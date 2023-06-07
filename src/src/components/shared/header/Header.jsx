@@ -1,14 +1,13 @@
 import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
-import Logo from "../../../assets/Images/guitar-fill.svg";
-import Hamburger from "hamburger-react";
+import Logo from "../../../assets/images/logo.svg";
 
 const Header = () => {
   const [isShow, setIsShow] = useState(false);
-  // const [isOpen, setIsOpen] = useState(false);
-  const [isOpen, setOpen] = useState(false);
-  // const { user, logOut } = useContext(AuthContext);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { user, logOut } = useContext(AuthContext);
   const handleLogOut = () => {
     // setIsUserOpen(!isUserOpen);
     logOut()
@@ -21,24 +20,14 @@ const Header = () => {
       });
   };
 
-  const links = [
-    { href: "/account-settings", label: "Account settings" },
-    { href: "/support", label: "Support" },
-    { href: "/license", label: "License" },
-    { href: "/sign-out", label: "Sign out" },
-  ];
-  let user = true;
   return (
     <nav className="  container mx-auto py-5">
       <div className="bg-white border-gray-200 dark:bg-gray-900 rounded-lg">
         <div className="flex flex-wrap items-center justify-between mx-auto p-4">
-          <div className=" flex border p-3 rounded-lg">
+          <div className="btn btn-outline btn-ghost">
             <img src={Logo} alt="logo" />
-            <Link
-              to="/"
-              className=" ml-3 text-2xl font-semibold text-fuchsia-500"
-            >
-              Music Shala
+            <Link to="/" className=" ml-3 text-2xl font-semibold text-rose-600">
+              TOY BARI
             </Link>
           </div>
           <div className="flex items-center md:order-2">
@@ -69,10 +58,26 @@ const Header = () => {
               )}
             </div>
             {/* main menu */}
-
-            <span className="md:hidden">
-              <Hamburger size={26} toggled={isOpen} toggle={setOpen} />
-            </span>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              type="button"
+              className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            >
+              <span className="sr-only">Open main menu</span>
+              <svg
+                className="w-6 h-6"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+            </button>
           </div>
           {/* hidden */}
           <div
@@ -85,32 +90,26 @@ const Header = () => {
               <li>
                 <NavLink to="/">
                   {({ isActive }) => (
-                    <span
-                      className={isActive ? "text-fuchsia-500 font-bold" : ""}
-                    >
+                    <span className={isActive ? "text-rose-600 font-bold" : ""}>
                       Home
                     </span>
                   )}
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/instructors">
+                <NavLink to="/blogs">
                   {({ isActive }) => (
-                    <span
-                      className={isActive ? "text-fuchsia-500 font-bold" : ""}
-                    >
-                      Instructors
+                    <span className={isActive ? "text-rose-600 font-bold" : ""}>
+                      Blogs
                     </span>
                   )}
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/classes">
+                <NavLink to="/all_toys">
                   {({ isActive }) => (
-                    <span
-                      className={isActive ? "text-fuchsia-500 font-bold" : ""}
-                    >
-                      Classes
+                    <span className={isActive ? "text-rose-600 font-bold" : ""}>
+                      All Toys
                     </span>
                   )}
                 </NavLink>
@@ -123,7 +122,7 @@ const Header = () => {
                         {({ isActive }) => (
                           <span
                             className={
-                              isActive ? "text-fuchsia-500 font-bold" : ""
+                              isActive ? "text-rose-600 font-bold" : ""
                             }
                           >
                             My Toys
@@ -137,7 +136,7 @@ const Header = () => {
                         {({ isActive }) => (
                           <span
                             className={
-                              isActive ? "text-fuchsia-500 font-bold block" : ""
+                              isActive ? "text-rose-600 font-bold block" : ""
                             }
                           >
                             Add Toys
