@@ -6,9 +6,7 @@ import Instructors from "./Instructors/Instructors";
 const Home = () => {
   return (
     <div>
-      <div>
  
-      </div>
       <Banner />
       <Classes />
       <Instructors />
