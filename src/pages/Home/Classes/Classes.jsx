@@ -1,11 +1,37 @@
-import React from 'react';
+import React from "react";
+import ClassCard from "./ClassCard";
+import Card from "../../../components/Card/Card";
 
 const Classes = () => {
-    return (
-        <div>
-            Classes
-        </div>
-    );
+  return (
+    <div className="max-w-screen-xl mx-auto mt-20">
+      <div className="flex items-center justify-center py-4 md:py-12 flex-wrap">
+        <h1 className="text-5xl font-semibold text-gray-900 dark:text-white ">
+          Classes
+        </h1>
+      </div>
+      <div className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-7">
+        <Card
+          image={
+            "https://bridgemusic.in/wp-content/uploads/2017/10/guitar-inst.webp"
+          }
+          name={"Gutter"}
+        ></Card>
+      </div>
+    </div>
+  );
 };
 
 export default Classes;
+/**
+ * https://bridgemusic.in/wp-content/uploads/2017/10/guitar-inst.webp
+ * https://bridgemusic.in/wp-content/uploads/2017/10/vocal-inst.webp
+ * https://bridgemusic.in/wp-content/uploads/2017/10/piano-inst.webp
+ * https://bridgemusic.in/wp-content/uploads/2017/10/drum-inst.webp
+ * https://bridgemusic.in/wp-content/uploads/2017/10/electronic-keyboards.webp
+ * https://bridgemusic.in/wp-content/uploads/2022/06/Himanshu-C-New.jpg
+ * https://bridgemusic.in/wp-content/uploads/2022/11/5-ways-learning-a-musica-instrument-improves-mental-health.webp
+ * https://bridgemusic.in/wp-content/uploads/2022/10/5-Common-Mistakes-to-Avoid-when-Learning-to-Play-the-Guitar.webp
+ *
+ *
+ */

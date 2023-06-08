@@ -86,7 +86,7 @@ const Header = () => {
     </>
   );
   return (
-    <nav className=" z-40 fixed top-0 right-0 w-full ">
+    <nav className=" z-40  md:fixed top-0 right-0 w-full ">
       <div className="   p-4  border  max-w-screen-xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-3">
           <div className=" btn btn-ghost">
