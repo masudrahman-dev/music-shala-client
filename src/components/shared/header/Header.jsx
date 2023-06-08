@@ -11,16 +11,16 @@ const Header = () => {
   // const { user, logOut } = useContext(AuthContext);
   const handleLogOut = () => {
     // setIsUserOpen(!isUserOpen);
-    logOut()
-      .then(() => {
-        // Sign-out successful.
-        // console.log("log out successful.");
-      })
-      .catch((error) => {
-        // An error happened.
-      });
+    // logOut()
+    //   .then(() => {
+    //     // Sign-out successful.
+    //     // console.log("log out successful.");
+    //   })
+    //   .catch((error) => {
+    //     // An error happened.
+    //   });
   };
-  console.log("isOpen :>> ", isOpen);
+  // console.log("isOpen :>> ", isOpen);
   let user = true;
 
   const menuItems = (
@@ -86,8 +86,8 @@ const Header = () => {
     </>
   );
   return (
-    <nav className="  max-w-screen-xl mx-auto  px-4">
-      <div className="bg-white border-gray-200 dark:bg-gray-900  rounded-lg py-4">
+    <nav className=" border  ">
+      <div className="   max-w-screen-xl mx-auto  p-4 ">
         <div className="flex flex-col md:flex-row justify-between items-center gap-3">
           <div className=" btn btn-ghost">
             <img src={Logo} alt="logo" />
@@ -100,7 +100,7 @@ const Header = () => {
           </div>
 
           <div className=" flex items-center  ">
-            <ul className="hidden md:flex  gap-5">{menuItems}</ul>
+            <ul className="hidden md:flex gap-5">{menuItems}</ul>
             <div className=" ml-5">
               {user ? (
                 <div className="flex">
@@ -120,7 +120,7 @@ const Header = () => {
                     </label>
                     {isShow && <p className=" ">{user?.displayName}</p>}
                   </div>
-                  <button onClick={handleLogOut} className="btn btn-ghost">
+                  <button onClick={handleLogOut} className="btn btn-ghost ">
                     Log out
                   </button>
                 </div>
@@ -134,7 +134,7 @@ const Header = () => {
               <Hamburger size={26} toggled={isOpen} toggle={setOpen} />
             </div>
             <ul
-              className={`  absolute  bg-white  rounded-lg shadow-md border p-5 top-32  md:hidden ${
+              className={`  absolute  z-50 rounded-lg shadow-md border p-5 top-32  md:hidden ${
                 isOpen ? "" : "hidden"
               }`}
               id="mobile-menu-2"
