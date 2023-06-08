@@ -1,15 +1,14 @@
 import React from "react";
 import Banner from "./Banner/Banner";
-import Classes from "./Classes/Classes";
-import Instructors from "./Instructors/Instructors";
+import ClassesSection from "./ClassesSection/ClassesSection";
+import InstructorsSection from "./InstructorsSection/InstructorsSection";
 
 const Home = () => {
   return (
     <div>
- 
       <Banner />
-      <Classes />
-      <Instructors />
+      <ClassesSection />
+      <InstructorsSection />
     </div>
   );
 };

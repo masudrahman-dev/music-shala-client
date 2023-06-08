@@ -1,7 +1,7 @@
 import React from "react";
 
-const Card = ({ image, name }) => {
-    console.log('image,name :>> ', image,name);
+const SectionCard = ({ image, name }) => {
+  // console.log('image,name :>> ', image,name);
   return (
     <div className="">
       <div className="relative ">
@@ -15,4 +15,4 @@ const Card = ({ image, name }) => {
   );
 };
 
-export default Card;
+export default SectionCard;

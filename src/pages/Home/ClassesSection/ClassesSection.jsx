@@ -1,8 +1,8 @@
 import React from "react";
-import ClassCard from "./ClassCard";
-import Card from "../../../components/Card/Card";
 
-const Classes = () => {
+import SectionCard from "../../../components/SectionCards/SectionCard";
+
+const ClassesSection = () => {
   return (
     <div className="max-w-screen-xl mx-auto mt-20">
       <div className="flex items-center justify-center py-4 md:py-12 flex-wrap">
@@ -11,18 +11,18 @@ const Classes = () => {
         </h1>
       </div>
       <div className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-7">
-        <Card
+        <SectionCard
           image={
             "https://bridgemusic.in/wp-content/uploads/2017/10/guitar-inst.webp"
           }
           name={"Gutter"}
-        ></Card>
+        ></SectionCard>
       </div>
     </div>
   );
 };
 
-export default Classes;
+export default ClassesSection;
 /**
  * https://bridgemusic.in/wp-content/uploads/2017/10/guitar-inst.webp
  * https://bridgemusic.in/wp-content/uploads/2017/10/vocal-inst.webp
