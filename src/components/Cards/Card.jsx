@@ -20,6 +20,7 @@ const Card = ({
           <h2 className="card-title">{name}</h2>
 
           <p>Instructor Name : {instructorName}</p>
+          <p>Email : {email}</p>
           <p>Available seats : {seats}</p>
           <p>Price : $ {price}</p>
           <div className="card-actions justify-end">
