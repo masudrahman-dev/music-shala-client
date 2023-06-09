@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -9,11 +8,11 @@ const Footer = () => {
           <Link to="/" className="link link-hover">
             Home
           </Link>
-          <Link to="/all_toys" className="link link-hover">
-            All Toys
+          <Link to="/instructors" className="link link-hover">
+            Instructor
           </Link>
-          <Link to="/blogs" className="link link-hover">
-            Blogs
+          <Link to="/classes" className="link link-hover">
+            Casses
           </Link>
           <Link to="/" className="link link-hover">
             Terms and Condition
