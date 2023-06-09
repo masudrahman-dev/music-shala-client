@@ -2,20 +2,28 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../../../assets/Images/guitar-fill.svg";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [confirmPass, setConfirmPass] = useState();
   const { createUser, updateUser, GoogleSignIn, user } =
     useContext(AuthContext);
-  let navigate = useNavigate();
-  let location = useLocation();
-  let from = location.state?.from?.pathname || "/";
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-  useEffect(() => {
-    if (user) {
-      navigate(from, { replace: true });
-    }
-  }, [from, navigate, user]);
+  // let navigate = useNavigate();
+  // let location = useLocation();
+  // let from = location.state?.from?.pathname || "/";
+
+  // useEffect(() => {
+  //   if (user) {
+  //     navigate(from, { replace: true });
+  //   }
+  // }, [from, navigate, user]);
   // console.log("location :>> ", location);
   const handleGoogleSignIn = () => {
     GoogleSignIn()
@@ -29,87 +37,104 @@ const Register = () => {
       });
   };
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const photo = form.url.value;
-    const password = form.password.value;
-    // console.log(photo, name, email, password);
+  // const handleRegister = (e) => {
+  //   e.preventDefault();
+  //   const form = e.target;
+  //   const name = form.name.value;
+  //   const email = form.email.value;
+  //   const photo = form.url.value;
+  //   const password = form.password.value;
+  //   // console.log(photo, name, email, password);
 
-    if (!/^.{6,}$/.test(password)) {
-      setErrorMessage("Password must be at least 6 characters long.");
-    } else {
-      setErrorMessage("");
-    }
-    createUser(email, password)
-      .then((userCredential) => {
-        // Signed in
-        // const user = userCredential.user;
-        // console.log("user :>> ", user);
-      })
-      .catch((error) => {
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // console.log(errorCode, errorMessage);
-      });
-    updateUser(name, photo);
+  //   if (!/^.{6,}$/.test(password)) {
+  //     setErrorMessage("Password must be at least 6 characters long.");
+  //   } else {
+  //     setErrorMessage("");
+  //   }
+  //   createUser(email, password)
+  //     .then((userCredential) => {
+  //       // Signed in
+  //       // const user = userCredential.user;
+  //       // console.log("user :>> ", user);
+  //     })
+  //     .catch((error) => {
+  //       // const errorCode = error.code;
+  //       // const errorMessage = error.message;
+  //       // console.log(errorCode, errorMessage);
+  //     });
+  //   updateUser(name, photo);
+  // };
+
+  const onSubmit = (data) => {
+    // Handle form submission
+    console.log("data :>> ", data);
   };
+  console.log("errors :>> ", errors);
   return (
     <section className="bg-gray-50 dark:bg-gray-900 py-20">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a
-          href="#"
+        <Link
+          to="/"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
         >
           <img className="w-8 h-8 mr-2" src={logo} alt="logo" />
-          TOY BARI
-        </a>
+          Music Shala
+        </Link>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create and account
             </h1>
-            <form onSubmit={handleRegister} className="space-y-4 md:space-y-6">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-4 md:space-y-6"
+            >
               <div>
                 <label
                   htmlFor="name"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Your name
+                  Your name *
                 </label>
                 <input
+                  defaultValue="ss"
                   type="name"
                   name="name"
                   id="name"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Your Name"
-                  required
+                  {...register("name", { required: "Name is required" })}
                 />
+                {errors.name && (
+                  <p className="text-rose-500 mt-1">{errors.name.message}</p>
+                )}
               </div>
               <div>
                 <label
                   htmlFor="email"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Your email
+                  Your email *
                 </label>
                 <input
+                  defaultValue="sss@gmail.com"
                   type="email"
                   name="email"
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
-                  required
+                  {...register("email", { required: "Email is required" })}
                 />
+                {errors.email && (
+                  <p className="text-rose-500 mt-1">{errors.email.message}</p>
+                )}
               </div>
               <div>
                 <label
                   htmlFor="url"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Your Photo url
+                  Your Photo url *
                 </label>
                 <input
                   type="url"
@@ -117,7 +142,6 @@ const Register = () => {
                   id="url"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="photo url"
-                  required
                 />
               </div>
 
@@ -126,17 +150,29 @@ const Register = () => {
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Password
+                  Password *
                 </label>
                 <input
-                  type="password"
+                  defaultValue="sssPass&123"
+                  type="text"
                   name="password"
                   id="password"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
+                  {...register("password", {
+                    required: "write password",
+                    pattern: {
+                      value: /^(?=.*[A-Z])(?=.*[\W_]).{6,}$/,
+                      message:
+                        "Password must be 6 characters long with at least 1 capital letter and 1 special character",
+                    },
+                  })}
                 />
-                <span className="text-rose-600">{errorMessage}</span>
+                {errors.password && (
+                  <p className="text-rose-500 mt-1">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label
@@ -151,9 +187,23 @@ const Register = () => {
                   id="confirmPassword"
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
+                  {...register("confirmPassword", {
+                    required: "Confirm Password is required",
+                    validate: (value) => {
+                      const isBool = value === password.value;
+                      setConfirmPass(isBool);
+                    },
+                  })}
                 />
-                <span className="text-rose-600">{errorMessage}</span>
+                {errors.confirmPassword ? (
+                  <p className="text-rose-500 mt-1">
+                    {errors.confirmPassword.message}
+                  </p>
+                ) : confirmPass ? (
+                  ""
+                ) : (
+                  <p className="text-rose-500 mt-1">Passwords do not match</p>
+                )}
               </div>
               <div className="flex items-start">
                 <div className="flex items-center h-5">

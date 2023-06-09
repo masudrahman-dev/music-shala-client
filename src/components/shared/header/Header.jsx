@@ -5,12 +5,9 @@ import Logo from "../../../assets/Images/guitar-fill.svg";
 import Hamburger from "hamburger-react";
 
 const Header = () => {
-  const [isShow, setIsShow] = useState(false);
-
   const [isOpen, setOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext);
   const handleLogOut = () => {
- 
     logOut()
       .then(() => {
         // Sign-out successful.
@@ -20,8 +17,7 @@ const Header = () => {
         // An error happened.
       });
   };
-  console.log("user :>> ", user);
-  // let user = true;
+
 
   const menuItems = (
     <>
@@ -66,20 +62,6 @@ const Header = () => {
                 )}
               </NavLink>
             </div>
-
-            {/* <div>
-              <NavLink to="/add_toys">
-                {({ isActive }) => (
-                  <span
-                    className={
-                      isActive ? "text-fuchsia-500 font-bold block" : ""
-                    }
-                  >
-                    Add Toys
-                  </span>
-                )}
-              </NavLink>
-            </div> */}
           </div>
         )}
       </li>
@@ -105,10 +87,7 @@ const Header = () => {
               {user ? (
                 <div className="flex">
                   <div className=" mx-3">
-                    <label
-                      onMouseEnter={() => setIsShow(!isShow)}
-                      className="btn btn-ghost btn-circle avatar"
-                    >
+                    <label className="btn btn-ghost btn-circle avatar">
                       <div className="w-10 rounded-full">
                         <img
                           src={
