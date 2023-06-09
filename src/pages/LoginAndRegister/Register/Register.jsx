@@ -5,7 +5,7 @@ import { AuthContext } from "../../../contexts/AuthProvider";
 import { useForm } from "react-hook-form";
 
 const Register = () => {
-  const [confirmPass, setConfirmPass] = useState();
+  const [confirmPass, setConfirmPass] = useState(null);
   const { createUser, updateUser, GoogleSignIn, user } =
     useContext(AuthContext);
   const {
@@ -15,15 +15,15 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  // let navigate = useNavigate();
-  // let location = useLocation();
-  // let from = location.state?.from?.pathname || "/";
+  let navigate = useNavigate();
+  let location = useLocation();
+  let from = location.state?.from?.pathname || "/";
 
-  // useEffect(() => {
-  //   if (user) {
-  //     navigate(from, { replace: true });
-  //   }
-  // }, [from, navigate, user]);
+  useEffect(() => {
+    if (user) {
+      navigate(from, { replace: true });
+    }
+  }, [from, navigate, user]);
   // console.log("location :>> ", location);
   const handleGoogleSignIn = () => {
     GoogleSignIn()
@@ -37,39 +37,27 @@ const Register = () => {
       });
   };
 
-  // const handleRegister = (e) => {
-  //   e.preventDefault();
-  //   const form = e.target;
-  //   const name = form.name.value;
-  //   const email = form.email.value;
-  //   const photo = form.url.value;
-  //   const password = form.password.value;
-  //   // console.log(photo, name, email, password);
 
-  //   if (!/^.{6,}$/.test(password)) {
-  //     setErrorMessage("Password must be at least 6 characters long.");
-  //   } else {
-  //     setErrorMessage("");
-  //   }
-  //   createUser(email, password)
-  //     .then((userCredential) => {
-  //       // Signed in
-  //       // const user = userCredential.user;
-  //       // console.log("user :>> ", user);
-  //     })
-  //     .catch((error) => {
-  //       // const errorCode = error.code;
-  //       // const errorMessage = error.message;
-  //       // console.log(errorCode, errorMessage);
-  //     });
-  //   updateUser(name, photo);
-  // };
 
-  const onSubmit = (data) => {
+  const handleRegister = (data) => {
     // Handle form submission
     console.log("data :>> ", data);
+    const { name, email, photo, password, confirmPassword } = data;
+    console.log("name :>> ", name);
+    createUser(email, password)
+      .then((userCredential) => {
+        // Signed in
+        // const user = userCredential.user;
+        // console.log("user :>> ", user);
+      })
+      .catch((error) => {
+        // const errorCode = error.code;
+        // const errorMessage = error.message;
+        // console.log(errorCode, errorMessage);
+      });
+    updateUser(name, photo);
   };
-  console.log("errors :>> ", errors);
+  // console.log("errors :>> ", errors);
   return (
     <section className="bg-gray-50 dark:bg-gray-900 py-20">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -86,7 +74,7 @@ const Register = () => {
               Create and account
             </h1>
             <form
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit(handleRegister)}
               className="space-y-4 md:space-y-6"
             >
               <div>
@@ -97,7 +85,7 @@ const Register = () => {
                   Your name *
                 </label>
                 <input
-                  defaultValue="ss"
+                  defaultValue="sss"
                   type="name"
                   name="name"
                   id="name"
@@ -137,14 +125,17 @@ const Register = () => {
                   Your Photo url *
                 </label>
                 <input
+                  defaultValue="https://gourmand.qodeinteractive.com/wp-content/uploads/2018/01/product-3.jpg"
                   type="url"
-                  name="url"
                   id="url"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="photo url"
+                  {...register("photo", { required: "photo url is required" })}
                 />
               </div>
-
+              {errors.email && (
+                <p className="text-rose-500 mt-1">{errors.email.message}</p>
+              )}
               <div>
                 <label
                   htmlFor="password"
@@ -179,7 +170,7 @@ const Register = () => {
                   htmlFor="confirmPassword"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Confirm Password
+                  Confirm Password *
                 </label>
                 <input
                   type="password"
@@ -195,15 +186,16 @@ const Register = () => {
                     },
                   })}
                 />
-                {errors.confirmPassword ? (
+                {errors.confirmPassword && (
                   <p className="text-rose-500 mt-1">
                     {errors.confirmPassword.message}
                   </p>
-                ) : confirmPass ? (
-                  ""
-                ) : (
-                  <p className="text-rose-500 mt-1">Passwords do not match</p>
                 )}
+                {/* { confirmPass ? (
+                  <p className="text-rose-500 mt-1">Passwords do not match</p>
+                ) : (
+                  ""
+                )} */}
               </div>
               <div className="flex items-start">
                 <div className="flex items-center h-5">
@@ -230,12 +222,16 @@ const Register = () => {
                   </label>
                 </div>
               </div>
-              <button
-                type="submit"
-                className="w-full btn btn-primary text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-              >
-                Create an account
-              </button>
+
+              {confirmPass ? (
+                <button type="submit" className="w-full btn btn-primary ">
+                  Create an account
+                </button>
+              ) : (
+                <button type="submit" className="w-full btn btn-primary ">
+                  Create an account
+                </button>
+              )}
               <div className="divider">OR</div>
               <div className="text-center">
                 <button
