@@ -3,9 +3,10 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../../../assets/Images/guitar-fill.svg";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const Register = () => {
-  const [confirmPass, setConfirmPass] = useState(null);
+  const [isMatch, setIsMatch] = useState(false);
   const { createUser, updateUser, GoogleSignIn, user } =
     useContext(AuthContext);
   const {
@@ -37,25 +38,41 @@ const Register = () => {
       });
   };
 
-
-
   const handleRegister = (data) => {
     // Handle form submission
-    console.log("data :>> ", data);
     const { name, email, photo, password, confirmPassword } = data;
-    console.log("name :>> ", name);
-    createUser(email, password)
-      .then((userCredential) => {
-        // Signed in
-        // const user = userCredential.user;
-        // console.log("user :>> ", user);
-      })
-      .catch((error) => {
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // console.log(errorCode, errorMessage);
-      });
-    updateUser(name, photo);
+
+    if (password === confirmPassword) {
+      console.log("data :>> ", data);
+
+      createUser(email, password)
+        .then((userCredential) => {
+          // Signed in
+          // const user = userCredential.user;
+          console.log("user :>> ", user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorMessage);
+          // console.log( errorCode);
+          if (
+            errorMessage === "Firebase: Error (auth/email-already-in-use)." ||
+            errorCode === "auth/email-already-in-use"
+          ) {
+            Swal.fire({
+              position: "top-end",
+              icon: "error",
+              title: "Email Already Use",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        });
+      updateUser(name, photo);
+    } else {
+      setIsMatch(true);
+    }
   };
   // console.log("errors :>> ", errors);
   return (
@@ -181,8 +198,7 @@ const Register = () => {
                   {...register("confirmPassword", {
                     required: "Confirm Password is required",
                     validate: (value) => {
-                      const isBool = value === password.value;
-                      setConfirmPass(isBool);
+                      setIsMatch(false);
                     },
                   })}
                 />
@@ -191,11 +207,9 @@ const Register = () => {
                     {errors.confirmPassword.message}
                   </p>
                 )}
-                {/* { confirmPass ? (
-                  <p className="text-rose-500 mt-1">Passwords do not match</p>
-                ) : (
-                  ""
-                )} */}
+                {isMatch && (
+                  <p className="text-rose-500 mt-1">Password does not match</p>
+                )}
               </div>
               <div className="flex items-start">
                 <div className="flex items-center h-5">
@@ -223,15 +237,10 @@ const Register = () => {
                 </div>
               </div>
 
-              {confirmPass ? (
-                <button type="submit" className="w-full btn btn-primary ">
-                  Create an account
-                </button>
-              ) : (
-                <button type="submit" className="w-full btn btn-primary ">
-                  Create an account
-                </button>
-              )}
+              <button type="submit" className="w-full btn btn-primary ">
+                Create an account
+              </button>
+
               <div className="divider">OR</div>
               <div className="text-center">
                 <button

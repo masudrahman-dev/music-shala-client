@@ -10,7 +10,6 @@ const AdminDashboard = () => {
           className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
         >
           <svg
-            aria-hidden="true"
             className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
             fill="currentColor"
             viewBox="0 0 20 20"
@@ -23,11 +22,10 @@ const AdminDashboard = () => {
       </li>
       <li>
         <Link
-          to='admin/manage-users'
+          to="admin/manage-users"
           className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
         >
           <svg
-            aria-hidden="true"
             className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
             fill="currentColor"
             viewBox="0 0 20 20"

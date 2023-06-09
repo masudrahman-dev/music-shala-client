@@ -13,12 +13,13 @@ import ManageUsersTable from "../../layout/Dashboard/AdminDashboard/ManageUsers/
 import StudentSelectedTable from "../../layout/Dashboard/StudentDashboard/StudentSelectedTable/StudentSelectedTable";
 import StudentEnrolledTable from "../../layout/Dashboard/StudentDashboard/StudentEnrolledTable/StudentEnrolledTable";
 import PrivateRoute from "../privateRoute/PrivateRoute";
+import ErrorPage from "../../pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-    // errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",

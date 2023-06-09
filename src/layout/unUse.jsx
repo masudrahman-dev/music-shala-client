@@ -58,7 +58,6 @@ const unUse = () => {
             className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
           >
             <svg
-              aria-hidden="true"
               className="w-6 h-6"
               fill="currentColor"
               viewBox="0 0 20 20"
@@ -73,7 +72,6 @@ const unUse = () => {
             className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:text-gray-400 dark:hover:text-white hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-600"
           >
             <svg
-              aria-hidden="true"
               className="w-6 h-6"
               fill="currentColor"
               viewBox="0 0 20 20"
@@ -100,7 +98,6 @@ const unUse = () => {
             className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:hover:text-white dark:text-gray-400 hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-600"
           >
             <svg
-              aria-hidden="true"
               className="h-5 w-5 rounded-full mt-0.5"
               xmlns="http://www.w3.org/2000/svg"
               xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -152,7 +149,6 @@ const unUse = () => {
                 >
                   <div className="inline-flex items-center">
                     <svg
-                      aria-hidden="true"
                       className="h-3.5 w-3.5 rounded-full mr-2"
                       xmlns="http://www.w3.org/2000/svg"
                       id="flag-icon-css-us"
@@ -195,7 +191,6 @@ const unUse = () => {
                 >
                   <div className="inline-flex items-center">
                     <svg
-                      aria-hidden="true"
                       className="h-3.5 w-3.5 rounded-full mr-2"
                       xmlns="http://www.w3.org/2000/svg"
                       id="flag-icon-css-de"
@@ -217,7 +212,6 @@ const unUse = () => {
                 >
                   <div className="inline-flex items-center">
                     <svg
-                      aria-hidden="true"
                       className="h-3.5 w-3.5 rounded-full mr-2"
                       xmlns="http://www.w3.org/2000/svg"
                       id="flag-icon-css-it"
@@ -241,7 +235,6 @@ const unUse = () => {
                 >
                   <div className="inline-flex items-center">
                     <svg
-                      aria-hidden="true"
                       className="h-3.5 w-3.5 rounded-full mr-2"
                       xmlns="http://www.w3.org/2000/svg"
                       xmlnsXlink="http://www.w3.org/1999/xlink"

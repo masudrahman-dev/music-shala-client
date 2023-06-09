@@ -14,7 +14,6 @@ const Navbar = () => {
               className="p-2 mr-2 text-gray-600 rounded-lg cursor-pointer md:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
             >
               <svg
-                aria-hidden="true"
                 className="w-6 h-6"
                 fill="currentColor"
                 viewBox="0 0 20 20"
@@ -27,7 +26,6 @@ const Navbar = () => {
                 ></path>
               </svg>
               <svg
-                aria-hidden="true"
                 className="hidden w-6 h-6"
                 fill="currentColor"
                 viewBox="0 0 20 20"
@@ -47,7 +45,6 @@ const Navbar = () => {
                 Music Shala
               </span>
             </Link>
-         
           </div>
           <div className="flex items-center lg:order-2">
             <button
@@ -58,12 +55,10 @@ const Navbar = () => {
             >
               <span className="sr-only">Toggle search</span>
               <svg
-                aria-hidden="true"
                 className="w-6 h-6"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
               >
                 <path
                   clipRule="evenodd"
@@ -81,7 +76,6 @@ const Navbar = () => {
               <span className="sr-only">View notifications</span>
               {/* <!-- Bell icon --> */}
               <svg
-                aria-hidden="true"
                 className="w-6 h-6"
                 fill="currentColor"
                 viewBox="0 0 20 20"
@@ -111,7 +105,6 @@ const Navbar = () => {
                     />
                     <div className="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 rounded-full border border-white bg-primary-700 dark:border-gray-700">
                       <svg
-                        aria-hidden="true"
                         className="w-3 h-3 text-white"
                         fill="currentColor"
                         viewBox="0 0 20 20"
@@ -147,7 +140,6 @@ const Navbar = () => {
                     />
                     <div className="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-gray-900 rounded-full border border-white dark:border-gray-700">
                       <svg
-                        aria-hidden="true"
                         className="w-3 h-3 text-white"
                         fill="currentColor"
                         viewBox="0 0 20 20"
@@ -185,7 +177,6 @@ const Navbar = () => {
                     />
                     <div className="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-red-600 rounded-full border border-white dark:border-gray-700">
                       <svg
-                        aria-hidden="true"
                         className="w-3 h-3 text-white"
                         fill="currentColor"
                         viewBox="0 0 20 20"
@@ -227,7 +218,6 @@ const Navbar = () => {
                     />
                     <div className="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-green-400 rounded-full border border-white dark:border-gray-700">
                       <svg
-                        aria-hidden="true"
                         className="w-3 h-3 text-white"
                         fill="currentColor"
                         viewBox="0 0 20 20"
@@ -269,7 +259,6 @@ const Navbar = () => {
                     />
                     <div className="flex absolute justify-center items-center ml-6 -mt-5 w-5 h-5 bg-purple-500 rounded-full border border-white dark:border-gray-700">
                       <svg
-                        aria-hidden="true"
                         className="w-3 h-3 text-white"
                         fill="currentColor"
                         viewBox="0 0 20 20"
@@ -299,7 +288,6 @@ const Navbar = () => {
               >
                 <div className="inline-flex items-center">
                   <svg
-                    aria-hidden="true"
                     className="mr-2 w-4 h-4 text-gray-500 dark:text-gray-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -347,7 +335,6 @@ const Navbar = () => {
                   className="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
                 >
                   <svg
-                    aria-hidden="true"
                     className="mx-auto mb-1 w-7 h-7 text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -368,7 +355,6 @@ const Navbar = () => {
                   className="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
                 >
                   <svg
-                    aria-hidden="true"
                     className="mx-auto mb-1 w-7 h-7 text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -385,7 +371,6 @@ const Navbar = () => {
                   className="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
                 >
                   <svg
-                    aria-hidden="true"
                     className="mx-auto mb-1 w-7 h-7 text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -406,7 +391,6 @@ const Navbar = () => {
                   className="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
                 >
                   <svg
-                    aria-hidden="true"
                     className="mx-auto mb-1 w-7 h-7 text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -427,7 +411,6 @@ const Navbar = () => {
                   className="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
                 >
                   <svg
-                    aria-hidden="true"
                     className="mx-auto mb-1 w-7 h-7 text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -448,7 +431,6 @@ const Navbar = () => {
                   className="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
                 >
                   <svg
-                    aria-hidden="true"
                     className="mx-auto mb-1 w-7 h-7 text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -470,7 +452,6 @@ const Navbar = () => {
                   className="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
                 >
                   <svg
-                    aria-hidden="true"
                     className="mx-auto mb-1 w-7 h-7 text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -492,7 +473,6 @@ const Navbar = () => {
                   className="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
                 >
                   <svg
-                    aria-hidden="true"
                     className="mx-auto mb-1 w-7 h-7 text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -513,7 +493,6 @@ const Navbar = () => {
                   className="block p-4 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 group"
                 >
                   <svg
-                    aria-hidden="true"
                     className="mx-auto mb-1 w-7 h-7 text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-400"
                     fill="none"
                     stroke="currentColor"
@@ -628,7 +607,6 @@ const Navbar = () => {
                   >
                     <span className="flex items-center">
                       <svg
-                        aria-hidden="true"
                         className="mr-2 w-5 h-5 text-primary-600 dark:text-primary-500"
                         fill="currentColor"
                         viewBox="0 0 20 20"
@@ -643,7 +621,6 @@ const Navbar = () => {
                       Pro version
                     </span>
                     <svg
-                      aria-hidden="true"
                       className="w-5 h-5 text-gray-400"
                       fill="currentColor"
                       viewBox="0 0 20 20"

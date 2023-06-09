@@ -91,7 +91,6 @@ const ManageClassesTable = () => {
                     <span className="sr-only">Previous</span>
                     <svg
                       className="w-5 h-5"
-                      aria-hidden="true"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
@@ -153,7 +152,6 @@ const ManageClassesTable = () => {
                     <span className="sr-only">Next</span>
                     <svg
                       className="w-5 h-5"
-                      aria-hidden="true"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
