@@ -1,7 +1,7 @@
 import React from "react";
-import Row from "./Row";
+import StudentTableRow from "./StudentTableRow";
 
-const Table = () => {
+const StudentTable = () => {
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
@@ -52,10 +52,10 @@ const Table = () => {
                       index={index}
                     ></Row>
                   ))} */}
-                  <Row></Row>
-                  <Row></Row>
-                  <Row></Row>
-                  <Row></Row>
+                  <StudentTableRow></StudentTableRow>
+                  <StudentTableRow></StudentTableRow>
+                  <StudentTableRow></StudentTableRow>
+                  <StudentTableRow></StudentTableRow>
                 </tbody>
               </table>
             </div>
@@ -166,4 +166,4 @@ const Table = () => {
   );
 };
 
-export default Table;
+export default StudentTable;

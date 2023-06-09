@@ -65,7 +65,7 @@ const Header = () => {
                     Dashboard
                   </span>
                 )}
-              </NavLink>{" "}
+              </NavLink>
             </div>
 
             {/* <div>

@@ -1,9 +1,9 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Navbar from "./Navbar/Navbar";
 import Sidebar from "./Sidebar/Sidebar";
-import Table from "./Table/Table";
+import StudentTable from "./StudentDashboard/StudentTable";
 
 import FormCRUD from "./FormCRUD/FormCRUD";
 const Dashboard = () => {
@@ -19,7 +19,8 @@ const Dashboard = () => {
         {/* main  */}
         <main className="p-4 md:ml-64 h-auto pt-20">
           {/* <Table></Table> */}
-         <FormCRUD></FormCRUD>
+          {/* <FormCRUD></FormCRUD> */}
+          <Outlet></Outlet>
         </main>
       </div>
     </div>

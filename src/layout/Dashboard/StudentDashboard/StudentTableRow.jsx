@@ -1,6 +1,6 @@
 import React from "react";
 
-const Row = () => {
+const StudentTableRow = () => {
   return (
     <>
       <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -32,11 +32,13 @@ const Row = () => {
         <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           {/* $ {price} */}
         </td>
-   
-        <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">Delete</td>
+
+        <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
+          Delete
+        </td>
       </tr>
     </>
   );
 };
 
-export default Row;
+export default StudentTableRow;
