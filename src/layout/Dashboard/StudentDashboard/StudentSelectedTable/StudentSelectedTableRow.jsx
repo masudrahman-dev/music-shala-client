@@ -32,6 +32,10 @@ const StudentSelectedTableRow = () => {
         <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           {/* $ {price} */}
         </td>
+
+        <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
+          Delete
+        </td>
       </tr>
     </>
   );

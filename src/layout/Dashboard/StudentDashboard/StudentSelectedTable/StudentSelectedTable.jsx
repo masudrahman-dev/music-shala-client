@@ -1,13 +1,22 @@
 import React from "react";
-import StudentSelectedTableRow from "./StudentSelectedClassesTableRow";
+import StudentSelectedTableRow from "./StudentSelectedTableRow";
 
 const StudentSelectedTable = () => {
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
         <div className="px-4 mx-auto max-w-screen-2xl lg:px-12">
+          {/*  */}
           <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
-            <div className="flex  px-4 py-3 space-y-3 lg:items-center justify-end lg:space-y-0 lg:space-x-4"></div>
+            <div className="flex  px-4 py-3 space-y-3 lg:items-center justify-end lg:space-y-0 lg:space-x-4">
+              <div className="flex items-center  space-x-4">
+                <h5 className="dark:text-white">
+                  <span>Total Price : </span>
+                  <span>$88.4k</span>
+                </h5>
+                <button className="btn btn-accent">Pay</button>
+              </div>
+            </div>
 
             {/* table */}
             <div className="overflow-x-auto">
@@ -28,6 +37,10 @@ const StudentSelectedTable = () => {
                     </th>
                     <th scope="col" className="px-4 py-3">
                       Price
+                    </th>
+
+                    <th scope="col" className="px-4 py-3">
+                      Delete
                     </th>
                   </tr>
                 </thead>
@@ -154,13 +167,3 @@ const StudentSelectedTable = () => {
 };
 
 export default StudentSelectedTable;
-
-{
-  /* <div className="flex items-center  space-x-4">
-                <h5 className="dark:text-white">
-                  <span>Total Price : </span>
-                  <span>$88.4k</span>
-                </h5>
-                <button className="btn btn-accent">Pay</button>
-              </div> */
-}

@@ -33,9 +33,6 @@ const StudentEnrolledTableRow = () => {
           {/* $ {price} */}
         </td>
 
-        <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
-          Delete
-        </td>
       </tr>
     </>
   );
