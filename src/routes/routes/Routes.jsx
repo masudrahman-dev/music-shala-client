@@ -6,9 +6,9 @@ import Classes from "../../pages/Classes/Classes";
 import Login from "../../pages/LoginAndRegister/Login/Login";
 import Register from "../../pages/LoginAndRegister/Register/Register";
 import Dashboard from "../../layout/Dashboard/Dashboard";
-import FormCRUD from "../../layout/Dashboard/FormCRUD/FormCRUD";
-import StudentTable from "../../layout/Dashboard/StudentDashboard/StudentTable";
-import InstructorTable from "../../layout/Dashboard/InstrctorDashboard/InstructorTable";
+import FormCRUD from "../../layout/Dashboard/InstrctorDashboard/FormCRUD/FormCRUD";
+import StudentSelectedTable from "../../layout/Dashboard/StudentDashboard/StudentSelectedTable/StudentSelectedTable";
+import InstructorTable from "../../layout/Dashboard/InstrctorDashboard/InstructorTable/InstructorTable";
 import ManageClassesTable from "../../layout/Dashboard/AdminDashboard/ManageClasses/ManageClassesTable";
 import ManageUsersTable from "../../layout/Dashboard/AdminDashboard/ManageUsers/ManageUsersTable";
 
@@ -45,7 +45,23 @@ const router = createBrowserRouter([
     element: <Dashboard />,
     children: [
       {
-        path: "/dashboard/add-class",
+        path: "/dashboard/student/selected-classes",
+        element: <StudentSelectedTable></StudentSelectedTable>,
+      },
+      {
+        path: "/dashboard/student/enrolled-classes",
+        element: <StudentSelectedTable></StudentSelectedTable>,
+      },
+      {
+        path: "/dashboard/instructor/my-classes",
+        element: <InstructorTable></InstructorTable>,
+      },
+      {
+        path: "/dashboard/instructor/my-classes",
+        element: <InstructorTable></InstructorTable>,
+      },
+      {
+        path: "/dashboard/instructor/add-class",
         element: <FormCRUD></FormCRUD>,
       },
       {

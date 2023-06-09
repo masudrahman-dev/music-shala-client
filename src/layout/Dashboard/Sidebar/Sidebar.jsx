@@ -59,12 +59,12 @@ const Sidebar = () => {
                 <span className="ml-3">Overview</span>
               </a>
             </li>
-            {/* <StudentDashboard></StudentDashboard> */}
-
-            {/* <InstructorDashboard></InstructorDashboard> */}
+            <StudentDashboard></StudentDashboard>
+            <hr />
+            <InstructorDashboard></InstructorDashboard>
+            <hr />
             <AdminDashboard></AdminDashboard>
           </ul>
-         
         </div>
       </aside>
     </>

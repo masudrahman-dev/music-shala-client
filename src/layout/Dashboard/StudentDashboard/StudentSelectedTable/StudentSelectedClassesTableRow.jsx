@@ -1,6 +1,6 @@
 import React from "react";
 
-const StudentTableRow = () => {
+const StudentSelectedTableRow = () => {
   return (
     <>
       <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -32,13 +32,9 @@ const StudentTableRow = () => {
         <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           {/* $ {price} */}
         </td>
-
-        <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
-          Delete
-        </td>
       </tr>
     </>
   );
 };
 
-export default StudentTableRow;
+export default StudentSelectedTableRow;

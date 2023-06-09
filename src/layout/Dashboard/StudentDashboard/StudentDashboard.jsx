@@ -1,14 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const StudentDashboard = () => {
   return (
     <>
       <li>
-        <button
-          type="button"
+        <Link
+          to="/dashboard/student/selected-classes"
           className="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-          aria-controls="dropdown-pages"
-          data-collapse-toggle="dropdown-pages"
         >
           <svg
             aria-hidden="true"
@@ -26,11 +25,11 @@ const StudentDashboard = () => {
           <span className="flex-1 ml-3 text-left whitespace-nowrap">
             Selected Classes
           </span>
-        </button>
+        </Link>
       </li>
       <li>
-        <button
-          type="button"
+        <Link
+          to="/dashboard/student/enrolled-classes"
           className="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
           aria-controls="dropdown-sales"
           data-collapse-toggle="dropdown-sales"
@@ -51,7 +50,7 @@ const StudentDashboard = () => {
           <span className="flex-1 ml-3 text-left whitespace-nowrap">
             Enrolled Classes
           </span>
-        </button>
+        </Link>
       </li>
     </>
   );
