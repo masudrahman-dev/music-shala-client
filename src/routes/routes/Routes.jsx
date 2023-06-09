@@ -12,6 +12,7 @@ import ManageClassesTable from "../../layout/Dashboard/AdminDashboard/ManageClas
 import ManageUsersTable from "../../layout/Dashboard/AdminDashboard/ManageUsers/ManageUsersTable";
 import StudentSelectedTable from "../../layout/Dashboard/StudentDashboard/StudentSelectedTable/StudentSelectedTable";
 import StudentEnrolledTable from "../../layout/Dashboard/StudentDashboard/StudentEnrolledTable/StudentEnrolledTable";
+import PrivateRoute from "../privateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/dashboard/student/selected-classes",

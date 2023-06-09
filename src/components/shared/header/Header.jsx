@@ -6,23 +6,22 @@ import Hamburger from "hamburger-react";
 
 const Header = () => {
   const [isShow, setIsShow] = useState(false);
-  // const [isOpen, setIsOpen] = useState(false);
 
   const [isOpen, setOpen] = useState(false);
-  // const { user, logOut } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   const handleLogOut = () => {
-    // setIsUserOpen(!isUserOpen);
-    // logOut()
-    //   .then(() => {
-    //     // Sign-out successful.
-    //     // console.log("log out successful.");
-    //   })
-    //   .catch((error) => {
-    //     // An error happened.
-    //   });
+ 
+    logOut()
+      .then(() => {
+        // Sign-out successful.
+        console.log("log out successful.");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
   };
-  // console.log("isOpen :>> ", isOpen);
-  let user = true;
+  console.log("user :>> ", user);
+  // let user = true;
 
   const menuItems = (
     <>
@@ -119,7 +118,6 @@ const Header = () => {
                         />
                       </div>
                     </label>
-                    {isShow && <p className=" ">{user?.displayName}</p>}
                   </div>
                   <button onClick={handleLogOut} className="btn btn-ghost ">
                     Log out
