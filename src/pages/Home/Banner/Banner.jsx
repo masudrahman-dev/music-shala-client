@@ -60,8 +60,8 @@ const Banner = () => {
       <div className="relative ">
         <div className="z-30 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  ">
           <div className="text-center ">
-            <div className="max-w-2xl mb-4  text-xl font-extrabold tracking-wide md:text-7xl  dark:text-white "></div>
-            <p> Music is Heart Of Love </p>
+           
+            <p className="font-extrabold dark:text-white leading-10 tracking-wide md:text-7xl mb-7  text-xl  ">  Music is <br /> Heart Of Love </p>
             <p className="  font-light text-gray-500 dark:text-white hidden md:block">
               Setting Gold Standards since 2009.the core of a rhythm section in
               a band. This is purely a rhythm instrument and is not really

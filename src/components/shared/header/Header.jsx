@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate, useNavigation } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import Logo from "../../../assets/Images/guitar-fill.svg";
 import Hamburger from "hamburger-react";
@@ -7,6 +7,7 @@ import Hamburger from "hamburger-react";
 const Header = () => {
   const [isShow, setIsShow] = useState(false);
   // const [isOpen, setIsOpen] = useState(false);
+
   const [isOpen, setOpen] = useState(false);
   // const { user, logOut } = useContext(AuthContext);
   const handleLogOut = () => {
@@ -21,7 +22,7 @@ const Header = () => {
     //   });
   };
   // console.log("isOpen :>> ", isOpen);
-  let user = false;
+  let user = true;
 
   const menuItems = (
     <>
@@ -56,7 +57,7 @@ const Header = () => {
         {user && (
           <div className="md:flex gap-7">
             <div>
-              <NavLink to="/my_toys">
+              <NavLink to="/dashboard">
                 {({ isActive }) => (
                   <span
                     className={isActive ? "text-fuchsia-500 font-bold" : ""}
@@ -87,7 +88,7 @@ const Header = () => {
   );
   return (
     <nav className=" z-40  md:fixed top-0 right-0 w-full ">
-      <div className="   p-4  border  max-w-screen-xl mx-auto">
+      <div className="   p-4    max-w-screen-xl mx-auto ">
         <div className="flex flex-col md:flex-row justify-between items-center gap-3">
           <div className=" btn btn-ghost">
             <img src={Logo} alt="logo" />
