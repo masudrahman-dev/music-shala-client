@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const InstructorTableRow = () => {
+const ManageClassesTableRow = () => {
   return (
     <>
       <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -41,17 +41,17 @@ const InstructorTableRow = () => {
           pending
         </td>
         <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-          Read
+          Feedback
         </td>
         <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-info">
-          <Link to="/dashboard"> update</Link>
+          Approve
         </td>
         <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
-          Delete
+          Deny
         </td>
       </tr>
     </>
   );
 };
 
-export default InstructorTableRow;
+export default ManageClassesTableRow;

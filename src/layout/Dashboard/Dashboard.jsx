@@ -18,7 +18,6 @@ const Dashboard = () => {
         <Sidebar></Sidebar>
         {/* main  */}
         <main className="p-4 md:ml-64 h-auto pt-20">
-          {/* <Table></Table> */}
           {/* <FormCRUD></FormCRUD> */}
           <Outlet></Outlet>
         </main>

@@ -1,8 +1,8 @@
 import React from "react";
-import InstructorTableRow from "./InstructorTableRow";
 import { Link } from "react-router-dom";
+import ManageUsersTableRow from "./ManageUsersTableRow";
 
-const InstructorTable = () => {
+const ManageUsersTable = () => {
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
@@ -31,30 +31,15 @@ const InstructorTable = () => {
                       Name
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      Instructor
-                    </th>
-                    <th scope="col" className="px-4 py-3">
-                      Seats
-                    </th>
-                    <th scope="col" className="px-4 py-3">
-                      Price
-                    </th>
-                    <th scope="col" className="px-4 py-3">
-                      Total Enrolled
-                    </th>
-                    <th scope="col" className="px-4 py-3">
-                      Status
-                    </th>
-                    <th scope="col" className="px-4 py-3">
-                      Feedback
-                    </th>
-                    <th scope="col" className="px-4 py-3">
-              
-                      Update
+                      Role
                     </th>
 
                     <th scope="col" className="px-4 py-3">
-                      Delete
+                      Make Instructor
+                    </th>
+
+                    <th scope="col" className="px-4 py-3">
+                      Make Admin
                     </th>
                   </tr>
                 </thead>
@@ -66,9 +51,7 @@ const InstructorTable = () => {
                         index={index}
                       ></Row>
                     ))} */}
-                  <InstructorTableRow></InstructorTableRow>
-                  <InstructorTableRow></InstructorTableRow>
-                  <InstructorTableRow></InstructorTableRow>
+                  <ManageUsersTableRow></ManageUsersTableRow>
                 </tbody>
               </table>
             </div>
@@ -179,4 +162,4 @@ const InstructorTable = () => {
   );
 };
 
-export default InstructorTable;
+export default ManageUsersTable;

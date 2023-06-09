@@ -9,6 +9,8 @@ import Dashboard from "../../layout/Dashboard/Dashboard";
 import FormCRUD from "../../layout/Dashboard/FormCRUD/FormCRUD";
 import StudentTable from "../../layout/Dashboard/StudentDashboard/StudentTable";
 import InstructorTable from "../../layout/Dashboard/InstrctorDashboard/InstructorTable";
+import ManageClassesTable from "../../layout/Dashboard/AdminDashboard/ManageClasses/ManageClassesTable";
+import ManageUsersTable from "../../layout/Dashboard/AdminDashboard/ManageUsers/ManageUsersTable";
 
 const router = createBrowserRouter([
   {
@@ -43,12 +45,16 @@ const router = createBrowserRouter([
     element: <Dashboard />,
     children: [
       {
-        path: "/dashboard",
+        path: "/dashboard/add-class",
         element: <FormCRUD></FormCRUD>,
       },
       {
-        path: "/dashboard/my-classes",
-        element: <InstructorTable></InstructorTable>,
+        path: "/dashboard/admin/manage-classes",
+        element: <ManageClassesTable></ManageClassesTable>,
+      },
+      {
+        path: "/dashboard/admin/manage-users",
+        element: <ManageUsersTable></ManageUsersTable>,
       },
     ],
   },

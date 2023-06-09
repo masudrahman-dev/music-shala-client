@@ -1,8 +1,7 @@
 import React from "react";
-import InstructorTableRow from "./InstructorTableRow";
-import { Link } from "react-router-dom";
+import ManageClassesTableRow from "./ManageClassesTableRow";
 
-const InstructorTable = () => {
+const ManageClassesTable = () => {
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
@@ -49,26 +48,23 @@ const InstructorTable = () => {
                       Feedback
                     </th>
                     <th scope="col" className="px-4 py-3">
-              
-                      Update
+                      Approve
                     </th>
 
                     <th scope="col" className="px-4 py-3">
-                      Delete
+                      deny
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {/* {products?.map((product, index) => (
-                      <Row
-                        key={product._id}
-                        product={product}
-                        index={index}
-                      ></Row>
-                    ))} */}
-                  <InstructorTableRow></InstructorTableRow>
-                  <InstructorTableRow></InstructorTableRow>
-                  <InstructorTableRow></InstructorTableRow>
+                        <Row
+                          key={product._id}
+                          product={product}
+                          index={index}
+                        ></Row>
+                      ))} */}
+                  <ManageClassesTableRow></ManageClassesTableRow>
                 </tbody>
               </table>
             </div>
@@ -179,4 +175,4 @@ const InstructorTable = () => {
   );
 };
 
-export default InstructorTable;
+export default ManageClassesTable;
