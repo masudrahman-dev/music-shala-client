@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { Toaster, toast } from "react-hot-toast";
+import Swal from "sweetalert2";
 // import Swal from "sweetalert2";
 const FormCRUD = () => {
-
   const {
     register,
     handleSubmit,
@@ -10,29 +11,24 @@ const FormCRUD = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
-    // Perform POST request
-    // axios
-    //   .post("https://toy-marketplace-server-rose.vercel.app/products", data)
-    //   .then((response) => {
-    //     // console.log("Success:", response.data);
-    //     // Process the response data
-    //     Swal.fire({
-    //       position: "top-end",
-    //       icon: "success",
-    //       title: "successfully Product Added",
-    //       showConfirmButton: false,
-    //       timer: 1500,
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //     // Handle the error
-    //   });
+    // const baseUrl = import.meta.env.VITE_BASE_URL;
+    axios
+      .post(`${import.meta.env.VITE_BASE_URL}/add-class`, data)
+      .then((response) => {
+        // console.log("Success:", response.data);
+        // Process the response data
+
+        toast.success("Successfully toasted!");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Handle the error
+      });
   };
 
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <div className=" flex justify-center">
         <div className=" p-4 w-full max-w-2xl h-full">
           {/* <!-- Modal content --> */}
