@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
-import { Link, NavLink, useNavigate, useNavigation } from "react-router-dom";
+import { Link, NavLink} from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
-import Logo from "../../../assets/Images/guitar-fill.svg";
+import logo from "../../../assets/Images/logo.svg";
 import Hamburger from "hamburger-react";
 
 const Header = () => {
@@ -17,7 +17,6 @@ const Header = () => {
         // An error happened.
       });
   };
-
 
   const menuItems = (
     <>
@@ -72,7 +71,7 @@ const Header = () => {
       <div className="   p-4    max-w-screen-xl mx-auto ">
         <div className="flex flex-col md:flex-row justify-between items-center gap-3">
           <div className=" btn btn-ghost">
-            <img src={Logo} alt="logo" />
+            <img src={logo} alt="logo" />
             <Link
               to="/"
               className=" ml-3 text-2xl font-semibold text-fuchsia-500"

@@ -6,6 +6,7 @@ import InstructorsSection from "./InstructorsSection/InstructorsSection";
 const Home = () => {
   return (
     <div>
+    
       <Banner />
       <ClassesSection />
       <InstructorsSection />

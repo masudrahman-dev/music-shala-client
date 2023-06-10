@@ -1,5 +1,5 @@
 import { Link, useRouteError } from "react-router-dom";
-import logo from "../../assets/Images/guitar-fill.svg";
+import logo from "../../assets/Images/logo.svg";
 const ErrorPage = () => {
   const error = useRouteError();
 

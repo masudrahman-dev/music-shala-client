@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
-import logo from "../../../assets/Images/guitar-fill.svg";
+import logo from "../../../assets/Images/logo.svg";
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const { GoogleSignIn, logIn, user } = useContext(AuthContext);
