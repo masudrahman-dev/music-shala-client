@@ -11,6 +11,7 @@ const ClassesSection = ({ data }) => {
       <div className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-7">
         {data?.map((item) => (
           <ClassesSectionCard
+            key={item._id}
             image={item?.class_image}
             name={item?.class_name}
           />
