@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../../components/Cards/Card";
+import InstructorCard from "../Home/InstructorsSection/InstructorCard";
 
 const Instructors = () => {
   return (
@@ -11,30 +11,30 @@ const Instructors = () => {
           </h1>
         </div>
         <div className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-7">
-          <Card
+          <InstructorCard
             image={
               "https://bridgemusic.in/wp-content/uploads/2022/07/sagar.jpeg "
             }
             name={"SAGAR GUSAIN"}
             email={"example@gamil.com"}
             Instrument={"Piano"}
-          ></Card>
-          <Card
+          ></InstructorCard>
+          <InstructorCard
             image={
               "https://bridgemusic.in/wp-content/uploads/2022/07/sagar.jpeg "
             }
             name={"SAGAR GUSAIN"}
             email={"example@gamil.com"}
             Instrument={"Piano"}
-          ></Card>
-          <Card
+          ></InstructorCard>
+          <InstructorCard
             image={
               "https://bridgemusic.in/wp-content/uploads/2022/07/sagar.jpeg "
             }
             name={"SAGAR GUSAIN"}
             email={"example@gamil.com"}
             Instrument={"Piano"}
-          ></Card>
+          ></InstructorCard>
         </div>
       </div>
     </div>

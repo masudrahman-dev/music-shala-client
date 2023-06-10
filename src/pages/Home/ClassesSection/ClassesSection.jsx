@@ -1,8 +1,7 @@
-import React from "react";
+import ClassesCard from "./ClassesCard";
 
-import SectionCard from "../../../components/SectionCards/SectionCard";
+const ClassesSection = ({ data }) => {
 
-const ClassesSection = () => {
   return (
     <div className="max-w-screen-xl mx-auto mt-20">
       <div className="flex items-center justify-center py-4 md:py-12 flex-wrap">
@@ -11,12 +10,9 @@ const ClassesSection = () => {
         </h1>
       </div>
       <div className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-7">
-        <SectionCard
-          image={
-            "https://bridgemusic.in/wp-content/uploads/2017/10/guitar-inst.webp"
-          }
-          name={"Gutter"}
-        ></SectionCard>
+        {data?.map((item) => (
+          <ClassesCard image={item?.class_image} name={item?.class_name} />
+        ))}
       </div>
     </div>
   );

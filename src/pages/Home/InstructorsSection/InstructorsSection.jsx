@@ -1,5 +1,4 @@
-import React from "react";
-import SectionCard from "../../../components/SectionCards/SectionCard";
+
 
 const InstructorsSection = () => {
   return (
@@ -10,16 +9,11 @@ const InstructorsSection = () => {
         </h1>
       </div>
       <div className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-7">
-        <SectionCard
+        <classesCard
           image={"https://bridgemusic.in/wp-content/uploads/2022/07/sagar.jpeg"}
           name={"Students: 1232"}
-        ></SectionCard>
-        <SectionCard
-          image={
-            "https://bridgemusic.in/wp-content/uploads/2022/07/FB_IMG_1590746443116.jpg"
-          }
-          name={"Students: 1232"}
-        ></SectionCard>
+        ></classesCard>
+     
       </div>
     </div>
   );

@@ -1,6 +1,4 @@
-import React from "react";
-
-const SectionCard = ({ image, name }) => {
+const ClassesCard = ({ image, name }) => {
   // console.log('image,name :>> ', image,name);
   return (
     <div className="">
@@ -15,4 +13,4 @@ const SectionCard = ({ image, name }) => {
   );
 };
 
-export default SectionCard;
+export default ClassesCard;

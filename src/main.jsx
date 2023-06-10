@@ -7,8 +7,10 @@ import AuthProvider from "./contexts/AuthProvider";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    {/* <SpinnerProvider> */}
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    {/* </SpinnerProvider> */}
   </React.StrictMode>
 );

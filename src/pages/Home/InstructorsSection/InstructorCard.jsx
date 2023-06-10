@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card = ({
+const InstructorCard = ({
   image,
   name,
   email,
@@ -32,4 +32,4 @@ const Card = ({
   );
 };
 
-export default Card;
+export default InstructorCard;
