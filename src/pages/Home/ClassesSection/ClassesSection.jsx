@@ -1,7 +1,6 @@
-import ClassesCard from "./ClassesCard";
+import ClassesSectionCard from "./ClassesSectionCard";
 
 const ClassesSection = ({ data }) => {
-
   return (
     <div className="max-w-screen-xl mx-auto mt-20">
       <div className="flex items-center justify-center py-4 md:py-12 flex-wrap">
@@ -11,7 +10,10 @@ const ClassesSection = ({ data }) => {
       </div>
       <div className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-7">
         {data?.map((item) => (
-          <ClassesCard image={item?.class_image} name={item?.class_name} />
+          <ClassesSectionCard
+            image={item?.class_image}
+            name={item?.class_name}
+          />
         ))}
       </div>
     </div>

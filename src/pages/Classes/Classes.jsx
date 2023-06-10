@@ -1,5 +1,5 @@
 import React from "react";
-import InstructorCard from "../Home/InstructorsSection/InstructorCard";
+import InstructorCard from "../Instructors/InstructorCard";
 
 const Classes = () => {
   return (

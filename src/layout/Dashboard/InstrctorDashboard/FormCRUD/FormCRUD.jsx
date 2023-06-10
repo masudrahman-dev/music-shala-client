@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Toaster, toast } from "react-hot-toast";
-import Swal from "sweetalert2";
-// import Swal from "sweetalert2";
+
 const FormCRUD = () => {
   const {
     register,
@@ -17,6 +16,7 @@ const FormCRUD = () => {
       .then((response) => {
         // console.log("Success:", response.data);
         // Process the response data
+        console.log('response :>> ', response);
 
         toast.success("Successfully toasted!");
       })
@@ -143,13 +143,35 @@ const FormCRUD = () => {
                     </p>
                   )}
                 </div>
+                <div>
+                  <label
+                    htmlFor="seller_name"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Instructor image url *
+                  </label>
+                  <input
+                    defaultValue="https://bridgemusic.in/wp-content/uploads/2022/07/sagar.jpeg"
+                    type="url"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="instructor image"
+                    {...register("instructor_image", {
+                      required: "This field is required",
+                    })}
+                  />
+                  {errors.instructor_image && (
+                    <p className="text-rose-500 mt-1">
+                      {errors.instructor_image.message}
+                    </p>
+                  )}
+                </div>
 
                 <div>
                   <label
                     htmlFor="price"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Price
+                    Price *
                   </label>
                   <input
                     defaultValue="230"
@@ -170,7 +192,7 @@ const FormCRUD = () => {
                     htmlFor="quantity"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Available Seats
+                    Available Seats *
                   </label>
                   <input
                     type="number"

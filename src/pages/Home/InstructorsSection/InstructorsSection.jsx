@@ -1,6 +1,7 @@
+import InstructorSectionCard from "./InstructorSectionCard";
 
-
-const InstructorsSection = () => {
+const InstructorsSection = ({ data }) => {
+  console.log("data :>> ", data);
   return (
     <div className="max-w-screen-xl mx-auto mt-20">
       <div className="flex items-center justify-center py-4 md:py-12 flex-wrap">
@@ -9,11 +10,9 @@ const InstructorsSection = () => {
         </h1>
       </div>
       <div className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-7">
-        <classesCard
-          image={"https://bridgemusic.in/wp-content/uploads/2022/07/sagar.jpeg"}
-          name={"Students: 1232"}
-        ></classesCard>
-     
+        {data?.map((item) => (
+          <InstructorSectionCard image={item?.instructor_image} />
+        ))}
       </div>
     </div>
   );
