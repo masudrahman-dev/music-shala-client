@@ -10,9 +10,7 @@ import Spinner from "../../../components/Spinner/Spinner";
 const Register = () => {
   const [isMatch, setIsMatch] = useState(false);
   const [isGoogle, setIssGoogle] = useState(true);
-  const [userData, setUserData] = useState({});
-  const [userError, setUserError] = useState(null);
-  const { createUser, updateUser, GoogleSignIn, user, loading, setLoading } =
+  const { createUser, updateUser, GoogleSignIn, user, loading } =
     useContext(AuthContext);
   const {
     register,
@@ -40,8 +38,6 @@ const Register = () => {
         isInstructor,
       };
 
-      setUserData(newUserData);
-
       axios
         .post(`${import.meta.env.VITE_BASE_URL}/users`, newUserData)
         .then((response) => {
@@ -62,8 +58,8 @@ const Register = () => {
       .then((result) => {
         const loggedInUser = result.user;
         // setUser(loggedInUser);
-        // handleUserData();
-        console.log("loggedInUser :>> ", loggedInUser);
+
+        // console.log("loggedInUser :>> ", loggedInUser);
       })
       .catch((error) => {
         console.log(error);
@@ -78,16 +74,14 @@ const Register = () => {
         .then((userCredential) => {
           // Signed in
           // const user = userCredential.user;
-          // console.log("user :>> ", user);
-          // handleUserData();
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorMessage);
           console.log(errorCode);
-          setUserError(errorCode);
-          console.log("user :>> ", user);
+
+          // console.log("user :>> ", user);
 
           console.log("error :>> ", error);
           if (
@@ -112,7 +106,6 @@ const Register = () => {
       setIsMatch(true);
     }
   };
-  console.log("userData :>> ", userData);
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900 py-20">
@@ -277,18 +270,37 @@ const Register = () => {
                 </div>
               </div>
 
-              <button type="submit" className="w-full btn btn-primary ">
-                Create an account
-              </button>
-
+              {loading ? (
+                <button
+                  disabled
+                  type="submit"
+                  className="w-full btn btn-primary "
+                >
+                  Create an account
+                </button>
+              ) : (
+                <button type="submit" className="w-full btn btn-primary ">
+                  Create an account
+                </button>
+              )}
               <div className="divider">OR</div>
               <div className="text-center">
-                <button
-                  onClick={handleGoogleSignIn}
-                  className="btn btn-primary"
-                >
-                  Google
-                </button>
+                {loading ? (
+                  <button
+                  disabled
+                    onClick={handleGoogleSignIn}
+                    className="btn btn-primary"
+                  >
+                    Google
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleGoogleSignIn}
+                    className="btn btn-primary"
+                  >
+                    Google
+                  </button>
+                )}
               </div>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
