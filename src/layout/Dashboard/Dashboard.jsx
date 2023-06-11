@@ -18,7 +18,7 @@ const Dashboard = () => {
       });
   };
 
-  // console.log("user :>> ", user);
+
   return (
     <div>
       <div className="antialiased bg-gray-50 dark:bg-gray-900 h-screen">

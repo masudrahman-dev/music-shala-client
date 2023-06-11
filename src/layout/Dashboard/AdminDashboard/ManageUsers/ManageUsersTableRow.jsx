@@ -1,6 +1,20 @@
+import axios from "axios";
 import React from "react";
 
-const ManageUsersTableRow = () => {
+const ManageUsersTableRow = ({ photo, role, name }) => {
+  const handleRole = (id) => {
+    axios
+      .patch(`${import.meta.env.VITE_BASE_URL}/users:${id}`, data)
+      .then((response) => {
+        console.log(response.data);
+        // Do something with the response
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle the error
+      });
+  };
+
   return (
     <>
       <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -12,17 +26,16 @@ const ManageUsersTableRow = () => {
           className="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
         >
           <img
-            // src={product_url}
-            src="https://source.unsplash.com/user/c_v_r/100x100"
+            src={photo}
+            // src="https://source.unsplash.com/user/c_v_r/100x100"
             alt="iMac Front Image"
             className="w-auto h-8 mr-3"
           />
-          {/* {product_name} */}
-          Akash Barma
+          {name}
         </th>
         <td className="px-4 py-2">
-          <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-            Student
+          <span className="bg-primary-100 dark:text-white text-primary-800  font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+            {role}
           </span>
         </td>
 

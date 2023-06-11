@@ -1,24 +1,40 @@
-import React from "react";
-import { Link } from "react-router-dom";
 import ManageUsersTableRow from "./ManageUsersTableRow";
+import { useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
+import Spinner from "../../../../components/Spinner/Spinner";
 
 const ManageUsersTable = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_BASE_URL}/users`
+        );
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
         <div className="px-4 mx-auto max-w-screen-2xl lg:px-12">
           {/*  */}
           <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
-            <div className="flex  px-4 py-3 space-y-3 lg:items-center justify-end lg:space-y-0 lg:space-x-4">
-              <div className="flex items-center  space-x-4">
-                <h5 className="dark:text-white">
-                  <span>Total Price : </span>
-                  <span>$88.4k</span>
-                </h5>
-                <button className="btn btn-accent">Pay</button>
-              </div>
-            </div>
-
             {/* table */}
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -44,14 +60,15 @@ const ManageUsersTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* {products?.map((product, index) => (
-                      <Row
-                        key={product._id}
-                        product={product}
-                        index={index}
-                      ></Row>
-                    ))} */}
-                  <ManageUsersTableRow></ManageUsersTableRow>
+                  {data?.map((user) => (
+                    <ManageUsersTableRow
+                      key={user._id}
+                      photo={user.photo}
+                      role={user.role}
+                      name={user.name}
+                    />
+                  ))}
+                  {/* <ManageUsersTableRow></ManageUsersTableRow> */}
                 </tbody>
               </table>
             </div>
