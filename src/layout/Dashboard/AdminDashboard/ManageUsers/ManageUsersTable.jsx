@@ -66,6 +66,7 @@ const ManageUsersTable = () => {
                       photo={user.photo}
                       role={user.role}
                       name={user.name}
+                      _id={user._id}
                     />
                   ))}
                   {/* <ManageUsersTableRow></ManageUsersTableRow> */}

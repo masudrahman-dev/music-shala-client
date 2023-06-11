@@ -1,10 +1,13 @@
 import axios from "axios";
 import React from "react";
 
-const ManageUsersTableRow = ({ photo, role, name }) => {
-  const handleRole = (id) => {
+const ManageUsersTableRow = ({ photo, role, name,_id }) => {
+
+  
+  const handleRole = (id,newRole) => {
+    console.log('id,newRole :>> ', id,newRole);
     axios
-      .patch(`${import.meta.env.VITE_BASE_URL}/users:${id}`, data)
+      .patch(`${import.meta.env.VITE_BASE_URL}/users/${id}`, newRole)
       .then((response) => {
         console.log(response.data);
         // Do something with the response
@@ -39,10 +42,10 @@ const ManageUsersTableRow = ({ photo, role, name }) => {
           </span>
         </td>
 
-        <td className="px-4  py-2 font-medium text-gray-900 whitespace-nowrap ">
+        <td onClick={()=>handleRole(_id,"instructor")} className="px-4  py-2 font-medium text-gray-900 whitespace-nowrap ">
           <button className="btn btn-info"> Instructor</button>
         </td>
-        <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
+        <td onClick={()=>handleRole(_id,"admin")}className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
           <button className="btn btn-primary"> Admin</button>
         </td>
       </tr>
