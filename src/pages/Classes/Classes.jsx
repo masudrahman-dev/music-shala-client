@@ -8,20 +8,17 @@ const Classes = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/add-class`
-        );
+    axios
+      .get(`${import.meta.env.VITE_BASE_URL}/classes`)
+      .then((response) => {
         setData(response.data);
-      } catch (error) {
+      })
+      .catch((error) => {
         console.error("Error fetching data:", error);
-      } finally {
+      })
+      .finally(() => {
         setLoading(false);
-      }
-    };
-
-    fetchData();
+      });
   }, []);
 
   if (loading) {

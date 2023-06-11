@@ -60,7 +60,7 @@ const Banner = () => {
       <div className="relative ">
         <div className="z-30 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  ">
           <div className="text-center ">
-            <p className="font-extrabold dark:text-white leading-10 tracking-wide md:text-7xl mb-7  text-xl  ">
+            <p className="font-extrabold text-3xl dark:text-white leading-10 tracking-wide md:text-7xl mb-7  ">
               {" "}
               Music is <br /> Heart Of Love{" "}
             </p>
