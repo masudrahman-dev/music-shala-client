@@ -6,9 +6,19 @@ import { AuthContext } from "../../contexts/AuthProvider";
 
 const Dashboard = () => {
   const [isOpen, setOpen] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { user,logOut } = useContext(AuthContext);
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        // Sign-out successful.
+        console.log("log out successful.");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
 
-  console.log("user :>> ", user);
+  // console.log("user :>> ", user);
   return (
     <div>
       <div className="antialiased bg-gray-50 dark:bg-gray-900 h-screen">
@@ -64,6 +74,9 @@ const Dashboard = () => {
               >
                 <span className="sr-only">Open user menu</span>
                 <img className="w-8 h-8 rounded-full" src={user?.photoURL} />
+              </button>
+              <button onClick={handleLogOut} type="button" className="btn ml-3 btn-ghost">
+                Log out
               </button>
             </div>
           </div>

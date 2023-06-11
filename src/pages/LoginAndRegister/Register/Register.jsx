@@ -44,9 +44,8 @@ const Register = () => {
   const handleRegister = (data) => {
     // Handle form submission
     const { name, email, photo, password, confirmPassword } = data;
-    const role = "";
+    const role = "user";
     if (password === confirmPassword) {
-      // console.log("data :>> ", data);
       const userData = {
         name,
         email,
@@ -58,7 +57,7 @@ const Register = () => {
           // Signed in
           // const user = userCredential.user;
           axios
-            .post(`${import.meta.env.VITE_BASE_URL}/users`,userData)
+            .post(`${import.meta.env.VITE_BASE_URL}/users`, userData)
             .then((response) => {
               console.log(response.data);
               // Do something with the response
