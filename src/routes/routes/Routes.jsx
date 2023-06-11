@@ -6,7 +6,8 @@ import Classes from "../../pages/Classes/Classes";
 import Login from "../../pages/LoginAndRegister/Login/Login";
 import Register from "../../pages/LoginAndRegister/Register/Register";
 import Dashboard from "../../layout/Dashboard/Dashboard";
-import FormCRUD from "../../layout/Dashboard/InstrctorDashboard/FormCRUD/FormCRUD";
+import AddClassForm from "../../layout/Dashboard/InstrctorDashboard/CRUDfrom/AddClassForm";
+import UpdateClassForm from "../../layout/Dashboard/InstrctorDashboard/CRUDfrom/UpdateClassForm";
 import InstructorTable from "../../layout/Dashboard/InstrctorDashboard/InstructorTable/InstructorTable";
 import ManageClassesTable from "../../layout/Dashboard/AdminDashboard/ManageClasses/ManageClassesTable";
 import ManageUsersTable from "../../layout/Dashboard/AdminDashboard/ManageUsers/ManageUsersTable";
@@ -64,13 +65,14 @@ const router = createBrowserRouter([
         path: "/dashboard/instructor/my-classes",
         element: <InstructorTable></InstructorTable>,
       },
-      {
-        path: "/dashboard/instructor/my-classes",
-        element: <InstructorTable></InstructorTable>,
-      },
+
       {
         path: "/dashboard/instructor/add-class",
-        element: <FormCRUD></FormCRUD>,
+        element: <AddClassForm></AddClassForm>,
+      },
+      {
+        path: "/dashboard/instructor/update-class/:id",
+        element: <UpdateClassForm></UpdateClassForm>,
       },
       {
         path: "/dashboard/admin/manage-classes",

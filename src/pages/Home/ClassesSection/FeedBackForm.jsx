@@ -11,7 +11,6 @@ const FeedBackForm = () => {
     register,
     reset,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
   const { id } = useParams();
@@ -23,7 +22,7 @@ const FeedBackForm = () => {
       .patch(
         `${
           import.meta.env.VITE_BASE_URL
-        }/manage-classes/feedback/?classId=${id}&newDesc=${description}`
+        }/classes/feedback/?classId=${id}&newDesc=${description}`
       )
       .then((response) => {
         console.log(response.data);
@@ -37,9 +36,7 @@ const FeedBackForm = () => {
         // Handle the error
       });
   };
-  //   const handleFeedback = () => {
 
-  //   };
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />

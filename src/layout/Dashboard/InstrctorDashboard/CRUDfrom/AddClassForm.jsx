@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Toaster, toast } from "react-hot-toast";
 import { CirclesWithBar } from "react-loader-spinner";
 
-const FormCRUD = () => {
+const AddClassForm = () => {
   const [loading, setLoading] = useState(true);
   const {
     register,
@@ -268,4 +268,4 @@ const FormCRUD = () => {
   );
 };
 
-export default FormCRUD;
+export default AddClassForm;

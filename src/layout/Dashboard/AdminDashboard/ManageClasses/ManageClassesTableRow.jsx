@@ -18,7 +18,7 @@ const ManageClassesTableRow = ({ item, index }) => {
       .patch(
         `${
           import.meta.env.VITE_BASE_URL
-        }/manage-classes/?classId=${id}&newStatus=${newStatus}`
+        }/classes/?classId=${id}&newStatus=${newStatus}`
       )
       .then((response) => {
         console.log(response.data);

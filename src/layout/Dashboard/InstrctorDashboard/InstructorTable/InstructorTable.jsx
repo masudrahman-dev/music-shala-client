@@ -1,8 +1,31 @@
 import React from "react";
 import InstructorTableRow from "./InstructorTableRow";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+import Spinner from "../../../../components/Spinner/Spinner";
+import axios from "axios";
 
 const InstructorTable = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BASE_URL}/classes`)
+      .then((response) => {
+        setData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, []);
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
@@ -58,16 +81,19 @@ const InstructorTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* {products?.map((product, index) => (
-                      <Row
-                        key={product._id}
-                        product={product}
-                        index={index}
-                      ></Row>
-                    ))} */}
-                  <InstructorTableRow></InstructorTableRow>
-                  <InstructorTableRow></InstructorTableRow>
-                  <InstructorTableRow></InstructorTableRow>
+                  {data?.map((item, index) => (
+                    <InstructorTableRow
+                      key={item._id}
+                      index={index}
+                      class_image={item.class_image}
+                      class_name={item.class_name}
+                      instructor_name={item.instructor_name}
+                      status={item.status}
+                      seats={item.seats}
+                      _id={item._id}
+                      price={item.price}
+                    />
+                  ))}
                 </tbody>
               </table>
             </div>

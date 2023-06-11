@@ -11,7 +11,7 @@ const ManageClassesTable = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BASE_URL}/manage-classes`)
+      .get(`${import.meta.env.VITE_BASE_URL}/classes`)
       .then((response) => {
         setData(response.data);
         setLoading(false);
