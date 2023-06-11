@@ -10,6 +10,8 @@ import Spinner from "../../../components/Spinner/Spinner";
 const Register = () => {
   const [isMatch, setIsMatch] = useState(false);
   const [isGoogle, setIssGoogle] = useState(true);
+  const [userPhoto, setUserPhoto] = useState(null);
+  const [userName, setUserName] = useState(null);
   const { createUser, updateUser, GoogleSignIn, user, loading } =
     useContext(AuthContext);
   const {
@@ -23,35 +25,6 @@ const Register = () => {
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
 
-  useEffect(() => {
-    if (user) {
-      const role = "user";
-      const isAdmin = false;
-      const isInstructor = false;
-      const { displayName, email, photoURL } = user;
-      const newUserData = {
-        displayName,
-        email,
-        photoURL,
-        role,
-        isAdmin,
-        isInstructor,
-      };
-
-      axios
-        .post(`${import.meta.env.VITE_BASE_URL}/users`, newUserData)
-        .then((response) => {
-          console.log(response.data);
-          // Do something with the response
-          navigate(from, { replace: true });
-        })
-        .catch((error) => {
-          console.error(error);
-          // Handle the error
-        });
-    }
-  }, [from, navigate, user]);
-
   const handleGoogleSignIn = () => {
     setIssGoogle(false);
     GoogleSignIn()
@@ -59,7 +32,7 @@ const Register = () => {
         const loggedInUser = result.user;
         // setUser(loggedInUser);
 
-        // console.log("loggedInUser :>> ", loggedInUser);
+        console.log("loggedInUser :>> ", loggedInUser);
       })
       .catch((error) => {
         console.log(error);
@@ -74,6 +47,8 @@ const Register = () => {
         .then((userCredential) => {
           // Signed in
           // const user = userCredential.user;
+          setUserName(name);
+          setUserPhoto(photo);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -107,6 +82,36 @@ const Register = () => {
     }
   };
 
+  useEffect(() => {
+    if (user) {
+      const role = "user";
+      const isAdmin = false;
+      const isInstructor = false;
+      const { displayName, email, photoURL } = user;
+      const newUserData = {
+        displayName,
+        email,
+        photoURL,
+        userPhoto,
+        userName,
+        role,
+        isAdmin,
+        isInstructor,
+      };
+
+      axios
+        .post(`${import.meta.env.VITE_BASE_URL}/users`, newUserData)
+        .then((response) => {
+          console.log(response.data);
+          // Do something with the response
+          navigate(from, { replace: true });
+        })
+        .catch((error) => {
+          console.error(error);
+          // Handle the error
+        });
+    }
+  }, [from, navigate, user]);
   return (
     <section className="bg-gray-50 dark:bg-gray-900 py-20">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -287,7 +292,7 @@ const Register = () => {
               <div className="text-center">
                 {loading ? (
                   <button
-                  disabled
+                    disabled
                     onClick={handleGoogleSignIn}
                     className="btn btn-primary"
                   >

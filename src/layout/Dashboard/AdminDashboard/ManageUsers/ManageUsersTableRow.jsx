@@ -1,44 +1,50 @@
 import axios from "axios";
 import { useState } from "react";
 
-const ManageUsersTableRow = ({ photo, role, name, _id }) => {
-  const [isDisable, setIsDisable] = useState(false);
-
+const ManageUsersTableRow = ({
+  photoURL,
+  userPhoto,
+  role,
+  displayName,
+  _id,
+  isInstructor,
+  isAdmin,
+  name,
+  index,
+}) => {
   const handleRole = (id, newRole) => {
-    // console.log("id,newRole :>> ", id, newRole);
-    // axios
-    //   .patch(
-    //     `${
-    //       import.meta.env.VITE_BASE_URL
-    //     }/users/?userId=${id}&newRole=${newRole}`
-    //   )
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     // Do something with the response
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //     // Handle the error
-    //   });
+    axios
+      .patch(
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/users/?userId=${id}&newRole=${newRole}`
+      )
+      .then((response) => {
+        console.log(response.data);
+        // Do something with the response
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle the error
+      });
   };
 
   return (
     <>
       <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
         <td className="w-4 px-4 py-3">
-          {/* <div className="flex items-center">{index + 1}</div> */}
+          <div className="flex items-center">{index + 1}</div>
         </td>
         <th
           scope="row"
           className="flex items-center  px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
         >
           <img
-            src={photo}
-            // src="https://source.unsplash.com/user/c_v_r/100x100"
+            src={photoURL || userPhoto}
             alt="iMac Front Image"
             className="w-auto h-8 mr-3"
           />
-          {name}
+          {displayName || name}
         </th>
         <td className="px-4 py-2">
           <span className="bg-primary-100 dark:text-white text-primary-800  font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
@@ -47,12 +53,11 @@ const ManageUsersTableRow = ({ photo, role, name, _id }) => {
         </td>
 
         <td className="px-4  py-2 font-medium text-gray-900 whitespace-nowrap ">
-          {isDisable ? (
+          {role === "instructor" ? (
             <button
-            disabled
+              disabled
               onClick={() => {
                 handleRole(_id, "instructor");
-                setIsDisable(true);
               }}
               className="btn btn-info"
             >
@@ -60,10 +65,8 @@ const ManageUsersTableRow = ({ photo, role, name, _id }) => {
             </button>
           ) : (
             <button
-             
               onClick={() => {
-                handleRole(_id, "instructor");
-                setIsDisable(true);
+                handleRole(_id, "instructor", true);
               }}
               className="btn btn-info"
             >
@@ -72,13 +75,22 @@ const ManageUsersTableRow = ({ photo, role, name, _id }) => {
           )}
         </td>
         <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
-          <button
-            onClick={() => handleRole(_id, "admin")}
-            className="btn btn-primary"
-          >
-            {" "}
-            Admin
-          </button>
+          {role === "admin" ? (
+            <button
+              disabled
+              onClick={() => handleRole(_id, "admin", true)}
+              className="btn btn-primary"
+            >
+              Admin
+            </button>
+          ) : (
+            <button
+              onClick={() => handleRole(_id, "admin", true)}
+              className="btn btn-primary"
+            >
+              Admin
+            </button>
+          )}
         </td>
       </tr>
     </>

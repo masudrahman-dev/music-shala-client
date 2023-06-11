@@ -60,16 +60,19 @@ const ManageUsersTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.map((user) => (
+                  {data?.map((user, index) => (
                     <ManageUsersTableRow
                       key={user._id}
-                      photo={user.photo}
+                      photoURL={user.photoURL}
+                      userPhoto={user.userPhoto}
                       role={user.role}
-                      name={user.name}
+                      displayName={user.displayName}
                       _id={user._id}
+                      isAdmin={user.isAdmin}
+                      name={user.userName}
+                      index={index}
                     />
                   ))}
-                  {/* <ManageUsersTableRow></ManageUsersTableRow> */}
                 </tbody>
               </table>
             </div>
