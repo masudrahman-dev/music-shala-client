@@ -33,6 +33,7 @@ const Home = () => {
 
   return (
     <div>
+      
       <Banner />
       <ClassesSection data={data} />
       <InstructorsSection data={data} />

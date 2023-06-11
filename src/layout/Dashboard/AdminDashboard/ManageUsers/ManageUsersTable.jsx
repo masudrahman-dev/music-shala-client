@@ -68,7 +68,7 @@ const ManageUsersTable = () => {
                       role={user.role}
                       displayName={user.displayName}
                       _id={user._id}
-                      isAdmin={user.isAdmin}
+                 
                       name={user.userName}
                       index={index}
                     />

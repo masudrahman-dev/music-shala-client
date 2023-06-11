@@ -14,6 +14,7 @@ import StudentSelectedTable from "../../layout/Dashboard/StudentDashboard/Studen
 import StudentEnrolledTable from "../../layout/Dashboard/StudentDashboard/StudentEnrolledTable/StudentEnrolledTable";
 import PrivateRoute from "../privateRoute/PrivateRoute";
 import ErrorPage from "../../pages/ErrorPage/ErrorPage";
+import FeedBackForm from "../../pages/Home/ClassesSection/FeedBackForm";
 
 const router = createBrowserRouter([
   {
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/admin/manage-classes",
         element: <ManageClassesTable></ManageClassesTable>,
+      },
+      {
+        path: "/dashboard/admin/manage-classes/feedback",
+        element: <FeedBackForm></FeedBackForm>,
       },
       {
         path: "/dashboard/admin/manage-users",

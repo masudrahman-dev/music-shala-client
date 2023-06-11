@@ -5,13 +5,15 @@ import { AuthContext } from "../../../contexts/AuthProvider";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import axios from "axios";
-import Spinner from "../../../components/Spinner/Spinner";
 
 const Register = () => {
   const [isMatch, setIsMatch] = useState(false);
   const [isGoogle, setIssGoogle] = useState(true);
   const [userPhoto, setUserPhoto] = useState(null);
   const [userName, setUserName] = useState(null);
+  const [userError, setUserError] = useState(null);
+  const [load, setLoad] = useState(null);
+  // const [loading, setLoading] = useState(false);
   const { createUser, updateUser, GoogleSignIn, user, loading } =
     useContext(AuthContext);
   const {
@@ -31,16 +33,18 @@ const Register = () => {
       .then((result) => {
         const loggedInUser = result.user;
         // setUser(loggedInUser);
-
+        setLoad(false);
         console.log("loggedInUser :>> ", loggedInUser);
       })
       .catch((error) => {
         console.log(error);
+        setLoad(false);
       });
   };
 
   const handleRegister = (data) => {
     // Handle form submission
+    setLoad(loading);
     const { name, email, photo, password, confirmPassword } = data;
     if (password === confirmPassword) {
       createUser(email, password)
@@ -55,9 +59,8 @@ const Register = () => {
           const errorMessage = error.message;
           console.log(errorMessage);
           console.log(errorCode);
-
-          // console.log("user :>> ", user);
-
+          setUserError(errorCode);
+        
           console.log("error :>> ", error);
           if (
             errorMessage === "Firebase: Error (auth/email-already-in-use)." ||
@@ -73,6 +76,7 @@ const Register = () => {
                 showConfirmButton: false,
                 timer: 2000,
               });
+              setLoad(false);
             }
           }
         });
@@ -111,6 +115,7 @@ const Register = () => {
           // Handle the error
         });
     }
+    setLoad(false);
   }, [from, navigate, user]);
   return (
     <section className="bg-gray-50 dark:bg-gray-900 py-20">
@@ -275,7 +280,7 @@ const Register = () => {
                 </div>
               </div>
 
-              {loading ? (
+              {load ? (
                 <button
                   disabled
                   type="submit"
@@ -290,7 +295,7 @@ const Register = () => {
               )}
               <div className="divider">OR</div>
               <div className="text-center">
-                {loading ? (
+                {load ? (
                   <button
                     disabled
                     onClick={handleGoogleSignIn}

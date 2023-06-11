@@ -1,23 +1,37 @@
 import React from "react";
 import ManageClassesTableRow from "./ManageClassesTableRow";
+import axios from "axios";
+import Spinner from "../../../../components/Spinner/Spinner";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const ManageClassesTable = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BASE_URL}/manage-classes`)
+      .then((response) => {
+        setData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, []);
+  if (loading) {
+    return <Spinner />;
+  }
+
+  console.log("data :>> ", data);
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
         <div className="px-4 mx-auto max-w-screen-2xl lg:px-12">
           {/*  */}
           <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
-            <div className="flex  px-4 py-3 space-y-3 lg:items-center justify-end lg:space-y-0 lg:space-x-4">
-              <div className="flex items-center  space-x-4">
-                <h5 className="dark:text-white">
-                  <span>Total Price : </span>
-                  <span>$88.4k</span>
-                </h5>
-                <button className="btn btn-accent">Pay</button>
-              </div>
-            </div>
-
             {/* table */}
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -36,11 +50,9 @@ const ManageClassesTable = () => {
                       Seats
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      Price
+                      Deny
                     </th>
-                    <th scope="col" className="px-4 py-3">
-                      Total Enrolled
-                    </th>
+
                     <th scope="col" className="px-4 py-3">
                       Status
                     </th>
@@ -52,19 +64,20 @@ const ManageClassesTable = () => {
                     </th>
 
                     <th scope="col" className="px-4 py-3">
-                      deny
+                      Deny
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {/* {products?.map((product, index) => (
-                        <Row
-                          key={product._id}
-                          product={product}
-                          index={index}
-                        ></Row>
-                      ))} */}
-                  <ManageClassesTableRow></ManageClassesTableRow>
+                  {/* {data?.map((class)=><ManageClassesTableRow/>)} */}
+
+                  {data?.map((item, index) => (
+                    <ManageClassesTableRow
+                      index={index}
+                      key={item?._id}
+                      item={item}
+                    />
+                  ))}
                 </tbody>
               </table>
             </div>

@@ -7,8 +7,7 @@ const ManageUsersTableRow = ({
   role,
   displayName,
   _id,
-  isInstructor,
-  isAdmin,
+
   name,
   index,
 }) => {
