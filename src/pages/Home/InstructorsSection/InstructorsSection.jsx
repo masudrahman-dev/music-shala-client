@@ -1,7 +1,7 @@
 import InstructorSectionCard from "./InstructorSectionCard";
 
 const InstructorsSection = ({ data }) => {
-  console.log("data :>> ", data);
+  // console.log("data :>> ", data);
   return (
     <div className="max-w-screen-xl mx-auto mt-20">
       <div className="flex items-center justify-center py-4 md:py-12 flex-wrap">

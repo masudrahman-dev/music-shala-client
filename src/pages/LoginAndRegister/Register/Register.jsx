@@ -4,9 +4,11 @@ import logo from "../../../assets/Images/logo.svg";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const Register = () => {
   const [isMatch, setIsMatch] = useState(false);
+  const [isGoogle, setIssGoogle] = useState(true);
   const { createUser, updateUser, GoogleSignIn, user } =
     useContext(AuthContext);
   const {
@@ -27,6 +29,7 @@ const Register = () => {
   }, [from, navigate, user]);
   // console.log("location :>> ", location);
   const handleGoogleSignIn = () => {
+    setIssGoogle(false);
     GoogleSignIn()
       .then((result) => {
         const loggedInUser = result.user;
@@ -41,38 +44,94 @@ const Register = () => {
   const handleRegister = (data) => {
     // Handle form submission
     const { name, email, photo, password, confirmPassword } = data;
-
+    const role = "";
     if (password === confirmPassword) {
-      console.log("data :>> ", data);
-
+      // console.log("data :>> ", data);
+      const userData = {
+        name,
+        email,
+        photo,
+        role,
+      };
       createUser(email, password)
         .then((userCredential) => {
           // Signed in
           // const user = userCredential.user;
-          console.log("user :>> ", user);
+          axios
+            .post(`${import.meta.env.VITE_BASE_URL}/users`,userData)
+            .then((response) => {
+              console.log(response.data);
+              // Do something with the response
+            })
+            .catch((error) => {
+              console.error(error);
+              // Handle the error
+            });
+
+          // console.log("user :>> ", user);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorMessage);
-          // console.log( errorCode);
+          console.log(errorCode);
+          console.log("user :>> ", user);
+
+          console.log("error :>> ", error);
           if (
             errorMessage === "Firebase: Error (auth/email-already-in-use)." ||
             errorCode === "auth/email-already-in-use"
           ) {
-            Swal.fire({
-              position: "top-end",
-              icon: "error",
-              title: "Email Already Use",
-              showConfirmButton: false,
-              timer: 1500,
-            });
+            if (isGoogle) {
+              Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Email Already Use",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
           }
         });
       updateUser(name, photo);
     } else {
       setIsMatch(true);
     }
+
+    // createUser(data.email, data.password)
+    // .then(result => {
+
+    //     const loggedUser = result.user;
+    //     console.log(loggedUser);
+
+    //     updateUserProfile(data.name, data.photoURL)
+    //         .then(() => {
+    //             const saveUser = { name: data.name, email: data.email }
+    //             fetch('https://bistro-boss-server-fawn.vercel.app/users', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'content-type': 'application/json'
+    //                 },
+    //                 body: JSON.stringify(saveUser)
+    //             })
+    //                 .then(res => res.json())
+    //                 .then(data => {
+    //                     if (data.insertedId) {
+    //                         reset();
+    //                         Swal.fire({
+    //                             position: 'top-end',
+    //                             icon: 'success',
+    //                             title: 'User created successfully.',
+    //                             showConfirmButton: false,
+    //                             timer: 1500
+    //                         });
+    //                         navigate('/');
+    //                     }
+    //                 })
+
+    //         })
+    //         .catch(error => console.log(error))
+    // })
   };
   // console.log("errors :>> ", errors);
   return (
@@ -190,6 +249,7 @@ const Register = () => {
                   Confirm Password *
                 </label>
                 <input
+                  defaultValue={"sssPass&123"}
                   type="password"
                   name="confirmPassword"
                   id="confirmPassword"

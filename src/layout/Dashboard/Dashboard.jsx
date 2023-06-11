@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar/Sidebar";
 import logo from "../../assets/Images/logo.svg";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const Dashboard = () => {
   const [isOpen, setOpen] = useState(false);
-  <>
-    <div className="md:hidden "></div>
-  </>;
+  const { user } = useContext(AuthContext);
+
+  console.log("user :>> ", user);
   return (
     <div>
       <div className="antialiased bg-gray-50 dark:bg-gray-900 h-screen">
@@ -62,11 +63,7 @@ const Dashboard = () => {
                 data-dropdown-toggle="dropdown"
               >
                 <span className="sr-only">Open user menu</span>
-                <img
-                  className="w-8 h-8 rounded-full"
-                  src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gough.png"
-                  alt="user photo"
-                />
+                <img className="w-8 h-8 rounded-full" src={user?.photoURL} />
               </button>
             </div>
           </div>
