@@ -5,6 +5,7 @@ import { AuthContext } from "../../../contexts/AuthProvider";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { Eye, EyeClosed } from "@phosphor-icons/react";
 
 const Register = () => {
   const [isMatch, setIsMatch] = useState(false);
@@ -13,7 +14,9 @@ const Register = () => {
   const [userName, setUserName] = useState(null);
   const [userError, setUserError] = useState(null);
   const [load, setLoad] = useState(null);
-  // const [loading, setLoading] = useState(false);
+  const [isHide, setIsHide] = useState(false);
+  const [isHideConfirm, setIsHideConfirm] = useState(false);
+
   const { createUser, updateUser, GoogleSignIn, user, loading } =
     useContext(AuthContext);
   const {
@@ -60,7 +63,7 @@ const Register = () => {
           console.log(errorMessage);
           console.log(errorCode);
           setUserError(errorCode);
-        
+
           console.log("error :>> ", error);
           if (
             errorMessage === "Firebase: Error (auth/email-already-in-use)." ||
@@ -195,7 +198,7 @@ const Register = () => {
               {errors.email && (
                 <p className="text-rose-500 mt-1">{errors.email.message}</p>
               )}
-              <div>
+              <div className="relative">
                 <label
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -204,10 +207,10 @@ const Register = () => {
                 </label>
                 <input
                   defaultValue="sssPass&123"
-                  type="text"
+                  type={`${isHide ? "text" : "password"}`}
                   name="password"
                   id="password"
-                  placeholder="••••••••"
+                  placeholder="password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   {...register("password", {
                     required: "write password",
@@ -223,8 +226,14 @@ const Register = () => {
                     {errors.password.message}
                   </p>
                 )}
+                <div
+                  onClick={() => setIsHide(!isHide)}
+                  className="absolute cursor-pointer top-1/2 right-5   "
+                >
+                  {isHide ? <Eye size={32} /> : <EyeClosed size={32} />}
+                </div>
               </div>
-              <div>
+              <div className="relative">
                 <label
                   htmlFor="confirmPassword"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -233,7 +242,7 @@ const Register = () => {
                 </label>
                 <input
                   defaultValue={"sssPass&123"}
-                  type="password"
+                  type={`${isHideConfirm ? "text" : "password"}`}
                   name="confirmPassword"
                   id="confirmPassword"
                   placeholder="••••••••"
@@ -253,6 +262,12 @@ const Register = () => {
                 {isMatch && (
                   <p className="text-rose-500 mt-1">Password does not match</p>
                 )}
+                <div
+                  onClick={() => setIsHideConfirm(!isHideConfirm)}
+                  className="absolute cursor-pointer top-1/2 right-5   "
+                >
+                  {isHideConfirm ? <Eye size={32} /> : <EyeClosed size={32} />}
+                </div>
               </div>
               <div className="flex items-start">
                 <div className="flex items-center h-5">

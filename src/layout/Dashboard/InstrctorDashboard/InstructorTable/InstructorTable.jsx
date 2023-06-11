@@ -26,13 +26,13 @@ const InstructorTable = () => {
     return <Spinner />;
   }
 
-  // new
+  // delete item
   const deleteClass = async (classId) => {
     try {
       const response = await axios.delete(
         `${import.meta.env.VITE_BASE_URL}/classes/${classId}`
       );
-      console.log(response.data); // Optional: Handle the response as needed
+      // console.log(response.data); 
       Swal.fire({
         position: "top-end",
         icon: "success",
