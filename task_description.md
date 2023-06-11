@@ -121,7 +121,7 @@ Read the tasks carefully.
    - Price
    - Select Button. If the user is not logged in, then tell the user to log in before selecting the course. This button will be disabled if:
      - Available seats are 0
-     - Logged in as admin/instructor
+     - Logged in as admin/instructor `2`
    - The class card background will be red if the available seats are 0.
      <br/>
 
@@ -213,7 +213,7 @@ Read the tasks carefully.
    - Used packages/ technology name
    - Live site link
 
-3. Implementing a dark/light theme toggle for the home page. It's optional to implement the theme toggle for the entire website\.
+`3.` Implementing a dark/light theme toggle for the home page. It's optional to implement the theme toggle for the entire website\.
 
 4. Make the home page responsive. If possible, Make your entire website responsive\. (It is ok if the table is not responsive\.)
 

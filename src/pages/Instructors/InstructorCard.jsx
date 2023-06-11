@@ -5,12 +5,12 @@ const InstructorCard = ({
   instructor_email,
   instructor_name,
   instructor_image,
-  price,
-  seats,
 }) => {
   return (
     <div>
-      <div className="card  bg-base-100 shadow-xl">
+      <div
+        className={` bg-base-100" dark:text-white shadow-xl`}
+      >
         <figure>
           <img className="w-full" src={instructor_image} alt="Shoes" />
         </figure>
@@ -19,11 +19,6 @@ const InstructorCard = ({
 
           <p>Instructor Name : {instructor_name}</p>
           <p>Email : {instructor_email}</p>
-          <p>Available seats : {seats}</p>
-          <p>Price : $ {price}</p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary">Select</button>
-          </div>
         </div>
       </div>
     </div>

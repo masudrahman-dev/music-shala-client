@@ -26,6 +26,7 @@ const ManageUsersTableRow = ({
         console.error(error);
         // Handle the error
       });
+
   };
 
   return (

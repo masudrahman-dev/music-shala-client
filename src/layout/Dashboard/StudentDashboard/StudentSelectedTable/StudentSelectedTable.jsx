@@ -26,7 +26,7 @@ const StudentSelectedTable = () => {
   if (loading) {
     return <Spinner />;
   }
-
+  console.log("data :>> ", data);
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
@@ -70,17 +70,18 @@ const StudentSelectedTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* {products?.map((product, index) => (
-                    <Row
-                      key={product._id}
-                      product={product}
+                  {data?.map((item, index) => (
+                    <StudentSelectedTableRow
+                      key={item._id}
+                      class_image={item.class_image}
+                      seats={item.seats}
+                      price={item.price}
+                      instructor_name={item.instructor_name}
+                      id={item._id}
+                      class_name={item.class_name}
                       index={index}
-                    ></Row>
-                  ))} */}
-                  <StudentSelectedTableRow></StudentSelectedTableRow>
-                  <StudentSelectedTableRow></StudentSelectedTableRow>
-                  <StudentSelectedTableRow></StudentSelectedTableRow>
-                  <StudentSelectedTableRow></StudentSelectedTableRow>
+                    />
+                  ))}
                 </tbody>
               </table>
             </div>

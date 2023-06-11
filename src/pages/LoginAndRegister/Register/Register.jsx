@@ -29,7 +29,7 @@ const Register = () => {
   let navigate = useNavigate();
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
-
+  const role = "user";
   const handleGoogleSignIn = () => {
     setIssGoogle(false);
     GoogleSignIn()
@@ -37,7 +37,7 @@ const Register = () => {
         const loggedInUser = result.user;
         // setUser(loggedInUser);
         setLoad(false);
-        console.log("loggedInUser :>> ", loggedInUser);
+        // console.log("loggedInUser :>> ", loggedInUser);
       })
       .catch((error) => {
         console.log(error);
@@ -60,7 +60,7 @@ const Register = () => {
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log(errorMessage);
+          // console.log(errorMessage);
           console.log(errorCode);
           setUserError(errorCode);
 
@@ -83,6 +83,7 @@ const Register = () => {
             }
           }
         });
+     
       updateUser(name, photo);
     } else {
       setIsMatch(true);
@@ -91,9 +92,6 @@ const Register = () => {
 
   useEffect(() => {
     if (user) {
-      const role = "user";
-      const isAdmin = false;
-      const isInstructor = false;
       const { displayName, email, photoURL } = user;
       const newUserData = {
         displayName,
@@ -102,14 +100,12 @@ const Register = () => {
         userPhoto,
         userName,
         role,
-        isAdmin,
-        isInstructor,
       };
 
       axios
         .post(`${import.meta.env.VITE_BASE_URL}/users`, newUserData)
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           // Do something with the response
           navigate(from, { replace: true });
         })

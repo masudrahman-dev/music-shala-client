@@ -1,5 +1,3 @@
-import React from "react";
-
 const ClassesCard = ({
   class_name,
   instructor_email,
@@ -7,10 +5,18 @@ const ClassesCard = ({
   class_image,
   price,
   seats,
+  userEmail,
+  id,
 }) => {
+  let role;
+  // let role = "admin";
   return (
     <div>
-      <div className="card  bg-base-100 shadow-xl">
+      <div
+        className={`card ${
+          seats == 0 ? "bg-rose-600" : "bg-base-100"
+        }  dark:text-white shadow-xl`}
+      >
         <figure>
           <img className="w-full" src={class_image} alt="Shoes" />
         </figure>
@@ -22,7 +28,13 @@ const ClassesCard = ({
           <p>Available seats : {seats}</p>
           <p>Price : $ {price}</p>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary">Select</button>
+            {role === "admin" || role == "instructor" ? (
+              <button disabled className="btn btn-primary">
+                Select
+              </button>
+            ) : (
+              <button className="btn btn-primary">Select</button>
+            )}
           </div>
         </div>
       </div>

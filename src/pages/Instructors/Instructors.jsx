@@ -11,7 +11,7 @@ const Instructors = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/add-class`
+          `${import.meta.env.VITE_BASE_URL}/classes`
         );
         setData(response.data);
       } catch (error) {

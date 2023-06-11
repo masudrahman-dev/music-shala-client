@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
 import ClassesCard from "./ClassesCard";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthProvider";
+
 const Classes = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const { user } = useContext(AuthContext);
+  // console.log("user :>> ", user?.email);
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BASE_URL}/classes`)
@@ -20,6 +23,8 @@ const Classes = () => {
         setLoading(false);
       });
   }, []);
+
+  console.log("data :>> ", data);
 
   if (loading) {
     return <Spinner />;
@@ -43,6 +48,9 @@ const Classes = () => {
               instructor_name={item.instructor_name}
               price={item.price}
               seats={item.seats}
+              status={item.status}
+              id={item._id}
+              userEmail={user?.email}
             />
           ))}
         </div>
