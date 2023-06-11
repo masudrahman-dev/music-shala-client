@@ -1,11 +1,15 @@
 import axios from "axios";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Toaster, toast } from "react-hot-toast";
+import { CirclesWithBar } from "react-loader-spinner";
 import { Link, useParams } from "react-router-dom";
 
 const FeedBackForm = () => {
+  const [loading, setLoading] = useState(true);
   const {
     register,
+    reset,
     handleSubmit,
     watch,
     formState: { errors },
@@ -13,9 +17,8 @@ const FeedBackForm = () => {
   const { id } = useParams();
   const onSubmit = (data) => {
     // const baseUrl = import.meta.env.VITE_BASE_URL;
-    // console.log("data :>> ", data);
+    setLoading(false);
     const { description } = data;
-    console.log(description, id);
     axios
       .patch(
         `${
@@ -25,8 +28,9 @@ const FeedBackForm = () => {
       .then((response) => {
         console.log(response.data);
         // Do something with the response
+        reset();
         toast.success("Successfully Added");
-        // setLoading(true);
+        setLoading(true);
       })
       .catch((error) => {
         console.error(error);
@@ -89,7 +93,23 @@ const FeedBackForm = () => {
                       clipRule="evenodd"
                     ></path>
                   </svg>
-                  Send Feedback
+
+                  {loading ? (
+                    "Send Feedback"
+                  ) : (
+                    <CirclesWithBar
+                      height="36"
+                      width="36"
+                      color="#ffffff"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                      visible={true}
+                      outerCircleColor=""
+                      innerCircleColor=""
+                      barColor=""
+                      ariaLabel="circles-with-bar-loading"
+                    />
+                  )}
                 </button>
                 <Link
                   to={"/dashboard/admin/manage-classes"}

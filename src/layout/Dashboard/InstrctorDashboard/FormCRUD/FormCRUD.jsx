@@ -10,6 +10,7 @@ const FormCRUD = () => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
@@ -22,6 +23,7 @@ const FormCRUD = () => {
         // console.log("Success:", response.data);
         // Process the response data
         console.log("response :>> ", response);
+        reset();
         toast.success("Successfully Added");
         setLoading(true);
       })
