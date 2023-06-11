@@ -77,7 +77,7 @@ const router = createBrowserRouter([
         element: <ManageClassesTable></ManageClassesTable>,
       },
       {
-        path: "/dashboard/admin/manage-classes/feedback",
+        path: "/dashboard/admin/manage-classes/feedback/:id",
         element: <FeedBackForm></FeedBackForm>,
       },
       {

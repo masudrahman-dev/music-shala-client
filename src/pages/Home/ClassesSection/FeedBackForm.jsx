@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Toaster, toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const FeedBackForm = () => {
   const {
@@ -10,24 +10,32 @@ const FeedBackForm = () => {
     watch,
     formState: { errors },
   } = useForm();
+  const { id } = useParams();
   const onSubmit = (data) => {
     // const baseUrl = import.meta.env.VITE_BASE_URL;
-    console.log("data :>> ", data);
+    // console.log("data :>> ", data);
+    const { description } = data;
+    console.log(description, id);
     axios
-      .put(`${import.meta.env.VITE_BASE_URL}/feedback`, data)
+      .patch(
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/manage-classes/feedback/?classId=${id}&newDesc=${description}`
+      )
       .then((response) => {
-        // console.log("Success:", response.data);
-        // Process the response data
-        console.log("response :>> ", response);
-
-        toast.success("Successfully toasted!");
+        console.log(response.data);
+        // Do something with the response
+        toast.success("Successfully Added");
+        // setLoading(true);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error(error);
         // Handle the error
       });
   };
+  //   const handleFeedback = () => {
 
+  //   };
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />

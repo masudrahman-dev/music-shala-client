@@ -13,7 +13,7 @@ const ManageClassesTableRow = ({ item, index }) => {
   } = item;
 
   const handleStatus = (id, newStatus) => {
-    console.log(id, newStatus);
+    // console.log(id, newStatus);
     axios
       .patch(
         `${
@@ -52,11 +52,8 @@ const ManageClassesTableRow = ({ item, index }) => {
             {instructor_name}
           </span>
         </td>
-        <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-          <div className="flex items-center">
-            <div className="inline-block w-4 h-4 mr-2 bg-red-700 rounded-full"></div>
-            {seats}
-          </div>
+        <td className="px-4 py-2 font-medium  text-gray-900 whitespace-nowrap dark:text-white">
+          <p className="text-center">{seats}</p>
         </td>
         <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           $ {price}
@@ -67,7 +64,7 @@ const ManageClassesTableRow = ({ item, index }) => {
         </td>
         <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
           <Link
-            to={"/dashboard/admin/manage-classes/feedback"}
+            to={`/dashboard/admin/manage-classes/feedback/${_id}`}
             className="btn  btn-info"
           >
             Feedback

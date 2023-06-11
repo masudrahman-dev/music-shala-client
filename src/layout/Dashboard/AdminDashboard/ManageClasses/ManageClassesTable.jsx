@@ -25,7 +25,7 @@ const ManageClassesTable = () => {
     return <Spinner />;
   }
 
-  console.log("data :>> ", data);
+  // console.log("data :>> ", data);
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">

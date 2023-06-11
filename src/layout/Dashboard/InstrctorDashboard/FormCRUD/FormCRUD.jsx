@@ -1,8 +1,11 @@
 import axios from "axios";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Toaster, toast } from "react-hot-toast";
+import { CirclesWithBar } from "react-loader-spinner";
 
 const FormCRUD = () => {
+  const [loading, setLoading] = useState(true);
   const {
     register,
     handleSubmit,
@@ -10,15 +13,17 @@ const FormCRUD = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
+    console.log("data :>> ", data);
+    setLoading(false);
     // const baseUrl = import.meta.env.VITE_BASE_URL;
     axios
       .post(`${import.meta.env.VITE_BASE_URL}/add-class`, data)
       .then((response) => {
         // console.log("Success:", response.data);
         // Process the response data
-        console.log('response :>> ', response);
-
-        toast.success("Successfully toasted!");
+        console.log("response :>> ", response);
+        toast.success("Successfully Added");
+        setLoading(true);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -55,6 +60,20 @@ const FormCRUD = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="default status is pending"
                   />
+                </div>
+                <div className="sm:col-span-2 hidden">
+                  <label
+                    htmlFor="description"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Description *
+                  </label>
+                  <textarea
+                    {...register("description", {})}
+                    rows="5"
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="Write  feedback here"
+                  ></textarea>
                 </div>
                 <div>
                   <label
@@ -209,10 +228,7 @@ const FormCRUD = () => {
                   )}
                 </div>
               </div>
-              <button
-                type="submit"
-                className="text-white inline-flex items-center bg-primary-700 hover:bg-primary-800  focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 btn-primary"
-              >
+              <button type="submit" className="btn btn-primary">
                 <svg
                   className="mr-1 -ml-1 w-6 h-6"
                   fill="currentColor"
@@ -225,7 +241,22 @@ const FormCRUD = () => {
                     clipRule="evenodd"
                   ></path>
                 </svg>
-                Add new Class
+                {loading ? (
+                  "Add new Class"
+                ) : (
+                  <CirclesWithBar
+                    height="36"
+                    width="36"
+                    color="#ffffff"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    outerCircleColor=""
+                    innerCircleColor=""
+                    barColor=""
+                    ariaLabel="circles-with-bar-loading"
+                  />
+                )}
               </button>
             </form>
           </div>
