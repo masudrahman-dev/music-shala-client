@@ -1,7 +1,32 @@
 import React from "react";
+
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
+import Spinner from "../../../../components/Spinner/Spinner";
+import axios from "axios";
 import StudentSelectedTableRow from "./StudentSelectedTableRow";
 
 const StudentSelectedTable = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BASE_URL}/classes`)
+      .then((response) => {
+        setData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, []);
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">

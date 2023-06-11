@@ -1,15 +1,15 @@
-import React from "react";
-import InstructorTableRow from "./InstructorTableRow";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import Spinner from "../../../../components/Spinner/Spinner";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const InstructorTable = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+  const [desc, setDesc] = useState(true);
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BASE_URL}/classes`)
@@ -26,22 +26,40 @@ const InstructorTable = () => {
     return <Spinner />;
   }
 
+  // new
+  const deleteClass = async (classId) => {
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BASE_URL}/classes/${classId}`
+      );
+      console.log(response.data); // Optional: Handle the response as needed
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Delete class one",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } catch (error) {
+      console.error("Error deleting class:", error);
+    }
+  };
+
   return (
     <>
+      <dialog id="my_modal_1" className="modal">
+        <form method="dialog" className="modal-box">
+          <p className="py-4 text-center">{desc}</p>
+          <div className="modal-action">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-ghost btn-outline">Close</button>
+          </div>
+        </form>
+      </dialog>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
         <div className="px-4 mx-auto max-w-screen-2xl lg:px-12">
           {/*  */}
           <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
-            <div className="flex  px-4 py-3 space-y-3 lg:items-center justify-end lg:space-y-0 lg:space-x-4">
-              <div className="flex items-center  space-x-4">
-                <h5 className="dark:text-white">
-                  <span>Total Price : </span>
-                  <span>$88.4k</span>
-                </h5>
-                <button className="btn btn-accent">Pay</button>
-              </div>
-            </div>
-
             {/* table */}
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -82,17 +100,70 @@ const InstructorTable = () => {
                 </thead>
                 <tbody>
                   {data?.map((item, index) => (
-                    <InstructorTableRow
-                      key={item._id}
-                      index={index}
-                      class_image={item.class_image}
-                      class_name={item.class_name}
-                      instructor_name={item.instructor_name}
-                      status={item.status}
-                      seats={item.seats}
-                      _id={item._id}
-                      price={item.price}
-                    />
+                    <tr
+                      key={item?._id}
+                      className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      <td className="w-4 px-4 py-3">
+                        <div className="flex items-center">{index + 1}</div>
+                      </td>
+                      <th
+                        scope="row"
+                        className="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        <img
+                          src={item?.class_image}
+                          alt="iMac Front Image"
+                          className="w-auto h-8 mr-3"
+                        />
+                        {item?.class_name}
+                      </th>
+                      <td className="px-4 py-2">
+                        <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                          {item?.instructor_name}
+                        </span>
+                      </td>
+                      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <div className="flex items-center">{item?.seats}</div>
+                      </td>
+                      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        $ {item?.price}
+                      </td>
+
+                      <td className="px-4 text-center  py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        34
+                      </td>
+                      <td className="px-4  py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {item?.status}
+                      </td>
+                      <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <button
+                          onClick={() => {
+                            setDesc(item?.description);
+                            window.my_modal_1.showModal();
+                          }}
+                          className="btn btn-info"
+                        >
+                          Read
+                        </button>
+                      </td>
+                      <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-info">
+                        <Link
+                          to={`/dashboard/instructor/update-class/${item?._id}`}
+                          className="btn btn-success"
+                        >
+                          update
+                        </Link>
+                      </td>
+                      <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
+                        <button
+                          onClick={() => deleteClass(item?._id)}
+                          className="btn btn-warning"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
                   ))}
                 </tbody>
               </table>

@@ -221,36 +221,45 @@ const UpdateClassForm = () => {
                   )}
                 </div>
               </div>
-              <button type="submit" className="btn btn-primary">
-                <svg
-                  className="mr-1 -ml-1 w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
+
+              <div className="flex justify-between">
+                <button type="submit" className="btn btn-primary">
+                  <svg
+                    className="mr-1 -ml-1 w-6 h-6"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                      clipRule="evenodd"
+                    ></path>
+                  </svg>
+                  {loading ? (
+                    "Update Class"
+                  ) : (
+                    <CirclesWithBar
+                      height="36"
+                      width="36"
+                      color="#ffffff"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                      visible={true}
+                      outerCircleColor=""
+                      innerCircleColor=""
+                      barColor=""
+                      ariaLabel="circles-with-bar-loading"
+                    />
+                  )}
+                </button>
+                <Link
+                  to={"/dashboard/instructor/my-classes"}
+                  className="btn btn-info"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-                {loading ? (
-                  "Update Class"
-                ) : (
-                  <CirclesWithBar
-                    height="36"
-                    width="36"
-                    color="#ffffff"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                    visible={true}
-                    outerCircleColor=""
-                    innerCircleColor=""
-                    barColor=""
-                    ariaLabel="circles-with-bar-loading"
-                  />
-                )}
-              </button>
+                  go back
+                </Link>
+              </div>
             </form>
           </div>
         </div>
