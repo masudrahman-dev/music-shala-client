@@ -1,21 +1,25 @@
 import axios from "axios";
-import React from "react";
+import { useState } from "react";
 
-const ManageUsersTableRow = ({ photo, role, name,_id }) => {
+const ManageUsersTableRow = ({ photo, role, name, _id }) => {
+  const [isDisable, setIsDisable] = useState(false);
 
-  
-  const handleRole = (id,newRole) => {
-    console.log('id,newRole :>> ', id,newRole);
-    axios
-      .patch(`${import.meta.env.VITE_BASE_URL}/users/${id}`, newRole)
-      .then((response) => {
-        console.log(response.data);
-        // Do something with the response
-      })
-      .catch((error) => {
-        console.error(error);
-        // Handle the error
-      });
+  const handleRole = (id, newRole) => {
+    // console.log("id,newRole :>> ", id, newRole);
+    // axios
+    //   .patch(
+    //     `${
+    //       import.meta.env.VITE_BASE_URL
+    //     }/users/?userId=${id}&newRole=${newRole}`
+    //   )
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     // Do something with the response
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //     // Handle the error
+    //   });
   };
 
   return (
@@ -26,7 +30,7 @@ const ManageUsersTableRow = ({ photo, role, name,_id }) => {
         </td>
         <th
           scope="row"
-          className="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          className="flex items-center  px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
         >
           <img
             src={photo}
@@ -42,11 +46,39 @@ const ManageUsersTableRow = ({ photo, role, name,_id }) => {
           </span>
         </td>
 
-        <td onClick={()=>handleRole(_id,"instructor")} className="px-4  py-2 font-medium text-gray-900 whitespace-nowrap ">
-          <button className="btn btn-info"> Instructor</button>
+        <td className="px-4  py-2 font-medium text-gray-900 whitespace-nowrap ">
+          {isDisable ? (
+            <button
+            disabled
+              onClick={() => {
+                handleRole(_id, "instructor");
+                setIsDisable(true);
+              }}
+              className="btn btn-info"
+            >
+              Instructor
+            </button>
+          ) : (
+            <button
+             
+              onClick={() => {
+                handleRole(_id, "instructor");
+                setIsDisable(true);
+              }}
+              className="btn btn-info"
+            >
+              Instructor
+            </button>
+          )}
         </td>
-        <td onClick={()=>handleRole(_id,"admin")}className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
-          <button className="btn btn-primary"> Admin</button>
+        <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
+          <button
+            onClick={() => handleRole(_id, "admin")}
+            className="btn btn-primary"
+          >
+            {" "}
+            Admin
+          </button>
         </td>
       </tr>
     </>

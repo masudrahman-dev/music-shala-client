@@ -2,9 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import logo from "../../../assets/Images/logo.svg";
+import "./Login.css";
+import Spinner from "../../../components/Spinner/Spinner";
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  const { GoogleSignIn, logIn, user } = useContext(AuthContext);
+  const { GoogleSignIn, logIn, user, loading } = useContext(AuthContext);
   let navigate = useNavigate();
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
@@ -54,7 +56,9 @@ const Login = () => {
         console.log(error);
       });
   };
-
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <div>
       <section className="bg-gray-50 dark:bg-gray-900">
@@ -138,6 +142,7 @@ const Login = () => {
                 >
                   Sign in
                 </button>
+
                 <div className="divider">OR</div>
                 <div className="text-center">
                   <button

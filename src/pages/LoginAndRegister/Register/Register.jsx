@@ -5,11 +5,14 @@ import { AuthContext } from "../../../contexts/AuthProvider";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import axios from "axios";
+import Spinner from "../../../components/Spinner/Spinner";
 
 const Register = () => {
   const [isMatch, setIsMatch] = useState(false);
   const [isGoogle, setIssGoogle] = useState(true);
-  const { createUser, updateUser, GoogleSignIn, user } =
+  const [userData, setUserData] = useState({});
+  const [userError, setUserError] = useState(null);
+  const { createUser, updateUser, GoogleSignIn, user, loading, setLoading } =
     useContext(AuthContext);
   const {
     register,
@@ -24,17 +27,43 @@ const Register = () => {
 
   useEffect(() => {
     if (user) {
-      navigate(from, { replace: true });
+      const role = "user";
+      const isAdmin = false;
+      const isInstructor = false;
+      const { displayName, email, photoURL } = user;
+      const newUserData = {
+        displayName,
+        email,
+        photoURL,
+        role,
+        isAdmin,
+        isInstructor,
+      };
+
+      setUserData(newUserData);
+
+      axios
+        .post(`${import.meta.env.VITE_BASE_URL}/users`, newUserData)
+        .then((response) => {
+          console.log(response.data);
+          // Do something with the response
+          navigate(from, { replace: true });
+        })
+        .catch((error) => {
+          console.error(error);
+          // Handle the error
+        });
     }
   }, [from, navigate, user]);
-  // console.log("location :>> ", location);
+
   const handleGoogleSignIn = () => {
     setIssGoogle(false);
     GoogleSignIn()
       .then((result) => {
         const loggedInUser = result.user;
         // setUser(loggedInUser);
-        // console.log('loggedInUser :>> ', loggedInUser);
+        // handleUserData();
+        console.log("loggedInUser :>> ", loggedInUser);
       })
       .catch((error) => {
         console.log(error);
@@ -44,50 +73,36 @@ const Register = () => {
   const handleRegister = (data) => {
     // Handle form submission
     const { name, email, photo, password, confirmPassword } = data;
-    const role = "user";
     if (password === confirmPassword) {
-      const userData = {
-        name,
-        email,
-        photo,
-        role,
-      };
       createUser(email, password)
         .then((userCredential) => {
           // Signed in
           // const user = userCredential.user;
-          axios
-            .post(`${import.meta.env.VITE_BASE_URL}/users`, userData)
-            .then((response) => {
-              console.log(response.data);
-              // Do something with the response
-            })
-            .catch((error) => {
-              console.error(error);
-              // Handle the error
-            });
-
           // console.log("user :>> ", user);
+          // handleUserData();
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorMessage);
           console.log(errorCode);
+          setUserError(errorCode);
           console.log("user :>> ", user);
 
           console.log("error :>> ", error);
           if (
             errorMessage === "Firebase: Error (auth/email-already-in-use)." ||
-            errorCode === "auth/email-already-in-use"
+            errorCode === "auth/email-already-in-use" ||
+            errorCode === "auth/invalid-email"
           ) {
             if (isGoogle) {
               Swal.fire({
                 position: "top-end",
                 icon: "error",
-                title: "Email Already Use",
+                title:
+                  userError || "something want wrong,please check email or etc",
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 2000,
               });
             }
           }
@@ -96,43 +111,9 @@ const Register = () => {
     } else {
       setIsMatch(true);
     }
-
-    // createUser(data.email, data.password)
-    // .then(result => {
-
-    //     const loggedUser = result.user;
-    //     console.log(loggedUser);
-
-    //     updateUserProfile(data.name, data.photoURL)
-    //         .then(() => {
-    //             const saveUser = { name: data.name, email: data.email }
-    //             fetch('https://bistro-boss-server-fawn.vercel.app/users', {
-    //                 method: 'POST',
-    //                 headers: {
-    //                     'content-type': 'application/json'
-    //                 },
-    //                 body: JSON.stringify(saveUser)
-    //             })
-    //                 .then(res => res.json())
-    //                 .then(data => {
-    //                     if (data.insertedId) {
-    //                         reset();
-    //                         Swal.fire({
-    //                             position: 'top-end',
-    //                             icon: 'success',
-    //                             title: 'User created successfully.',
-    //                             showConfirmButton: false,
-    //                             timer: 1500
-    //                         });
-    //                         navigate('/');
-    //                     }
-    //                 })
-
-    //         })
-    //         .catch(error => console.log(error))
-    // })
   };
-  // console.log("errors :>> ", errors);
+  console.log("userData :>> ", userData);
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900 py-20">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
