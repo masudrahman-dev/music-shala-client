@@ -63,12 +63,22 @@ const ManageClassesTableRow = ({ item, index }) => {
           {status}
         </td>
         <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-          <Link
-            to={`/dashboard/admin/manage-classes/feedback/${_id}`}
-            className="btn  btn-info"
-          >
-            Feedback
-          </Link>
+          {status === "denied" ? (
+            <Link
+              to={`/dashboard/admin/manage-classes/feedback/${_id}`}
+              className="btn  btn-info"
+            >
+              Feedback
+            </Link>
+          ) : (
+            <Link
+              disabled
+              to={`/dashboard/admin/manage-classes/feedback/${_id}`}
+              className="btn  btn-info"
+            >
+              Feedback
+            </Link>
+          )}
         </td>
         <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-info">
           {status === "approved" || status === "denied" ? (
