@@ -1,3 +1,9 @@
+import { useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../contexts/AuthProvider";
+import axios from "axios";
+
 const ClassesCard = ({
   class_name,
   instructor_email,
@@ -5,11 +11,70 @@ const ClassesCard = ({
   class_image,
   price,
   seats,
-  userEmail,
-  id,
+  _id,
 }) => {
   let role;
   // let role = "admin";
+
+  // const { name, image, price, recipe, _id } = item;
+  const { user } = useContext(AuthContext);
+  // const [, refetch] = useCart();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleAddToCart = (item) => {
+    console.log(item);
+    if (user && user.email) {
+      const cartItem = {
+        menuItemId: _id,
+        instructor_name,
+        class_name,
+        price,
+        email: user?.email,
+      };
+      axios
+        .post(`${import.meta.env.VITE_BASE_URL}/carts`, cartItem, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          const data = response.data;
+          if (data.insertedId) {
+            // refetch(); // refetch cart to update the number of items in the cart
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "class added successfully.",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error adding item to cart:", error);
+          Swal.fire({
+            title: "Error!",
+            text: "An error occurred while adding the food to the cart.",
+            icon: "error",
+          });
+        });
+    } else {
+      Swal.fire({
+        title: "Please login to order the food",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Login now!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login", { state: { from: location } });
+        }
+      });
+    }
+  };
+
   return (
     <div>
       <div
@@ -33,7 +98,9 @@ const ClassesCard = ({
                 Select
               </button>
             ) : (
-              <button className="btn btn-primary">Select</button>
+              <button onClick={handleAddToCart} className="btn btn-primary">
+                Select
+              </button>
             )}
           </div>
         </div>
