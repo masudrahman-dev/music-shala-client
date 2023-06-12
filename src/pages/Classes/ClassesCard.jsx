@@ -13,10 +13,11 @@ const ClassesCard = ({
   seats,
   _id,
   role,
+  refetch,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const { user } = useContext(AuthContext);
   const handleAddToCart = (item) => {
     // console.log(item);
     if (user && user.email) {
@@ -39,7 +40,7 @@ const ClassesCard = ({
         .then((response) => {
           const data = response.data;
           if (data.insertedId) {
-            // refetch(); // refetch cart to update the number of items in the cart
+            refetch(); // refetch cart to update the number of items in the cart
             Swal.fire({
               position: "top-end",
               icon: "success",

@@ -3,23 +3,34 @@ import { useEffect } from "react";
 import Spinner from "../../../../components/Spinner/Spinner";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 const StudentSelectedTable = () => {
-  const [data, setData] = useState(null);
 
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASE_URL}/carts`)
-      .then((response) => {
-        setData(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
-  }, []);
+  const { data, isLoading, refetch, error } = useQuery({
+    queryFn: async () => {
+      const data = await axios(`${import.meta.env.VITE_BASE_URL}/carts`);
+
+      return data?.data;
+    },
+    queryKey: ["users"],
+  });
+  // console.log("data :>> ", data);
+  // const [data, setData] = useState(null);
+
+  // const [loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${import.meta.env.VITE_BASE_URL}/carts`)
+  //     .then((response) => {
+  //       setData(response.data);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       setLoading(false);
+  //     });
+  // }, []);
 
   const total = data?.reduce((sum, item) => parseFloat(item.price) + sum, 0);
   const handleDelete = (id) => {
@@ -38,7 +49,7 @@ const StudentSelectedTable = () => {
           .then((response) => {
             const data = response.data;
             if (data.deletedCount > 0) {
-              // refetch();
+              refetch();
               Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -59,7 +70,7 @@ const StudentSelectedTable = () => {
       }
     });
   };
-  if (loading) {
+  if (isLoading) {
     return <Spinner />;
   }
   return (

@@ -3,26 +3,36 @@ import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
 import ClassesCard from "./ClassesCard";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
 
 const Classes = () => {
   const [userData, setUserData] = useState(null);
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
+  // const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
+  const { data, isLoading, refetch, error } = useQuery({
+    queryFn: async () => {
+      const data = await axios(`${import.meta.env.VITE_BASE_URL}/classes`);
 
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASE_URL}/classes`)
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+      return data?.data;
+    },
+    queryKey: ["users"],
+  });
+  // console.log("data :>> ", data);
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${import.meta.env.VITE_BASE_URL}/classes`)
+  //     .then((response) => {
+  //       setData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //     })
+  //     .finally(() => {
+  //       setLoading(false);
+  //     });
+  // }, []);
 
   // find one
   useEffect(() => {
@@ -40,7 +50,7 @@ const Classes = () => {
 
   const role = userData?.role;
   // console.log("role :>> ", role);
-  if (loading) {
+  if (isLoading) {
     return <Spinner />;
   }
 
@@ -65,6 +75,7 @@ const Classes = () => {
               status={item.status}
               _id={item._id}
               role={role}
+              refetch={refetch}
             />
           ))}
         </div>
