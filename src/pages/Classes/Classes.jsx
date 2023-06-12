@@ -6,9 +6,8 @@ import { AuthContext } from "../../contexts/AuthProvider";
 
 const Classes = () => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [userData, setUserData] = useState(null);
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
@@ -39,9 +38,9 @@ const Classes = () => {
   }, [user]);
 
   // console.log("userData :>> ", userData);
-  console.log("user.email :>> ", user?.email);
+  // console.log("user.email :>> ", user?.email);
   const role = userData?.role;
-  console.log("role :>> ", role);
+  // console.log("role :>> ", role);
   if (loading) {
     return <Spinner />;
   }

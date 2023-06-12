@@ -1,12 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar/Sidebar";
 import logo from "../../assets/Images/logo.svg";
 import { AuthContext } from "../../contexts/AuthProvider";
+import axios from "axios";
 
 const Dashboard = () => {
   const [isOpen, setOpen] = useState(false);
-  const { user,logOut } = useContext(AuthContext);
+  const [userData, setUserData] = useState(null);
+  const { user, logOut } = useContext(AuthContext);
   const handleLogOut = () => {
     logOut()
       .then(() => {
@@ -75,7 +77,11 @@ const Dashboard = () => {
                 <span className="sr-only">Open user menu</span>
                 <img className="w-8 h-8 rounded-full" src={user?.photoURL} />
               </button>
-              <button onClick={handleLogOut} type="button" className="btn ml-3 btn-ghost">
+              <button
+                onClick={handleLogOut}
+                type="button"
+                className="btn ml-3 btn-ghost"
+              >
                 Log out
               </button>
             </div>

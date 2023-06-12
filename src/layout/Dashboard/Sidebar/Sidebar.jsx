@@ -2,9 +2,32 @@ import React, { useState } from "react";
 import StudentDashboard from "../StudentDashboard/StudentDashboard";
 import InstructorDashboard from "../InstrctorDashboard/InstructorDashboard";
 import AdminDashboard from "../AdminDashboard/AdminDashboard";
+import { useContext } from "react";
+import { AuthContext } from "../../../contexts/AuthProvider";
+import axios from "axios";
+import { useEffect } from "react";
 
 const Sidebar = ({ isOpen }) => {
+  const [userData, setUserData] = useState(null);
+  const { user } = useContext(AuthContext);
+  // find one
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BASE_URL}/users/${user?.email}`)
+      .then((response) => {
+        setUserData(response.data);
+        // setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        // setLoading(false);
+      });
+  }, [user]);
 
+  // console.log("userData :>> ", userData);
+  // console.log("user.email :>> ", user?.email);
+  const role = userData?.role;
+  // console.log("role :>> ", role);
   return (
     <>
       <aside
@@ -28,14 +51,22 @@ const Sidebar = ({ isOpen }) => {
                   <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                   <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                 </svg>
-                <span className="ml-3">Overview</span>
+                <span className="ml-3">{role}</span>
               </a>
             </li>
-            <StudentDashboard></StudentDashboard>
+            {role == "instructor" ? "" : ""}
+
+            <StudentDashboard />
+
+            {role == "user" && <StudentDashboard />}
+
             <hr />
-            <InstructorDashboard></InstructorDashboard>
+            <InstructorDashboard />
+            {role == "instructor" && <InstructorDashboard />}
+
             <hr />
-            <AdminDashboard></AdminDashboard>
+            <AdminDashboard />
+            {role == "admin" && <AdminDashboard />}
           </ul>
         </div>
       </aside>
