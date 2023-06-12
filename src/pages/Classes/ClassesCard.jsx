@@ -23,14 +23,17 @@ const ClassesCard = ({
   const location = useLocation();
 
   const handleAddToCart = (item) => {
-    console.log(item);
+    // console.log(item);
     if (user && user.email) {
       const cartItem = {
-        menuItemId: _id,
-        instructor_name,
+        classId: _id,
         class_name,
+        instructor_email,
+        instructor_name,
+        class_image,
         price,
-        email: user?.email,
+        seats,
+        userEmail: user?.email,
       };
       axios
         .post(`${import.meta.env.VITE_BASE_URL}/carts`, cartItem, {
@@ -61,7 +64,7 @@ const ClassesCard = ({
         });
     } else {
       Swal.fire({
-        title: "Please login to order the food",
+        title: "Please login before select",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",

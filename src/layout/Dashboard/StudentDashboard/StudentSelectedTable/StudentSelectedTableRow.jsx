@@ -8,29 +8,11 @@ const StudentSelectedTableRow = ({
   seats,
   price,
   instructor_name,
-  id,
+  _id,
   index,
 }) => {
-  // // delete item
-  // const deleteClass = async (classId) => {
-  //   try {
-  //     const response = await axios.delete(
-  //       `${import.meta.env.VITE_BASE_URL}/classes/${classId}`
-  //     );
-  //     // console.log(response.data);
-  //     Swal.fire({
-  //       position: "top-end",
-  //       icon: "success",
-  //       title: "Delete class one",
-  //       showConfirmButton: false,
-  //       timer: 1500,
-  //     });
-  //   } catch (error) {
-  //     console.error("Error deleting class:", error);
-  //   }
-  // };
-
-  const handleDelete = (item) => {
+  const handleDelete = (id) => {
+    console.log(_id);
     Swal.fire({
       title: "Are you sure?",
       text: "You Want to delete it!",
@@ -42,12 +24,18 @@ const StudentSelectedTableRow = ({
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`${import.meta.env.VITE_BASE_URL}/carts/${item._id}`)
+          .delete(`${import.meta.env.VITE_BASE_URL}/carts/${id}`)
           .then((response) => {
             const data = response.data;
             if (data.deletedCount > 0) {
               // refetch();
-              Swal.fire("Deleted!", "Your file has been deleted.", "success");
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Deleted!",
+                showConfirmButton: false,
+                timer: 1500,
+              });
             }
           })
           .catch((error) => {
@@ -92,7 +80,7 @@ const StudentSelectedTableRow = ({
         </td>
 
         <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
-          <button onClick={handleDelete} className="btn btn-warning">
+          <button onClick={() => handleDelete(_id)} className="btn btn-warning">
             Delete
           </button>
         </td>

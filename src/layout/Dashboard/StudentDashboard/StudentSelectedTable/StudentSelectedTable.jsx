@@ -13,7 +13,7 @@ const StudentSelectedTable = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BASE_URL}/classes`)
+      .get(`${import.meta.env.VITE_BASE_URL}/carts`)
       .then((response) => {
         setData(response.data);
         setLoading(false);
@@ -26,7 +26,9 @@ const StudentSelectedTable = () => {
   if (loading) {
     return <Spinner />;
   }
-  console.log("data :>> ", data);
+  // console.log("data :>> ", data);
+  const total = data?.reduce((sum, item) => parseFloat(item.price) + sum, 0);
+  // console.log(total);
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
@@ -35,9 +37,12 @@ const StudentSelectedTable = () => {
           <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
             <div className="flex  px-4 py-3 space-y-3 lg:items-center justify-end lg:space-y-0 lg:space-x-4">
               <div className="flex items-center  space-x-4">
+                <span className="dark:text-white">
+                  Total Selected : {data?.length}{" "}
+                </span>
                 <h5 className="dark:text-white">
                   <span>Total Price : </span>
-                  <span>$88.4k</span>
+                  <span>${total}</span>
                 </h5>
                 <button className="btn btn-accent">Pay</button>
               </div>
@@ -77,7 +82,7 @@ const StudentSelectedTable = () => {
                       seats={item.seats}
                       price={item.price}
                       instructor_name={item.instructor_name}
-                      id={item._id}
+                      _id={item._id}
                       class_name={item.class_name}
                       index={index}
                     />

@@ -20,7 +20,7 @@ const Classes = () => {
       });
   }, []);
 
-  console.log("data :>> ", data);
+  // console.log("data :>> ", data);
 
   if (loading) {
     return <Spinner />;
