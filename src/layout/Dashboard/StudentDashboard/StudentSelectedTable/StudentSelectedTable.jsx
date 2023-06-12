@@ -38,7 +38,7 @@ const StudentSelectedTable = () => {
             <div className="flex  px-4 py-3 space-y-3 lg:items-center justify-end lg:space-y-0 lg:space-x-4">
               <div className="flex items-center  space-x-4">
                 <span className="dark:text-white">
-                  Total Selected : {data?.length}{" "}
+                  Total Selected : {data?.length || 0}{" "}
                 </span>
                 <h5 className="dark:text-white">
                   <span>Total Price : </span>

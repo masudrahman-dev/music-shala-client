@@ -12,7 +12,6 @@ const StudentSelectedTableRow = ({
   index,
 }) => {
   const handleDelete = (id) => {
-    console.log(_id);
     Swal.fire({
       title: "Are you sure?",
       text: "You Want to delete it!",

@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.15",
     "@phosphor-icons/react": "^2.0.9",
     "@tanstack/react-query": "^4.29.12",
     "axios": "^1.4.0",

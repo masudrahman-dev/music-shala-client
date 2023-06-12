@@ -17,24 +17,20 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [name, setName] = useState(null);
   const [photo, setPhoto] = useState(null);
-
   const [loading, setLoading] = useState(true);
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
   const updateUser = (name, photo) => {
-    console.log( name,role);
     setLoading(true);
     setName(name);
     setPhoto(photo);
-
   };
 
   updateProfile(auth.currentUser, {
     displayName: name,
     photoURL: photo,
-
   })
     .then(() => {
       // Profile updated!

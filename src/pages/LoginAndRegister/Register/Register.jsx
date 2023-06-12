@@ -6,23 +6,24 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { Eye, EyeClosed } from "@phosphor-icons/react";
+import { CirclesWithBar } from "react-loader-spinner";
 
 const Register = () => {
   const [isMatch, setIsMatch] = useState(false);
   const [isGoogle, setIssGoogle] = useState(true);
-  const [userPhoto, setUserPhoto] = useState(null);
-  const [userName, setUserName] = useState(null);
   const [userError, setUserError] = useState(null);
-  const [load, setLoad] = useState(null);
+  const [userName, setUserName] = useState(null);
+  const [userPhoto, setUserPhoto] = useState(null);
+  const [load, setLoad] = useState(true);
   const [isHide, setIsHide] = useState(false);
   const [isHideConfirm, setIsHideConfirm] = useState(false);
-
   const { createUser, updateUser, GoogleSignIn, user, loading } =
     useContext(AuthContext);
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -48,6 +49,7 @@ const Register = () => {
   const handleRegister = (data) => {
     // Handle form submission
     setLoad(loading);
+
     const { name, email, photo, password, confirmPassword } = data;
     if (password === confirmPassword) {
       createUser(email, password)
@@ -56,6 +58,7 @@ const Register = () => {
           // const user = userCredential.user;
           setUserName(name);
           setUserPhoto(photo);
+          reset();
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -83,8 +86,8 @@ const Register = () => {
             }
           }
         });
-     
-      updateUser(name, photo);
+
+      updateUser(userName, userPhoto);
     } else {
       setIsMatch(true);
     }
@@ -93,13 +96,14 @@ const Register = () => {
   useEffect(() => {
     if (user) {
       const { displayName, email, photoURL } = user;
+      const role = "user";
       const newUserData = {
         displayName,
         email,
         photoURL,
-        userPhoto,
-        userName,
         role,
+        userName,
+        userPhoto,
       };
 
       axios
@@ -292,12 +296,19 @@ const Register = () => {
               </div>
 
               {load ? (
-                <button
-                  disabled
-                  type="submit"
-                  className="w-full btn btn-primary "
-                >
-                  Create an account
+                <button type="submit" className="w-full btn btn-primary ">
+                  <CirclesWithBar
+                    height="32"
+                    width="32"
+                    color="#ffffff"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    outerCircleColor=""
+                    innerCircleColor=""
+                    barColor=""
+                    ariaLabel="circles-with-bar-loading"
+                  />
                 </button>
               ) : (
                 <button type="submit" className="w-full btn btn-primary ">
@@ -308,11 +319,21 @@ const Register = () => {
               <div className="text-center">
                 {load ? (
                   <button
-                    disabled
                     onClick={handleGoogleSignIn}
                     className="btn btn-primary"
                   >
-                    Google
+                    <CirclesWithBar
+                      height="32"
+                      width="32"
+                      color="#ffffff"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                      visible={true}
+                      outerCircleColor=""
+                      innerCircleColor=""
+                      barColor=""
+                      ariaLabel="circles-with-bar-loading"
+                    />
                   </button>
                 ) : (
                   <button
