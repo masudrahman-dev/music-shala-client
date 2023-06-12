@@ -8,16 +8,16 @@ import { useContext } from "react";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 
 const StudentSelectedTable = () => {
-const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const { data, isLoading, refetch, error } = useQuery({
     queryFn: async () => {
-      const data = await axios(`${import.meta.env.VITE_BASE_URL}/carts/?email=${user?.email}`);
+      const data = await axios(`${import.meta.env.VITE_BASE_URL}/carts}`);
 
       return data?.data;
     },
     queryKey: ["carts-email"],
   });
-// console.log('data :>> ', data);
+  // console.log('data :>> ', data);
 
   const total = data?.reduce((sum, item) => parseFloat(item.price) + sum, 0);
   const handleDelete = (id) => {

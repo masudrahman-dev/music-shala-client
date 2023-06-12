@@ -57,12 +57,9 @@ const Sidebar = ({ isOpen }) => {
             </li>
             {role == "instructor" ? "" : ""}
 
-
             {role == "user" && <StudentDashboard />}
 
-
             {role == "instructor" && <InstructorDashboard />}
-
 
             {role == "admin" && <AdminDashboard />}
           </ul>
