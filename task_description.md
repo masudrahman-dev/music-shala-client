@@ -96,11 +96,11 @@ Read the tasks carefully.
 
     - **Popular Instructors Section -** Show relevant pictures related to the classes or activities. Show the top 6 instructors based on the number of students in their Class. However, selecting top instructors based on the number of students is optional, but you must show 6 instructors.
 
-`2` - **Extra Section -** Add one relevant sections. Make it attractive :heart_eyes:. Try to use animation effects.
+`1` - **Extra Section -** Add one relevant sections. Make it attractive :heart_eyes:. Try to use animation effects.
 
 <br/>
 
-6. **Instructors Page:**  `2`
+6. **Instructors Page:**  `1`
    Display all the instructors. Each Instructor will be:
 
    - Image
@@ -112,7 +112,7 @@ Read the tasks carefully.
      <br/>
      <br/>
 
-7. **Classes page:** `2`
+7. **Classes page:** `1`
    Show all approved classes on this page. Each Class will have the following:
    - Image
    - Name
@@ -121,7 +121,7 @@ Read the tasks carefully.
    - Price
    - Select Button. If the user is not logged in, then tell the user to log in before selecting the course. This button will be disabled if:
      - Available seats are 0
-     - Logged in as admin/instructor `2`
+     - Logged in as admin/instructor `1`
    - The class card background will be red if the available seats are 0.
      <br/>
 
@@ -145,7 +145,7 @@ Read the tasks carefully.
 
 <br/>
 
-10. **Instructor Dashboard:**
+10. **Instructor Dashboard:** `1`
     <br/>
     **_It will be private & only an instructor can access this route._**
 

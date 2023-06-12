@@ -4,33 +4,20 @@ import Spinner from "../../../../components/Spinner/Spinner";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
+import { AuthContext } from "../../../../contexts/AuthProvider";
 
 const StudentSelectedTable = () => {
-
+const {user} = useContext(AuthContext)
   const { data, isLoading, refetch, error } = useQuery({
     queryFn: async () => {
-      const data = await axios(`${import.meta.env.VITE_BASE_URL}/carts`);
+      const data = await axios(`${import.meta.env.VITE_BASE_URL}/carts/?email=${user?.email}`);
 
       return data?.data;
     },
-    queryKey: ["users"],
+    queryKey: ["carts-email"],
   });
-  // console.log("data :>> ", data);
-  // const [data, setData] = useState(null);
-
-  // const [loading, setLoading] = useState(true);
-  // useEffect(() => {
-  //   axios
-  //     .get(`${import.meta.env.VITE_BASE_URL}/carts`)
-  //     .then((response) => {
-  //       setData(response.data);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //       setLoading(false);
-  //     });
-  // }, []);
+// console.log('data :>> ', data);
 
   const total = data?.reduce((sum, item) => parseFloat(item.price) + sum, 0);
   const handleDelete = (id) => {

@@ -14,7 +14,7 @@ const ManageClassesTable = () => {
 
       return data?.data;
     },
-    queryKey: ["carts"],
+    queryKey: ["classes"],
   });
   // const [data, setData] = useState(null);
   // const [loading, setLoading] = useState(true);

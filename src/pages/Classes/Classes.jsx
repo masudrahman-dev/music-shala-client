@@ -7,8 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 
 const Classes = () => {
   const [userData, setUserData] = useState(null);
-  // const [data, setData] = useState(null);
-  // const [loading, setLoading] = useState(true);
+
+  const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
   const { data, isLoading, refetch, error } = useQuery({
     queryFn: async () => {
@@ -18,21 +18,6 @@ const Classes = () => {
     },
     queryKey: ["users"],
   });
-  // console.log("data :>> ", data);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`${import.meta.env.VITE_BASE_URL}/classes`)
-  //     .then((response) => {
-  //       setData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     })
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // }, []);
 
   // find one
   useEffect(() => {
