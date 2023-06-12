@@ -1,16 +1,13 @@
-import React from "react";
-
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import Spinner from "../../../../components/Spinner/Spinner";
 import axios from "axios";
-import StudentSelectedTableRow from "./StudentSelectedTableRow";
+import Swal from "sweetalert2";
 
 const StudentSelectedTable = () => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
 
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BASE_URL}/carts`)
@@ -23,12 +20,48 @@ const StudentSelectedTable = () => {
         setLoading(false);
       });
   }, []);
+
+  const total = data?.reduce((sum, item) => parseFloat(item.price) + sum, 0);
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You Want to delete it!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`${import.meta.env.VITE_BASE_URL}/carts/${id}`)
+          .then((response) => {
+            const data = response.data;
+            if (data.deletedCount > 0) {
+              // refetch();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Deleted!",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error deleting item:", error);
+            Swal.fire(
+              "Error!",
+              "An error occurred while deleting the file.",
+              "error"
+            );
+          });
+      }
+    });
+  };
   if (loading) {
     return <Spinner />;
   }
-  // console.log("data :>> ", data);
-  const total = data?.reduce((sum, item) => parseFloat(item.price) + sum, 0);
-  // console.log(total);
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
@@ -76,16 +109,47 @@ const StudentSelectedTable = () => {
                 </thead>
                 <tbody>
                   {data?.map((item, index) => (
-                    <StudentSelectedTableRow
-                      key={item._id}
-                      class_image={item.class_image}
-                      seats={item.seats}
-                      price={item.price}
-                      instructor_name={item.instructor_name}
-                      _id={item._id}
-                      class_name={item.class_name}
-                      index={index}
-                    />
+                    <tr
+                      key={item?._id}
+                      className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      <td className="w-4 px-4 py-3">
+                        <div className="flex items-center">{index + 1}</div>
+                      </td>
+                      <th
+                        scope="row"
+                        className="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        <img
+                          src={item?.class_image}
+                          alt="iMac Front Image"
+                          className="w-auto h-8 mr-3"
+                        />
+                        {item?.class_name}
+                      </th>
+                      <td className="px-4 py-2">
+                        <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                          {item?.instructor_name}
+                        </span>
+                      </td>
+                      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <p className="flex items-center text-center">
+                          {item?.seats}
+                        </p>
+                      </td>
+                      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        $ {item?.price}
+                      </td>
+
+                      <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
+                        <button
+                          onClick={() => handleDelete(item._id)}
+                          className="btn btn-warning"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
                   ))}
                 </tbody>
               </table>

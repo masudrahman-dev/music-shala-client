@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
 import ClassesCard from "./ClassesCard";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const Classes = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
+  const { user } = useContext(AuthContext);
+
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BASE_URL}/classes`)
@@ -20,8 +24,24 @@ const Classes = () => {
       });
   }, []);
 
-  // console.log("data :>> ", data);
+  // find one
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BASE_URL}/users/${user?.email}`)
+      .then((response) => {
+        setUserData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, [user]);
 
+  // console.log("userData :>> ", userData);
+  console.log("user.email :>> ", user?.email);
+  const role = userData?.role;
+  console.log("role :>> ", role);
   if (loading) {
     return <Spinner />;
   }
@@ -46,6 +66,7 @@ const Classes = () => {
               seats={item.seats}
               status={item.status}
               _id={item._id}
+              role={role}
             />
           ))}
         </div>

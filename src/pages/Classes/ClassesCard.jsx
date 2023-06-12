@@ -12,13 +12,8 @@ const ClassesCard = ({
   price,
   seats,
   _id,
+  role,
 }) => {
-  let role;
-  // let role = "admin";
-
-  // const { name, image, price, recipe, _id } = item;
-  const { user } = useContext(AuthContext);
-  // const [, refetch] = useCart();
   const navigate = useNavigate();
   const location = useLocation();
 
