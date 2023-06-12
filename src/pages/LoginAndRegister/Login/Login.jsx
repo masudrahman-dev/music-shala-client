@@ -5,6 +5,7 @@ import logo from "../../../assets/Images/logo.svg";
 
 import Spinner from "../../../components/Spinner/Spinner";
 import { Eye, EyeClosed } from "@phosphor-icons/react";
+import axios from "axios";
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isHide, setIsHide] = useState(false);
@@ -31,9 +32,8 @@ const Login = () => {
       })
       .catch((error) => {
         // const errorCode = error.code;
-        // console.log("errorCode :>> ", errorCode);
         // const errorMessage = error.message;
-        // console.log(errorMessage);
+        console.log(errorMessage);
         if (
           error.code === "auth/wrong-password" ||
           error.code === "auth/user-not-found"
@@ -50,9 +50,31 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     GoogleSignIn()
       .then((result) => {
-        const loggedInUser = result.user;
+        const user = result.user;
         // setUser(loggedInUser);
         // console.log("loggedInUser :>> ", loggedInUser);
+
+        if (user) {
+          const { displayName, email, photoURL } = user;
+          const role = "user";
+          const newUserData = {
+            displayName,
+            email,
+            photoURL,
+            role,
+          };
+
+          axios
+            .post(`${import.meta.env.VITE_BASE_URL}/users`, newUserData)
+            .then((response) => {
+              console.log(response.data);
+              // Do something with the response
+            })
+            .catch((error) => {
+              console.error(error);
+              // Handle the error
+            });
+        }
       })
       .catch((error) => {
         console.log(error);
