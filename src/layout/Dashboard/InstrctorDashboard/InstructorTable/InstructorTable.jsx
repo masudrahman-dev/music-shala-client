@@ -4,25 +4,34 @@ import Spinner from "../../../../components/Spinner/Spinner";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 const InstructorTable = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [data, setData] = useState(null);
+  // const [loading, setLoading] = useState(true);
   const [desc, setDesc] = useState(true);
+  const { data, isLoading, refetch, error } = useQuery({
+    queryFn: async () => {
+      const data = await axios(`${import.meta.env.VITE_BASE_URL}/classes`);
 
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASE_URL}/classes`)
-      .then((response) => {
-        setData(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
-  }, []);
-  if (loading) {
+      return data?.data;
+    },
+    queryKey: ["manage-users"],
+  });
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${import.meta.env.VITE_BASE_URL}/classes`)
+  //     .then((response) => {
+  //       setData(response.data);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       setLoading(false);
+  //     });
+  // }, []);
+  if (isLoading) {
     return <Spinner />;
   }
 
@@ -33,6 +42,7 @@ const InstructorTable = () => {
         `${import.meta.env.VITE_BASE_URL}/classes/${classId}`
       );
       // console.log(response.data); 
+      refetch()
       Swal.fire({
         position: "top-end",
         icon: "success",

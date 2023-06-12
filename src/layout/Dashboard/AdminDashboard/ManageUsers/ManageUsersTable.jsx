@@ -3,29 +3,38 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import Spinner from "../../../../components/Spinner/Spinner";
+import { useQuery } from "@tanstack/react-query";
 
 const ManageUsersTable = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { data, isLoading, refetch, error } = useQuery({
+    queryFn: async () => {
+      const data = await axios(`${import.meta.env.VITE_BASE_URL}/users`);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/users`
-        );
-        setData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+      return data?.data;
+    },
+    queryKey: ["manage-users"],
+  });
+  // const [data, setData] = useState(null);
+  // const [loading, setLoading] = useState(true);
 
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${import.meta.env.VITE_BASE_URL}/users`
+  //       );
+  //       setData(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-  if (loading) {
+  //   fetchData();
+  // }, []);
+
+  if (isLoading) {
     return <Spinner />;
   }
 
@@ -68,7 +77,7 @@ const ManageUsersTable = () => {
                       role={user.role}
                       displayName={user.displayName}
                       _id={user._id}
-                 
+                      refetch={refetch}
                       name={user.userName}
                       index={index}
                     />

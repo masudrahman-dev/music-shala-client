@@ -1,27 +1,58 @@
 import React from "react";
-import ManageClassesTableRow from "./ManageClassesTableRow";
+
 import axios from "axios";
 import Spinner from "../../../../components/Spinner/Spinner";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 const ManageClassesTable = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { data, isLoading, refetch, error } = useQuery({
+    queryFn: async () => {
+      const data = await axios(`${import.meta.env.VITE_BASE_URL}/classes`);
 
-  useEffect(() => {
+      return data?.data;
+    },
+    queryKey: ["carts"],
+  });
+  // const [data, setData] = useState(null);
+  // const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${import.meta.env.VITE_BASE_URL}/classes`)
+  //     .then((response) => {
+  //       setData(response.data);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       setLoading(false);
+  //     });
+  // }, []);
+
+  const handleStatus = (id, newStatus) => {
+    // console.log(id, newStatus);
     axios
-      .get(`${import.meta.env.VITE_BASE_URL}/classes`)
+      .patch(
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/classes/?classId=${id}&newStatus=${newStatus}`
+      )
       .then((response) => {
-        setData(response.data);
-        setLoading(false);
+        console.log(response.data);
+        // Do something with the response
+        refetch();
       })
       .catch((error) => {
         console.error(error);
-        setLoading(false);
+        // Handle the error
+        refetch();
       });
-  }, []);
-  if (loading) {
+  };
+
+  if (isLoading) {
     return <Spinner />;
   }
 
@@ -69,14 +100,97 @@ const ManageClassesTable = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* {data?.map((class)=><ManageClassesTableRow/>)} */}
-
                   {data?.map((item, index) => (
-                    <ManageClassesTableRow
-                      index={index}
+                    <tr
                       key={item?._id}
-                      item={item}
-                    />
+                      className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      <td className="w-4 px-4 py-3">
+                        <div className="flex items-center">{index + 1}</div>
+                      </td>
+                      <th
+                        scope="row"
+                        className="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        <img
+                          src={item?.class_image}
+                          alt="iMac Front Image"
+                          className="w-auto h-8 mr-3"
+                        />
+                        {item?.lass_name}
+                      </th>
+                      <td className="px-4 py-2">
+                        <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                          {item?.instructor_name}
+                        </span>
+                      </td>
+                      <td className="px-4 py-2 font-medium  text-gray-900 whitespace-nowrap dark:text-white">
+                        <p className="text-center">{item?.seats}</p>
+                      </td>
+                      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        $ {item?.price}
+                      </td>
+
+                      <td className="px-4  py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {item?.status}
+                      </td>
+                      <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {item?.status === "denied" ? (
+                          <Link
+                            to={`/dashboard/admin/manage-classes/feedback/${item?._id}`}
+                            className="btn  btn-info"
+                          >
+                            Feedback
+                          </Link>
+                        ) : (
+                          <Link
+                            disabled
+                            to={`/dashboard/admin/manage-classes/feedback/${item?._id}`}
+                            className="btn  btn-info"
+                          >
+                            Feedback
+                          </Link>
+                        )}
+                      </td>
+                      <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-info">
+                        {item?.status === "approved" ||
+                        item?.status === "denied" ? (
+                          <button
+                            disabled
+                            onClick={() => handleStatus(item?._id, "approved")}
+                            className="btn btn-success"
+                          >
+                            Approve
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleStatus(item?._id, "approved")}
+                            className="btn btn-success"
+                          >
+                            Approve
+                          </button>
+                        )}
+                      </td>
+                      <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
+                        {item?.status === "approved" ||
+                        item?.status === "denied" ? (
+                          <button
+                            disabled
+                            onClick={() => handleStatus(item?._id, "denied")}
+                            className="btn btn-warning "
+                          >
+                            deny
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleStatus(item?._id, "denied")}
+                            className="btn btn-warning "
+                          >
+                            deny
+                          </button>
+                        )}
+                      </td>
+                    </tr>
                   ))}
                 </tbody>
               </table>

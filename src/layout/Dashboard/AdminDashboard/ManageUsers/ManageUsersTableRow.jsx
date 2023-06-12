@@ -6,7 +6,7 @@ const ManageUsersTableRow = ({
   role,
   displayName,
   _id,
-
+  refetch,
   name,
   index,
 }) => {
@@ -20,12 +20,12 @@ const ManageUsersTableRow = ({
       .then((response) => {
         console.log(response.data);
         // Do something with the response
+        refetch()
       })
       .catch((error) => {
         console.error(error);
         // Handle the error
       });
-
   };
 
   return (
