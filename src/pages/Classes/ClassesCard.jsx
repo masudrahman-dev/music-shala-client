@@ -74,7 +74,7 @@ const ClassesCard = ({
   };
 
   return (
-    <div>
+    <>
       <div
         className={`card ${
           seats == 0 ? "bg-rose-600" : "bg-base-100"
@@ -103,7 +103,7 @@ const ClassesCard = ({
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

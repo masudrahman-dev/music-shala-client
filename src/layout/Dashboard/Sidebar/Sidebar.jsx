@@ -11,7 +11,7 @@ const Sidebar = ({ isOpen }) => {
   const [userData, setUserData] = useState(null);
   const { user } = useContext(AuthContext);
 
-  // TODO: make admin first time
+  // TODO: make admin first time then delete extra component
   // let isAdmin = true;
 
   // find one

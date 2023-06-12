@@ -14,6 +14,7 @@ const InstructorsSection = ({ data }) => {
           <InstructorSectionCard
             key={item._id}
             image={item?.instructor_image}
+            name={item?.instructor_name}
           />
         ))}
       </div>

@@ -193,7 +193,7 @@ Read the tasks carefully.
       - **Make Admin button Action:** Update the user role as an admin.
         </br>
 
-12. Use **relevant icons** in your **dashboard menus**, animations on your website.\. You have to use **anyone** of the animation libraries below:
+`1`12. Use **relevant icons** in your **dashboard menus**, animations on your website.\. You have to use **anyone** of the animation libraries below:
     - [Framer-motion](https://www.framer.com/motion/)
     - [React-awesome-reveal](https://react-awesome-reveal.morello.dev/)
     - [React-spring](https://www.react-spring.dev/)
@@ -204,9 +204,9 @@ Read the tasks carefully.
 
 ## :writing_hand: **Bonus Task:**
 
-1. Minimum 20 meaningful git commits on the client-side repository and 12 meaningful commits on the server-side repository. Feel free to commit as many as needed to save your progress during load-shedding.
+`1`1. Minimum 20 meaningful git commits on the client-side repository and 12 meaningful commits on the server-side repository. Feel free to commit as many as needed to save your progress during load-shedding.
 
-2. Create a readme for the client-side and write about your project.
+`1` 2. Create a readme for the client-side and write about your project.
 
    - Website name or logo or both
    - Minimum 5 points of your website features
@@ -215,17 +215,17 @@ Read the tasks carefully.
 
 `3.` Implementing a dark/light theme toggle for the home page. It's optional to implement the theme toggle for the entire website\.
 
-4. Make the home page responsive. If possible, Make your entire website responsive\. (It is ok if the table is not responsive\.)
+`1`4. Make the home page responsive. If possible, Make your entire website responsive\. (It is ok if the table is not responsive\.)
 
 5. Use tanstack query (react-query) in at least two places. If needed, you can use it everywhere.
 
-6. use Axios for at least two calls.
+`1`6. use Axios for at least two calls.
 
-7. Must Use [react-hook-form](https://react-hook-form.com/) in the registration & login page. Using react hook form in another place is optional.
+`1`7. Must Use [react-hook-form](https://react-hook-form.com/) in the registration & login page. Using react hook form in another place is optional.
 
 </br>
 
-8. Use the Environment variables both on the client side & server side\.
+`1`8. Use the Environment variables both on the client side & server side\.
 
 </br>
 
@@ -233,7 +233,7 @@ Read the tasks carefully.
 
 </br>
 
-10. Create a 404 page\. Add any interesting image/ animation & a back-to-home button on the 404 page\. **Do not add header & footer in this page**\.
+`1`10. Create a 404 page\. Add any interesting image/ animation & a back-to-home button on the 404 page\. **Do not add header & footer in this page**\.
 
 </br>
 

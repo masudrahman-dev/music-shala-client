@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
-import { Link, NavLink} from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import logo from "../../../assets/Images/logo.svg";
 import Hamburger from "hamburger-react";
-
+import { motion } from "framer-motion"
 const Header = () => {
   const [isOpen, setOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext);
@@ -71,7 +71,15 @@ const Header = () => {
       <div className="   p-4    max-w-screen-xl mx-auto ">
         <div className="flex flex-col md:flex-row justify-between items-center gap-3">
           <div className=" btn btn-ghost">
-            <img src={logo} alt="logo" />
+            <motion.div
+              animate={{
+                scale: [1, 2, 2, 1, 1],
+                rotate: [0, 0, 270, 270, 0],
+                borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+              }}
+            >
+              <img src={logo} alt="logo" />
+            </motion.div>
             <Link
               to="/"
               className=" ml-3 text-2xl font-semibold text-fuchsia-500"

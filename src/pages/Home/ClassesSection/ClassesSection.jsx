@@ -22,6 +22,15 @@ const ClassesSection = ({ data }) => {
 };
 
 export default ClassesSection;
+
+
+
+// const ClassesSectionCard = ({ image, name }) => {
+//   return (
+    
+//   );
+// };
+
 /**
  * https://bridgemusic.in/wp-content/uploads/2017/10/guitar-inst.webp
  * https://bridgemusic.in/wp-content/uploads/2017/10/vocal-inst.webp

@@ -1,6 +1,6 @@
 # Project Name: MUSIC SHALA
 
-## user packages
+## use packages
 
 1. @phosphor-icons/react
 2. tanstack/react-query
