@@ -4,7 +4,7 @@ import ClassesSection from "./ClassesSection/ClassesSection";
 import InstructorsSection from "./InstructorsSection/InstructorsSection";
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
-
+import CustomarReview from '../ExtraPages/CustomarReview'
 const Home = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -29,11 +29,12 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <>
       <Banner />
       <ClassesSection data={data} />
       <InstructorsSection data={data} />
-    </div>
+      <CustomarReview></CustomarReview>
+    </>
   );
 };
 
