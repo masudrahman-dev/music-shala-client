@@ -5,6 +5,7 @@ import InstructorsSection from "./InstructorsSection/InstructorsSection";
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
 import CustomarReview from '../ExtraPages/CustomarReview'
+import ServiceTeam from "../ExtraPages/ServiceTeam";
 const Home = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -34,6 +35,7 @@ const Home = () => {
       <ClassesSection data={data} />
       <InstructorsSection data={data} />
       <CustomarReview></CustomarReview>
+      <ServiceTeam></ServiceTeam>
     </>
   );
 };

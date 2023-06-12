@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 
 const CustomarReview = () => {
   return (
-    <div className="container mx-auto mb-20 mt-20">
-      <div className="mx-auto text-center md:max-w-xl lg:max-w-3xl">
+    <div className="max-w-screen-xl mx-auto mb-20 mt-20">
+      <div className="mx-auto text-center ">
         <h3 className="mb-6 text-5xl font-bold text-neutral-800 dark:text-neutral-200">
           Our student Feedback
         </h3>
@@ -13,7 +13,7 @@ const CustomarReview = () => {
       </div>
 
       {/* <!-- Container for the Testimonials --> */}
-      <div className="grid gap-6 text-center md:grid-cols-3 lg:gap-12">
+      <div className="grid gap-6 text-center  md:grid-cols-3 lg:gap-12">
         {/* <!-- First Testimonial --> */}
         <motion.div
           whileHover={{ scale: 1.1 }}
