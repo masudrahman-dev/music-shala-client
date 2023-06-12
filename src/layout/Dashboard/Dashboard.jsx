@@ -3,11 +3,11 @@ import { Link, Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar/Sidebar";
 import logo from "../../assets/Images/logo.svg";
 import { AuthContext } from "../../contexts/AuthProvider";
-import axios from "axios";
+
 
 const Dashboard = () => {
   const [isOpen, setOpen] = useState(false);
-  const [userData, setUserData] = useState(null);
+
   const { user, logOut } = useContext(AuthContext);
   const handleLogOut = () => {
     logOut()

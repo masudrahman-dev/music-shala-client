@@ -10,6 +10,10 @@ import { useEffect } from "react";
 const Sidebar = ({ isOpen }) => {
   const [userData, setUserData] = useState(null);
   const { user } = useContext(AuthContext);
+
+  // TODO: make admin first time
+  // let isAdmin = true;
+
   // find one
   useEffect(() => {
     axios
@@ -23,11 +27,8 @@ const Sidebar = ({ isOpen }) => {
         // setLoading(false);
       });
   }, [user]);
-
-  // console.log("userData :>> ", userData);
-  // console.log("user.email :>> ", user?.email);
   const role = userData?.role;
-  // console.log("role :>> ", role);
+
   return (
     <>
       <aside

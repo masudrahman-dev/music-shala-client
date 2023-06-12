@@ -5,6 +5,7 @@ import ClassesCard from "./ClassesCard";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const Classes = () => {
+  const [userData, setUserData] = useState(null);
   const [data, setData] = useState(null);
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
@@ -37,8 +38,6 @@ const Classes = () => {
       });
   }, [user]);
 
-  // console.log("userData :>> ", userData);
-  // console.log("user.email :>> ", user?.email);
   const role = userData?.role;
   // console.log("role :>> ", role);
   if (loading) {
