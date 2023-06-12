@@ -92,7 +92,7 @@ const ClassesCard = ({
           <p>Available seats : {seats}</p>
           <p>Price : $ {price}</p>
           <div className="card-actions justify-end">
-            {role === "admin" || role == "instructor" ? (
+            {role === "admin" || role == "instructor" || role == "0" ? (
               <button disabled className="btn btn-primary">
                 Select
               </button>
