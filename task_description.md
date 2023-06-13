@@ -18,7 +18,7 @@ Read the tasks carefully.
 
 ## :writing_hand: **Main Requirements**
 
-1.  Focus on making the website visually appealing. Ensure that
+`1`1.  Focus on making the website visually appealing. Ensure that
 
     - color contrast is pleasing to the eye
     - the website does not have a **"gobindo design"**
@@ -42,7 +42,7 @@ Read the tasks carefully.
 
     <br/>
 
-2.  Make sure to keep the navbar and footer **on all the pages except on the 404 page**. Create a good, stylish, and meaningful footer. (including website logo or name or both, copyright, some contact information, Address etc.)
+`1`2.  Make sure to keep the navbar and footer **on all the pages except on the 404 page**. Create a good, stylish, and meaningful footer. (including website logo or name or both, copyright, some contact information, Address etc.)
 
 <br/>
 
@@ -127,21 +127,21 @@ Read the tasks carefully.
 
 <br/>
 
-8.  **Student Dashboard:**
+8.  **Student Dashboard:** `0`
     <br/>
     **_It will be private & only a student can access this route._**
 
     - **My Selected Classes:** The student will see all the Classes they booked after clicking the Select button. You must display the relevant information on the Class, Delete, and Pay buttons. More in point 9. On clicking the **Delete button**, a student can remove a selected Class from the list.
 
-    - **My Enrolled Classes:** Show all the Classes a student selected after successful payment. `9`
+    - **My Enrolled Classes:** Show all the Classes a student selected after successful payment.
 
 <br/>
 
-9. **Payment: (Student Dashboard)**
+1. **Payment: (Student Dashboard)** `0`
 
    - **Pay button Action:** Upon clicking the **Pay button** for a Class on the My Selected Classes, the student will be redirected to the payment page to finalize their payment. After a successful payment, the **Available seats** for the particular Class will be reduced by 1. The Class information will be shown on the **My Enrolled Classes page**and removed from the **My Selected Classes page**.
 
-   `9` - Create a payment history page for students. It will show the payment made by that student. Make sure to sort the payment history descending. The newest payment will be at the top
+   `0` - Create a `payment history page` for students. It will show the payment made by that student. Make sure to sort the payment history descending. The newest payment will be at the top
 
 <br/>
 
@@ -162,7 +162,7 @@ Read the tasks carefully.
 
     - **My Classes:** Show all the Classes an instructor has added after clicking the **Add button** from the **Add a Class page**. Each Class will show relevant information, including **pending/ approved/ denied** status, **Total Enrolled Students**, **Feedback** & **Update button**.
 
-      - **Total Enrolled Students:** Initially it will be zero. If any student has successfully booked the Class, show the total number of students.
+   `0`   - **Total Enrolled Students:** Initially it will be zero. If any student has successfully booked the Class, show the total number of students.
 
       - **Feedback:**
         - There will be no feedback if the Class is in pending or approved status.
@@ -170,7 +170,7 @@ Read the tasks carefully.
 
 <br/>
 
-11. **Admin Dashboard:**
+`1`11. **Admin Dashboard:**
     <br/>
     **_It will be private & only an admin can access this route._**
 
@@ -217,7 +217,7 @@ Read the tasks carefully.
 
 `1`4. Make the home page responsive. If possible, Make your entire website responsive\. (It is ok if the table is not responsive\.)
 
-5. Use tanstack query (react-query) in at least two places. If needed, you can use it everywhere.
+`1` 5. Use tanstack query (react-query) in at least two places. If needed, you can use it everywhere.
 
 `1`6. use Axios for at least two calls.
 

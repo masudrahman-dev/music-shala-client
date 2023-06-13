@@ -1,6 +1,9 @@
-import ClassesSectionCard from "./ClassesSectionCard";
-
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import "../../../assets/css/LazyLload.css";
+import LazyLoad from "react-lazy-load";
 const ClassesSection = ({ data }) => {
+  // console.log('data :>> ', data);
   return (
     <div className="max-w-screen-xl mx-auto mt-20">
       <div className="flex items-center justify-center py-4 md:py-12 flex-wrap">
@@ -10,11 +13,27 @@ const ClassesSection = ({ data }) => {
       </div>
       <div className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-7">
         {data?.map((item) => (
-          <ClassesSectionCard
-            key={item._id}
-            image={item?.class_image}
-            name={item?.class_name}
-          />
+          <motion.div
+            key={item?._id}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <div className="relative ">
+              <LazyLoad threshold={0.95}>
+                <img
+                  className="shadow-xl rounded-xl w-full"
+                  src={item?.class_image}
+                  alt=""
+                />
+              </LazyLoad>
+
+              <Link to={"/classes"} className="absolute top-8 right-8 ">
+                <p className="badge badge-primary hover:bg-fuchsia-500 hover:border-none  uppercase p-4">
+                  {item?.class_name}
+                </p>
+              </Link>
+            </div>
+          </motion.div>
         ))}
       </div>
     </div>
@@ -23,11 +42,9 @@ const ClassesSection = ({ data }) => {
 
 export default ClassesSection;
 
-
-
 // const ClassesSectionCard = ({ image, name }) => {
 //   return (
-    
+
 //   );
 // };
 

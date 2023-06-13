@@ -6,26 +6,21 @@ import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
 import CustomarReview from '../ExtraPages/CustomarReview'
 import ServiceTeam from "../ExtraPages/ServiceTeam";
+import { useQuery } from "@tanstack/react-query";
 const Home = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASE_URL}/classes/six`)
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  const { data, isLoading, refetch, error } = useQuery({
+    queryFn: async () => {
+      const data = await axios(`${import.meta.env.VITE_BASE_URL}/classes/six-item`);
+
+      return data?.data;
+    },
+    queryKey: ["home-classes"],
+  });
 
 
-  if (loading) {
+
+  if (isLoading) {
     return <Spinner />;
   }
 

@@ -1,84 +1,65 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import Spinner from "../../../../components/Spinner/Spinner";
 import axios from "axios";
-import Swal from "sweetalert2";
+import Spinner from "../../../../components/Spinner/Spinner";
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
-import { AuthContext } from "../../../../contexts/AuthProvider";
+import { Toaster, toast } from "react-hot-toast";
 
-const StudentSelectedTable = () => {
-  const { user } = useContext(AuthContext);
+const ManageUsers = () => {
   const { data, isLoading, refetch, error } = useQuery({
     queryFn: async () => {
-      const data = await axios(`${import.meta.env.VITE_BASE_URL}/carts}`);
+      const data = await axios(`${import.meta.env.VITE_BASE_URL}/users`);
 
       return data?.data;
     },
-    queryKey: ["carts-email"],
+    queryKey: ["manage-users"],
   });
-  // console.log('data :>> ', data);
+  console.log("data :>> ", data);
+  const handleRole = (id, newRole, email) => {
+    axios
+      .patch(
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/users/update-role/?userId=${id}&newRole=${newRole}`
+      )
+      .then((response) => {
+        console.log(response.data);
+        // Do something with the response
 
-  const total = data?.reduce((sum, item) => parseFloat(item.price) + sum, 0);
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You Want to delete it!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .delete(`${import.meta.env.VITE_BASE_URL}/carts/${id}`)
-          .then((response) => {
-            const data = response.data;
-            if (data.deletedCount > 0) {
-              refetch();
-              Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Deleted!",
-                showConfirmButton: false,
-                timer: 1500,
-              });
-            }
-          })
-          .catch((error) => {
-            console.error("Error deleting item:", error);
-            Swal.fire(
-              "Error!",
-              "An error occurred while deleting the file.",
-              "error"
-            );
-          });
-      }
-    });
+        toast.success("Successfully Updated!");
+        refetch();
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle the error
+      });
+
+    axios
+      .patch(
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/classes/user-role/?email=${email}&newRole=${newRole}`
+      )
+      .then((response) => {
+        console.log(response.data);
+        // Do something with the response
+        // toast.success("Successfully Updated!");
+        refetch();
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle the error
+      });
   };
   if (isLoading) {
     return <Spinner />;
   }
+  // TODO: delete user btn
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
         <div className="px-4 mx-auto max-w-screen-2xl lg:px-12">
           {/*  */}
           <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
-            <div className="flex  px-4 py-3 space-y-3 lg:items-center justify-end lg:space-y-0 lg:space-x-4">
-              <div className="flex items-center  space-x-4">
-                <span className="dark:text-white">
-                  Total Selected : {data?.length || 0}{" "}
-                </span>
-                <h5 className="dark:text-white">
-                  <span>Total Price : </span>
-                  <span>${total}</span>
-                </h5>
-                <button className="btn btn-accent">Pay</button>
-              </div>
-            </div>
-
             {/* table */}
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -91,21 +72,20 @@ const StudentSelectedTable = () => {
                       Name
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      Instructor
-                    </th>
-                    <th scope="col" className="px-4 py-3">
-                      Seats
-                    </th>
-                    <th scope="col" className="px-4 py-3">
-                      Price
+                      Role
                     </th>
 
                     <th scope="col" className="px-4 py-3">
-                      Delete
+                      Make Instructor
+                    </th>
+
+                    <th scope="col" className="px-4 py-3">
+                      Make Admin
                     </th>
                   </tr>
                 </thead>
                 <tbody>
+                  {/* row */}
                   {data?.map((item, index) => (
                     <tr
                       key={item?._id}
@@ -116,36 +96,68 @@ const StudentSelectedTable = () => {
                       </td>
                       <th
                         scope="row"
-                        className="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        className="flex items-center  px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
                         <img
-                          src={item?.class_image}
+                          src={item?.photoURL || item?.userPhoto}
                           alt="iMac Front Image"
                           className="w-auto h-8 mr-3"
                         />
-                        {item?.class_name}
+                        {item?.displayName || item?.userName || item?.name}
                       </th>
                       <td className="px-4 py-2">
-                        <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                          {item?.instructor_name}
+                        <span className="bg-primary-100 dark:text-white text-primary-800  font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                          {item?.role}
                         </span>
                       </td>
-                      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <p className="flex items-center text-center">
-                          {item?.seats}
-                        </p>
-                      </td>
-                      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        $ {item?.price}
-                      </td>
 
+                      <td className="px-4  py-2 font-medium text-gray-900 whitespace-nowrap ">
+                        {item?.role === "instructor" ? (
+                          <button disabled className="btn btn-info">
+                            Instructor
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              handleRole(item?._id, "instructor", item?.email);
+                            }}
+                            className="btn btn-info"
+                          >
+                            Instructor
+                          </button>
+                        )}
+                      </td>
                       <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
-                        <button
-                          onClick={() => handleDelete(item._id)}
-                          className="btn btn-warning"
-                        >
-                          Delete
-                        </button>
+                        {item?.role === "admin" ? (
+                          <button disabled className="btn btn-primary">
+                            Admin
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() =>
+                              handleRole(item?._id, "admin", item?.email)
+                            }
+                            className="btn btn-primary"
+                          >
+                            Admin
+                          </button>
+                        )}
+                      </td>
+                      <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
+                        {item?.role === "user" ? (
+                          <button disabled className="btn btn-accent">
+                            User
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() =>
+                              handleRole(item?._id, "user", item?.email)
+                            }
+                            className="btn btn-accent"
+                          >
+                            User
+                          </button>
+                        )}
                       </td>
                     </tr>
                   ))}
@@ -257,4 +269,4 @@ const StudentSelectedTable = () => {
   );
 };
 
-export default StudentSelectedTable;
+export default ManageUsers;

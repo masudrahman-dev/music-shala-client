@@ -6,16 +6,16 @@ import Classes from "../../pages/Classes/Classes";
 import Login from "../../pages/LoginAndRegister/Login/Login";
 import Register from "../../pages/LoginAndRegister/Register/Register";
 import Dashboard from "../../layout/Dashboard/Dashboard";
-import AddClassForm from "../../layout/Dashboard/InstrctorDashboard/CRUDfrom/AddClassForm";
-import UpdateClassForm from "../../layout/Dashboard/InstrctorDashboard/CRUDfrom/UpdateClassForm";
-import InstructorTable from "../../layout/Dashboard/InstrctorDashboard/InstructorTable/InstructorTable";
-import ManageClassesTable from "../../layout/Dashboard/AdminDashboard/ManageClasses/ManageClassesTable";
-import ManageUsersTable from "../../layout/Dashboard/AdminDashboard/ManageUsers/ManageUsersTable";
-import StudentSelectedTable from "../../layout/Dashboard/StudentDashboard/StudentSelectedTable/StudentSelectedTable";
-import StudentEnrolledTable from "../../layout/Dashboard/StudentDashboard/StudentEnrolledTable/StudentEnrolledTable";
+import MyClasses from "../../layout/Dashboard/InstrctorDashboard/MyClasses/MyClasses";
+import ManageClasses from "../../layout/Dashboard/AdminDashboard/ManageClasses/ManageClasses";
+import ManageUsers from "../../layout/Dashboard/AdminDashboard/ManageUsers/ManageUsers";
+import SelectedClasses from "../../layout/Dashboard/StudentDashboard/SelectedClasses/SelectedClasses";
+import EnrolledClasses from "../../layout/Dashboard/StudentDashboard/EnrolledClasses/EnrolledClasses";
 import PrivateRoute from "../privateRoute/PrivateRoute";
 import ErrorPage from "../../pages/ErrorPage/ErrorPage";
 import FeedBackForm from "../../pages/Home/ClassesSection/FeedBackForm";
+import AddClassForm from "../../layout/Dashboard/InstrctorDashboard/Add_UpdateClassFrom/AddClassForm";
+import UpdateClassForm from "../../layout/Dashboard/InstrctorDashboard/Add_UpdateClassFrom/UpdateClassForm";
 
 const router = createBrowserRouter([
   {
@@ -55,15 +55,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard/student/selected-classes",
-        element: <StudentSelectedTable></StudentSelectedTable>,
+        element: <SelectedClasses></SelectedClasses>,
       },
       {
         path: "/dashboard/student/enrolled-classes",
-        element: <StudentEnrolledTable></StudentEnrolledTable>,
+        element: <EnrolledClasses></EnrolledClasses>,
       },
       {
         path: "/dashboard/instructor/my-classes",
-        element: <InstructorTable></InstructorTable>,
+        element: <MyClasses></MyClasses>,
       },
 
       {
@@ -76,7 +76,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/admin/manage-classes",
-        element: <ManageClassesTable></ManageClassesTable>,
+        element: <ManageClasses></ManageClasses>,
       },
       {
         path: "/dashboard/admin/manage-classes/feedback/:id",
@@ -84,7 +84,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/admin/manage-users",
-        element: <ManageUsersTable></ManageUsersTable>,
+        element: <ManageUsers></ManageUsers>,
       },
     ],
   },

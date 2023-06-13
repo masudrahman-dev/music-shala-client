@@ -1,11 +1,14 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Toaster, toast } from "react-hot-toast";
 import { CirclesWithBar } from "react-loader-spinner";
+import { AuthContext } from "../../../../contexts/AuthProvider";
 
 const AddClassForm = () => {
   const [loading, setLoading] = useState(true);
+  const { user } = useContext(AuthContext);
+  // console.log(user?.email);
   const {
     register,
     handleSubmit,
@@ -14,15 +17,16 @@ const AddClassForm = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    console.log("data :>> ", data);
+    // console.log("data :>> ", data);
     setLoading(false);
-    // const baseUrl = import.meta.env.VITE_BASE_URL;
+    data.user_email = user?.email;
+    // console.log(data);
     axios
       .post(`${import.meta.env.VITE_BASE_URL}/add-class`, data)
       .then((response) => {
         // console.log("Success:", response.data);
         // Process the response data
-        console.log("response :>> ", response);
+        // console.log("response :>> ", response);
         reset();
         toast.success("Successfully Added");
         setLoading(true);
@@ -244,22 +248,25 @@ const AddClassForm = () => {
                   )}
                 </div>
               </div>
-              <button type="submit" className="btn btn-primary">
-                <svg
-                  className="mr-1 -ml-1 w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-                {loading ? (
-                  "Add new Class"
-                ) : (
+
+              {loading ? (
+                <button type="submit" className="btn btn-primary">
+                  <svg
+                    className="mr-1 -ml-1 w-6 h-6"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                      clipRule="evenodd"
+                    ></path>
+                  </svg>
+                  Add new Class
+                </button>
+              ) : (
+                <div className="btn btn-primary w-44">
                   <CirclesWithBar
                     height="36"
                     width="36"
@@ -272,8 +279,8 @@ const AddClassForm = () => {
                     barColor=""
                     ariaLabel="circles-with-bar-loading"
                   />
-                )}
-              </button>
+                </div>
+              )}
             </form>
           </div>
         </div>

@@ -1,5 +1,7 @@
-import InstructorSectionCard from "./InstructorSectionCard";
-
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import "../../../assets/css/LazyLload.css";
+import LazyLoad from "react-lazy-load";
 const InstructorsSection = ({ data }) => {
   // console.log("data :>> ", data);
 
@@ -12,11 +14,26 @@ const InstructorsSection = ({ data }) => {
       </div>
       <div className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-7">
         {data?.map((item) => (
-          <InstructorSectionCard
-            key={item._id}
-            image={item?.instructor_image}
-            name={item?.instructor_name}
-          />
+          <motion.div
+            key={item?._key}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <div className="relative ">
+              <LazyLoad threshold={0.95}>
+                <img
+                  className="shadow-xl rounded-xl w-full   "
+                  src={item?.instructor_image}
+                  alt=""
+                />
+              </LazyLoad>
+              <Link to={"/instructors"} className="absolute top-8 right-8 ">
+                <p className="badge badge-primary uppercase p-4 hover:bg-fuchsia-500 hover:border-none ">
+                  {item?.instructor_name}
+                </p>
+              </Link>
+            </div>
+          </motion.div>
         ))}
       </div>
     </div>

@@ -1,5 +1,6 @@
 import React from "react";
-
+import LazyLoad from "react-lazy-load";
+import "../../assets/css/LazyLload.css";
 const InstructorCard = ({
   class_name,
   instructor_email,
@@ -8,11 +9,11 @@ const InstructorCard = ({
 }) => {
   return (
     <div>
-      <div
-        className={` bg-base-100" dark:text-white shadow-xl`}
-      >
+      <div className={` bg-base-100" dark:text-white shadow-xl`}>
         <figure>
-          <img className="w-full" src={instructor_image} alt="Shoes" />
+          <LazyLoad >
+            <img className="w-full" src={instructor_image} alt="Shoes" />
+          </LazyLoad>
         </figure>
         <div className="card-body">
           <h2 className="card-title">{class_name}</h2>

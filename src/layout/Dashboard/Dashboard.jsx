@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
-import Sidebar from "./Sidebar/Sidebar";
+import DashboardMenu from "./DashboardMenu/DashboardMenu";
 import logo from "../../assets/Images/logo.svg";
 import { AuthContext } from "../../contexts/AuthProvider";
-
 
 const Dashboard = () => {
   const [isOpen, setOpen] = useState(false);
@@ -19,7 +18,6 @@ const Dashboard = () => {
         // An error happened.
       });
   };
-
 
   return (
     <div>
@@ -87,9 +85,8 @@ const Dashboard = () => {
             </div>
           </div>
         </nav>
-        {/* <!-- Sidebar --> */}
-
-        <Sidebar isOpen={isOpen}></Sidebar>
+        {/* <!-- Dashboard Menu --> */}
+        <DashboardMenu isOpen={isOpen}></DashboardMenu>
         {/* main  */}
         <main className="p-4 md:ml-64 h-auto pt-20">
           {/* <FormCRUD></FormCRUD> */}

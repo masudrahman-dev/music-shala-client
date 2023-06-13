@@ -2,29 +2,20 @@ import React, { useEffect, useState } from "react";
 import InstructorCard from "./InstructorCard";
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
+import { useQuery } from "@tanstack/react-query";
 
 const Instructors = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { data, isLoading, refetch, error } = useQuery({
+    queryFn: async () => {
+      const data = await axios(`${import.meta.env.VITE_BASE_URL}/classes`);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/classes`
-        );
-        setData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+      return data?.data;
+    },
+    queryKey: ["instructor-classes"],
+  });
 
-    fetchData();
-  }, []);
 
-  if (loading) {
+  if (isLoading) {
     return <Spinner />;
   }
 
@@ -33,7 +24,7 @@ const Instructors = () => {
       <div className="max-w-screen-xl mx-auto ">
         <div className="flex items-center justify-center py-4 md:py-12 flex-wrap">
           <h1 className="text-5xl font-semibold text-gray-900 dark:text-white ">
-            Instructors
+          Our  Instructors
           </h1>
         </div>
         <div className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-7">

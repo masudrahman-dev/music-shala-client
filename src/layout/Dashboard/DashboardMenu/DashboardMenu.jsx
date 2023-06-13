@@ -7,7 +7,7 @@ import { AuthContext } from "../../../contexts/AuthProvider";
 import axios from "axios";
 import { useEffect } from "react";
 
-const Sidebar = ({ isOpen }) => {
+const DashboardMenu = ({ isOpen }) => {
   const [userData, setUserData] = useState(null);
   const { user } = useContext(AuthContext);
 
@@ -55,13 +55,17 @@ const Sidebar = ({ isOpen }) => {
                 <span className="ml-3">{role}</span>
               </a>
             </li>
-            {role == "instructor" ? "" : ""}
 
-            {role == "user" && <StudentDashboard />}
+            {/* {role == "user" && <StudentDashboard />}
 
             {role == "instructor" && <InstructorDashboard />}
 
-            {role == "admin" && <AdminDashboard />}
+            {role == "admin" && <AdminDashboard />} */}
+            {<StudentDashboard />}
+
+            {<InstructorDashboard />}
+
+            {<AdminDashboard />}
           </ul>
         </div>
       </aside>
@@ -69,4 +73,4 @@ const Sidebar = ({ isOpen }) => {
   );
 };
 
-export default Sidebar;
+export default DashboardMenu;

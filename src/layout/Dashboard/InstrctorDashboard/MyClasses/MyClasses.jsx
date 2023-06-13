@@ -1,64 +1,56 @@
-import React from "react";
-
-import axios from "axios";
-import Spinner from "../../../../components/Spinner/Spinner";
 import { useState } from "react";
-import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import Spinner from "../../../../components/Spinner/Spinner";
+import axios from "axios";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
-const ManageClassesTable = () => {
+const MyClasses = () => {
+  const [desc, setDesc] = useState(true);
   const { data, isLoading, refetch, error } = useQuery({
     queryFn: async () => {
       const data = await axios(`${import.meta.env.VITE_BASE_URL}/classes`);
 
       return data?.data;
     },
-    queryKey: ["classes"],
+    queryKey: ["manage-users"],
   });
-  // const [data, setData] = useState(null);
-  // const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`${import.meta.env.VITE_BASE_URL}/classes`)
-  //     .then((response) => {
-  //       setData(response.data);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //       setLoading(false);
-  //     });
-  // }, []);
-
-  const handleStatus = (id, newStatus) => {
-    // console.log(id, newStatus);
-    axios
-      .patch(
-        `${
-          import.meta.env.VITE_BASE_URL
-        }/classes/?classId=${id}&newStatus=${newStatus}`
-      )
-      .then((response) => {
-        console.log(response.data);
-        // Do something with the response
-        refetch();
-      })
-      .catch((error) => {
-        console.error(error);
-        // Handle the error
-        refetch();
-      });
-  };
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  // console.log("data :>> ", data);
+  // delete item
+  const deleteClass = async (classId) => {
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BASE_URL}/classes/my-class/${classId}`
+      );
+      // console.log(response.data);
+      refetch();
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Delete class one",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } catch (error) {
+      console.error("Error deleting class:", error);
+    }
+  };
+
   return (
     <>
+      <dialog id="my_modal_1" className="modal">
+        <form method="dialog" className="modal-box">
+          <p className="py-4 text-center">{desc}</p>
+          <div className="modal-action">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-ghost btn-outline">Close</button>
+          </div>
+        </form>
+      </dialog>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
         <div className="px-4 mx-auto max-w-screen-2xl lg:px-12">
           {/*  */}
@@ -81,9 +73,11 @@ const ManageClassesTable = () => {
                       Seats
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      Deny
+                      Price
                     </th>
-
+                    <th scope="col" className="px-4 py-3">
+                      Total Enrolled
+                    </th>
                     <th scope="col" className="px-4 py-3">
                       Status
                     </th>
@@ -91,11 +85,11 @@ const ManageClassesTable = () => {
                       Feedback
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      Approve
+                      Update
                     </th>
 
                     <th scope="col" className="px-4 py-3">
-                      Deny
+                      Delete
                     </th>
                   </tr>
                 </thead>
@@ -117,78 +111,58 @@ const ManageClassesTable = () => {
                           alt="iMac Front Image"
                           className="w-auto h-8 mr-3"
                         />
-                        {item?.lass_name}
+                        {item?.class_name}
                       </th>
                       <td className="px-4 py-2">
                         <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
                           {item?.instructor_name}
                         </span>
                       </td>
-                      <td className="px-4 py-2 font-medium  text-gray-900 whitespace-nowrap dark:text-white">
-                        <p className="text-center">{item?.seats}</p>
+                      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <div className="flex items-center">{item?.seats}</div>
                       </td>
                       <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         $ {item?.price}
                       </td>
 
+                      <td className="px-4 text-center  py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        34
+                      </td>
                       <td className="px-4  py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {item?.status}
                       </td>
                       <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {item?.status === "denied" ? (
-                          <Link
-                            to={`/dashboard/admin/manage-classes/feedback/${item?._id}`}
-                            className="btn  btn-info"
+                          <button
+                            onClick={() => {
+                              setDesc(item?.description);
+                              window.my_modal_1.showModal();
+                            }}
+                            className="btn btn-info"
                           >
-                            Feedback
-                          </Link>
+                            Read
+                          </button>
                         ) : (
-                          <Link
-                            disabled
-                            to={`/dashboard/admin/manage-classes/feedback/${item?._id}`}
-                            className="btn  btn-info"
-                          >
-                            Feedback
-                          </Link>
+                          <button disabled className="btn btn-info">
+                            Read
+                          </button>
                         )}
                       </td>
                       <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-info">
-                        {item?.status === "approved" ||
-                        item?.status === "denied" ? (
-                          <button
-                            disabled
-                            onClick={() => handleStatus(item?._id, "approved")}
-                            className="btn btn-success"
-                          >
-                            Approve
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => handleStatus(item?._id, "approved")}
-                            className="btn btn-success"
-                          >
-                            Approve
-                          </button>
-                        )}
+                        <Link
+                          to={`/dashboard/instructor/update-class/${item?._id}`}
+                          className="btn btn-success"
+                        >
+                          update
+                        </Link>
                       </td>
                       <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
-                        {item?.status === "approved" ||
-                        item?.status === "denied" ? (
-                          <button
-                            disabled
-                            onClick={() => handleStatus(item?._id, "denied")}
-                            className="btn btn-warning "
-                          >
-                            deny
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => handleStatus(item?._id, "denied")}
-                            className="btn btn-warning "
-                          >
-                            deny
-                          </button>
-                        )}
+                        <button
+                          onClick={() => deleteClass(item?._id)}
+                          className="btn btn-warning"
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -300,4 +274,4 @@ const ManageClassesTable = () => {
   );
 };
 
-export default ManageClassesTable;
+export default MyClasses;
