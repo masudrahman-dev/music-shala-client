@@ -1,24 +1,14 @@
-import React from "react";
 
 import axios from "axios";
 import Spinner from "../../../../components/Spinner/Spinner";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import useClassesGET from "../../../../hooks/useClassesGET";
 
 const ManageClasses = () => {
-  const { data, isLoading, refetch, error } = useQuery({
-    queryFn: async () => {
-      const data = await axios(`${import.meta.env.VITE_BASE_URL}/classes`);
-
-      return data?.data;
-    },
-    queryKey: ["classes"],
-  });
+  const {data, isLoading, refetch} = useClassesGET();
 
   const handleStatus = (id, newStatus) => {
-    // console.log(id, newStatus);
+
     axios
       .patch(
         `${
@@ -41,7 +31,7 @@ const ManageClasses = () => {
     return <Spinner />;
   }
 
-  // console.log("data :>> ", data);
+
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">

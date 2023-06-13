@@ -15,19 +15,19 @@ const DashboardMenu = ({ isOpen }) => {
   // let isAdmin = true;
 
   // find one
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASE_URL}/users/${user?.email}`)
-      .then((response) => {
-        setUserData(response.data);
-        // setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        // setLoading(false);
-      });
-  }, [user]);
-  const role = userData?.role;
+  // useEffect(() => {
+  //   axios
+  //     .get(`${import.meta.env.VITE_BASE_URL}/users/${user?.email}`)
+  //     .then((response) => {
+  //       setUserData(response.data);
+  //       // setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       // setLoading(false);
+  //     });
+  // }, [user]);
+  // const role = userData?.role;
 
   return (
     <>
@@ -52,7 +52,7 @@ const DashboardMenu = ({ isOpen }) => {
                   <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                   <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                 </svg>
-                <span className="ml-3">{role}</span>
+                {/* <span className="ml-3">{role}</span> */}
               </a>
             </li>
 

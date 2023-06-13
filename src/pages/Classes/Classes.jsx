@@ -6,51 +6,74 @@ import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import LazyLoad from "react-lazy-load";
+import useClassesGET from "../../hooks/useClassesGET";
 
 const Classes = () => {
-
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useContext(AuthContext);
-  const { data, isLoading, refetch, error } = useQuery({
-    queryFn: async () => {
-      const data = await axios(`${import.meta.env.VITE_BASE_URL}/classes`);
-      return data?.data;
-    },
-    queryKey: ["classes"],
-  });
-  // console.log(data);
+  const { data, isLoading, refetch, error } = useClassesGET();
 
+  const loggedUserEmail = user?.email;
+  console.log("loggedUserEmail :>> ", loggedUserEmail);
   const handleAddToCart = (item) => {
-    if (user && user.email) {
+    if (user) {
+      const {
+        class_image,
+        class_name,
+        description,
+        instructor_email,
+        instructor_image,
+        instructor_name,
+        price,
+        role,
+        seats,
+        status,
+        user_email,
+        _id: addToCartId,
+      } = item;
+      console.log('user_email :>> ', user_email);
+      const addToCart = {
+        class_image,
+        class_name,
+        description,
+        instructor_email,
+        instructor_image,
+        instructor_name,
+        price,
+        role,
+        seats,
+        status,
+        user_email,
+        addToCartId,
+      };
+      // console.log(addToCart);
       axios
-        .post(`${import.meta.env.VITE_BASE_URL}/carts`, item)
+        .post(`${import.meta.env.VITE_BASE_URL}/carts`, addToCart)
         .then((response) => {
-          const data = response.data;
-          if (data.insertedId) {
-            refetch(); // refetch cart to update the number of items in the cart
+          const insertedId = response.data;
+          if (insertedId) {
+            refetch(); // Refetch cart to update the number of items in the cart
             Swal.fire({
               position: "top-end",
               icon: "success",
-              title: "class added successfully.",
+              title: "Item added successfully.",
               showConfirmButton: false,
               timer: 1500,
             });
-            refetch();
           }
         })
         .catch((error) => {
           console.error("Error adding item to cart:", error);
           Swal.fire({
             title: "Error!",
-            text: "An error occurred while adding the food to the cart.",
+            text: "An error occurred while adding the item to the cart.",
             icon: "error",
           });
         });
-        
     } else {
       Swal.fire({
-        title: "Please login before select",
+        title: "Please login before adding to cart",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -58,12 +81,13 @@ const Classes = () => {
         confirmButtonText: "Login now!",
       }).then((result) => {
         if (result.isConfirmed) {
-          refetch();
+          // refetch();
           navigate("/login", { state: { from: location } });
         }
       });
     }
   };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -85,7 +109,7 @@ const Classes = () => {
               }  dark:text-white shadow-xl`}
             >
               <figure>
-                <LazyLoad threshold={0.95}>
+                <LazyLoad>
                   <img className="w-full" src={item?.class_image} alt="Shoes" />
                 </LazyLoad>
               </figure>

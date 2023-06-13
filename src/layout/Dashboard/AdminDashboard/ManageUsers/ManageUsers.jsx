@@ -2,17 +2,12 @@ import axios from "axios";
 import Spinner from "../../../../components/Spinner/Spinner";
 import { useQuery } from "@tanstack/react-query";
 import { Toaster, toast } from "react-hot-toast";
+import useUserGET from "../../../../hooks/useUserGET";
 
 const ManageUsers = () => {
-  const { data, isLoading, refetch, error } = useQuery({
-    queryFn: async () => {
-      const data = await axios(`${import.meta.env.VITE_BASE_URL}/users`);
+  const { data, isLoading, refetch, error } = useUserGET()
 
-      return data?.data;
-    },
-    queryKey: ["manage-users"],
-  });
-  console.log("data :>> ", data);
+  // console.log("data :>> ", data);
   const handleRole = (id, newRole, email) => {
     axios
       .patch(
@@ -36,7 +31,7 @@ const ManageUsers = () => {
       .patch(
         `${
           import.meta.env.VITE_BASE_URL
-        }/classes/user-role/?email=${email}&newRole=${newRole}`
+        }/classes/update-user-role/?email=${email}&newRole=${newRole}`
       )
       .then((response) => {
         console.log(response.data);

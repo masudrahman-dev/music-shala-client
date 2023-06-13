@@ -1,25 +1,29 @@
-import { useState } from "react";
-import { useEffect } from "react";
 import Spinner from "../../../../components/Spinner/Spinner";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 import { Toaster, toast } from "react-hot-toast";
 
 const SelectedClasses = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
+  const searchQuery = user?.email;
   const { data, isLoading, refetch, error } = useQuery({
     queryFn: async () => {
-      const data = await axios(`${import.meta.env.VITE_BASE_URL}/carts`);
+      const data = await axios(
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/carts/logged-user/?searchQuery=${searchQuery}`
+      );
 
       return data?.data;
     },
-    queryKey: ["carts"],
+    queryKey: ["carts-logged-user-classes"],
   });
 
-  // console.log("data :>> ", data);
+  console.log("data :>> ", data);
+
 
   const total = data?.reduce((sum, item) => parseFloat(item.price) + sum, 0);
   const handleDelete = (id) => {
@@ -53,7 +57,8 @@ const SelectedClasses = () => {
       }
     });
   };
-  if (isLoading) {
+  if (loading || isLoading) {
+    refetch();
     return <Spinner />;
   }
   return (

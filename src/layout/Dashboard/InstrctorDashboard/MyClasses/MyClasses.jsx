@@ -1,25 +1,32 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Spinner from "../../../../components/Spinner/Spinner";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../../../contexts/AuthProvider";
 
 const MyClasses = () => {
   const [desc, setDesc] = useState(true);
+  const { user } = useContext(AuthContext);
+  const searchQuery = user?.email;
   const { data, isLoading, refetch, error } = useQuery({
     queryFn: async () => {
-      const data = await axios(`${import.meta.env.VITE_BASE_URL}/classes`);
+      const data = await axios(
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/classes/logged-user/?searchQuery=${searchQuery}`
+      );
 
       return data?.data;
     },
-    queryKey: ["manage-users"],
+    queryKey: ["classes-logged-user"],
   });
 
   if (isLoading) {
     return <Spinner />;
   }
-
+  // console.log('data :>> ', data);
   // delete item
   const deleteClass = async (classId) => {
     try {
