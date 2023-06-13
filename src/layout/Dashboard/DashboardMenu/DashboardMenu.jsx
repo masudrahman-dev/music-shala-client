@@ -37,7 +37,7 @@ const DashboardMenu = ({ isOpen,role }) => {
             {role == "instructor" && <InstructorDashboard />}
 
             {role == "admin" && <AdminDashboard  />} */}
-            {<StudentDashboard />}
+            {<StudentDashboard role={role} />}
 
             {<InstructorDashboard />}
 

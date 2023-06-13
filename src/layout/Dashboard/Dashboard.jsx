@@ -41,7 +41,7 @@ const Dashboard = () => {
     refetch();
   }, [role]);
 
-  // console.log(role);
+  console.log(role);
 
   return (
     <div>

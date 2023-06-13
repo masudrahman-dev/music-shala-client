@@ -26,7 +26,7 @@ const MyClasses = () => {
   if (isLoading) {
     return <Spinner />;
   }
-  // console.log('data :>> ', data);
+  console.log('data :>> ', data);
   // delete item
   const deleteClass = async (classId) => {
     try {

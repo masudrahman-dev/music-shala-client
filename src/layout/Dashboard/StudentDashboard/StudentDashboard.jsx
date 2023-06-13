@@ -2,7 +2,8 @@ import { ArrowCircleRight, Basket } from "@phosphor-icons/react";
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
-const StudentDashboard = () => {
+const StudentDashboard = ({role}) => {
+  console.log(role);
   <>
     <NavLink to="/">
       {({ isActive }) => (
