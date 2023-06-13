@@ -2,33 +2,9 @@ import React, { useState } from "react";
 import StudentDashboard from "../StudentDashboard/StudentDashboard";
 import InstructorDashboard from "../InstrctorDashboard/InstructorDashboard";
 import AdminDashboard from "../AdminDashboard/AdminDashboard";
-import { useContext } from "react";
-import { AuthContext } from "../../../contexts/AuthProvider";
-import axios from "axios";
-import { useEffect } from "react";
 
-const DashboardMenu = ({ isOpen }) => {
-  const [userData, setUserData] = useState(null);
-  const { user } = useContext(AuthContext);
+const DashboardMenu = ({ isOpen,role }) => {
 
-  // TODO: make admin first time then delete extra component
-  // let isAdmin = true;
-
-  // find one to verify user or admin or instructor
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASE_URL}/users/role/${user?.email}`)
-      .then((response) => {
-        setUserData(response.data);
-        // setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        // setLoading(false);
-      });
-  }, [user]);
-  const role = userData?.role;
-// console.log(role);
   return (
     <>
       <aside
@@ -52,7 +28,7 @@ const DashboardMenu = ({ isOpen }) => {
                   <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                   <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                 </svg>
-                {/* <span className="ml-3">{role}</span> */}
+                <span className="ml-3">{role}</span>
               </a>
             </li>
 

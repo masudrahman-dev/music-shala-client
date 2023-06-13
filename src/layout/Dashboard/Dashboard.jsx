@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import DashboardMenu from "./DashboardMenu/DashboardMenu";
 import logo from "../../assets/Images/logo.svg";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../contexts/AuthProvider";
-
 const Dashboard = () => {
   const [isOpen, setOpen] = useState(false);
 
@@ -18,6 +19,29 @@ const Dashboard = () => {
         // An error happened.
       });
   };
+
+  const { data, isLoading, refetch, error } = useQuery({
+    queryFn: async () => {
+      const data = await axios(
+        `${import.meta.env.VITE_BASE_URL}/users/one-role/${user?.email}`
+      );
+
+      return data?.data;
+    },
+    queryKey: ["users-one-role"],
+  });
+
+  // TODO: make admin first time then delete extra component
+  // let isAdmin = true;
+
+  // find one to verify user or admin or instructor
+
+  const role = data?.role;
+  useEffect(() => {
+    refetch();
+  }, [role]);
+
+  // console.log(role);
 
   return (
     <div>
@@ -86,7 +110,7 @@ const Dashboard = () => {
           </div>
         </nav>
         {/* <!-- Dashboard Menu --> */}
-        <DashboardMenu isOpen={isOpen}></DashboardMenu>
+        <DashboardMenu isOpen={isOpen} role={role}></DashboardMenu>
         {/* main  */}
         <main className="p-4 md:ml-64 h-auto pt-20">
           {/* <FormCRUD></FormCRUD> */}
