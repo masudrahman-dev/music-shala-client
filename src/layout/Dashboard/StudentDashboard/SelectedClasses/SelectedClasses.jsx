@@ -22,8 +22,7 @@ const SelectedClasses = () => {
     queryKey: ["carts-logged-user-classes"],
   });
 
-  console.log("data :>> ", data);
-
+  // console.log("data :>> ", data);
 
   const total = data?.reduce((sum, item) => parseFloat(item.price) + sum, 0);
   const handleDelete = (id) => {

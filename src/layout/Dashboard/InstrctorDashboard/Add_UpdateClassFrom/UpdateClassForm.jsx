@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Toaster, toast } from "react-hot-toast";
 import { CirclesWithBar } from "react-loader-spinner";
@@ -14,11 +14,13 @@ const UpdateClassForm = () => {
     formState: { errors },
   } = useForm();
   const { id } = useParams();
+
   const onSubmit = (data) => {
+    // console.log("data :>> ", data);
     setLoading(false);
-    console.log(data, id);
+    // console.log(data, id);
     axios
-      .patch(`${import.meta.env.VITE_BASE_URL}/classes/update/${id}`, data)
+      .patch(`${import.meta.env.VITE_BASE_URL}/classes/update-info/${id}`, data)
       .then((response) => {
         console.log(response.data);
         // Do something with the response
@@ -31,7 +33,9 @@ const UpdateClassForm = () => {
         // Handle the error
       });
   };
-
+  useEffect(() => {
+    // onSubmit()
+  }, []);
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -50,13 +54,14 @@ const UpdateClassForm = () => {
               <div className="grid gap-4 mb-4 sm:grid-cols-2">
                 <div className="hidden">
                   <label
-                    htmlFor="product_name"
+                    htmlFor="status"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Status
                   </label>
                   <input
-                    {...register("status", { required: true })}
+                    defaultValue={"pending"}
+                    {...register("status")}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="default status is pending"
                   />
@@ -69,7 +74,7 @@ const UpdateClassForm = () => {
                     Description *
                   </label>
                   <textarea
-                    {...register("description", {})}
+                    {...register("description")}
                     rows="5"
                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Write  feedback here"
@@ -223,22 +228,24 @@ const UpdateClassForm = () => {
               </div>
 
               <div className="flex justify-between">
-                <button type="submit" className="btn btn-primary">
-                  <svg
-                    className="mr-1 -ml-1 w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg>
-                  {loading ? (
-                    "Update Class"
-                  ) : (
+                {loading ? (
+                  <button type="submit" className="btn btn-primary">
+                    <svg
+                      className="mr-1 -ml-1 w-6 h-6"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                        clipRule="evenodd"
+                      ></path>
+                    </svg>
+                    Update Class
+                  </button>
+                ) : (
+                  <div className="btn btn-primary w-44">
                     <CirclesWithBar
                       height="36"
                       width="36"
@@ -251,8 +258,9 @@ const UpdateClassForm = () => {
                       barColor=""
                       ariaLabel="circles-with-bar-loading"
                     />
-                  )}
-                </button>
+                  </div>
+                )}
+
                 <Link
                   to={"/dashboard/instructor/my-classes"}
                   className="btn btn-info"

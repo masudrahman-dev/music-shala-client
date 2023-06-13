@@ -10,6 +10,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import app from "../contexts/firebase/firebase.config";
+import axios from "axios";
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
 
@@ -59,6 +60,21 @@ const AuthProvider = ({ children }) => {
       // console.log("logged in user inside auth state observer", currentUser);
       setUser(currentUser);
       setLoading(false);
+
+      // get and set token
+      if (currentUser) {
+        axios
+          .post(`${import.meta.env.VITE_BASE_URL}/jwt`, {
+            email: currentUser?.email,
+          })
+          .then((data) => {
+            console.log(data.data.token)
+            localStorage.setItem("access-token", data?.data?.token);
+            setLoading(false);
+          });
+      } else {
+        localStorage.removeItem("access-token");
+      }
     });
 
     return () => {

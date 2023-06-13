@@ -14,21 +14,21 @@ const DashboardMenu = ({ isOpen }) => {
   // TODO: make admin first time then delete extra component
   // let isAdmin = true;
 
-  // find one
-  // useEffect(() => {
-  //   axios
-  //     .get(`${import.meta.env.VITE_BASE_URL}/users/${user?.email}`)
-  //     .then((response) => {
-  //       setUserData(response.data);
-  //       // setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //       // setLoading(false);
-  //     });
-  // }, [user]);
-  // const role = userData?.role;
-
+  // find one to verify user or admin or instructor
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BASE_URL}/users/role/${user?.email}`)
+      .then((response) => {
+        setUserData(response.data);
+        // setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        // setLoading(false);
+      });
+  }, [user]);
+  const role = userData?.role;
+// console.log(role);
   return (
     <>
       <aside
@@ -60,7 +60,7 @@ const DashboardMenu = ({ isOpen }) => {
 
             {role == "instructor" && <InstructorDashboard />}
 
-            {role == "admin" && <AdminDashboard />} */}
+            {role == "admin" && <AdminDashboard  />} */}
             {<StudentDashboard />}
 
             {<InstructorDashboard />}
