@@ -1,20 +1,12 @@
-
-import "../../assets/css/LazyLload.css";
-import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
-import { useQuery } from "@tanstack/react-query";
+import useClassesGET from "../../hooks/useClassesGET";
+import "../../assets/css/lazyLoad.css";
 import LazyLoad from "react-lazy-load";
+import { motion } from "framer-motion";
 
 const Instructors = () => {
-  const { data, isLoading, refetch, error } = useQuery({
-    queryFn: async () => {
-      const data = await axios(`${import.meta.env.VITE_BASE_URL}/classes`);
-
-      return data?.data;
-    },
-    queryKey: ["instructor-classes"],
-  });
-
+  const { data, isLoading } = useClassesGET();
+  // console.log(data);
   if (isLoading) {
     return <Spinner />;
   }
@@ -27,22 +19,30 @@ const Instructors = () => {
             Our Instructors
           </h1>
         </div>
-        <div className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-7">
-    
+        <div className="grid grid-cols-1 mt-12 md:grid-cols-2  lg:grid-cols-3 gap-7">
           {data?.map((item) => (
-            <div key={item?._id} className={` bg-base-100" dark:text-white shadow-xl`}>
-              <figure>
-                <LazyLoad>
-                  <img className="w-full" src={item?.instructor_image} alt="Shoes" />
+            <motion.div
+              key={item?._id}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <div className="relative shadow-lg">
+                <LazyLoad threshold={0.95}>
+                  <img
+                    className="shadow-xl rounded-xl w-full"
+                    src={item?.instructor_image}
+                    alt=""
+                  />
                 </LazyLoad>
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">{item?.class_name}</h2>
 
-                <p>Instructor Name : {item?.instructor_name}</p>
-                <p>Email : {item?.instructor_email}</p>
+                <div className="card-body">
+                  {/* <h2 className="card-title">{item?.instructor_name}</h2> */}
+
+                  <p>Instructor Name : {item?.instructor_name}</p>
+                  <p>Email : {item?.instructor_email}</p>
+                </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

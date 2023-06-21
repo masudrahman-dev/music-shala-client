@@ -22,7 +22,7 @@ const AddClassForm = () => {
     data.user_email = user?.email;
     // console.log(data);
     axios
-      .post(`${import.meta.env.VITE_BASE_URL}/add-class`, data)
+      .post(`${import.meta.env.VITE_BASE_URL}/classes`, data)
       .then((response) => {
         // console.log("Success:", response.data);
         // Process the response data
@@ -43,7 +43,7 @@ const AddClassForm = () => {
       <div className=" flex justify-center">
         <div className=" p-4 w-full max-w-2xl h-full">
           {/* <!-- Modal content --> */}
-          <div className="relative p-4 rounded-lg shadow  bg-white  dark:bg-gray-800 sm:p-5">
+          <div className="relative p-4 rounded-lg shadow     dark:bg-gray-800 sm:p-5">
             {/* <!-- Modal header --> */}
             <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -146,7 +146,7 @@ const AddClassForm = () => {
                     Instructor Name *
                   </label>
                   <input
-                    defaultValue="HIMANSHU DELWAR"
+                    defaultValue={user?.displayName}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="instructor name"
                     {...register("instructor_name", {
@@ -168,7 +168,7 @@ const AddClassForm = () => {
                     Instructor Email *
                   </label>
                   <input
-                    defaultValue="example@gmail.com"
+                    defaultValue={user?.email}
                     type="email"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="instructor email"

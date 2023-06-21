@@ -3,16 +3,19 @@ import StudentDashboard from "../StudentDashboard/StudentDashboard";
 import InstructorDashboard from "../InstrctorDashboard/InstructorDashboard";
 import AdminDashboard from "../AdminDashboard/AdminDashboard";
 
-const DashboardMenu = ({ isOpen,role }) => {
-
+const DashboardMenu = ({ isOpen }) => {
+  // TODO: role come from server
+  let role1 = "instructor";
+  let role2 = "student";
+  let role = "admin";
   return (
     <>
       <aside
-        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform  bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700  ${
+        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform    border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700  ${
           isOpen ? " " : " md:translate-x-0 -translate-x-full"
         } `}
       >
-        <div className="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
+        <div className="overflow-y-auto py-5 px-3 h-full   dark:bg-gray-800">
           <ul className="space-y-2">
             <li>
               <a
@@ -32,16 +35,16 @@ const DashboardMenu = ({ isOpen,role }) => {
               </a>
             </li>
 
-            {/* {role == "user" && <StudentDashboard />}
+            {role2 == "student" && <StudentDashboard />}
 
-            {role == "instructor" && <InstructorDashboard />}
+            {role1 == "instructor" && <InstructorDashboard />}
 
-            {role == "admin" && <AdminDashboard  />} */}
-            {<StudentDashboard role={role} />}
+            {role == "admin" && <AdminDashboard />}
+            {/* {<StudentDashboard role={role} />}
 
             {<InstructorDashboard />}
 
-            {<AdminDashboard />}
+            {<AdminDashboard />} */}
           </ul>
         </div>
       </aside>

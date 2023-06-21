@@ -8,7 +8,7 @@ import { AuthContext } from "../../contexts/AuthProvider";
 const Dashboard = () => {
   const [isOpen, setOpen] = useState(false);
 
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut, setLoading } = useContext(AuthContext);
   const handleLogOut = () => {
     logOut()
       .then(() => {
@@ -20,35 +20,31 @@ const Dashboard = () => {
       });
   };
 
-  const { data, isLoading, refetch, error } = useQuery({
-    queryFn: async () => {
-      const data = await axios(
-        `${import.meta.env.VITE_BASE_URL}/users/one-role/${user?.email}`
-      );
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+  // const { data, isLoading, refetch, error } = useQuery({
+  //   queryFn: async () => {
+  //     const data = await axios(
+  //       `${import.meta.env.VITE_BASE_URL}/users/one-role/${user?.email}`
+  //     );
 
-      return data?.data;
-    },
-    queryKey: ["users-one-role"],
-  });
+  //     return data?.data;
+  //   },
+  //   queryKey: ["users-one-role"],
+  // });
 
   // TODO: make admin first time then delete extra component
   // let isAdmin = true;
 
   // find one to verify user or admin or instructor
 
-  const role = data?.role;
-  useEffect(() => {
-    refetch();
-  }, [role]);
-
-  console.log(role);
-
   return (
     <div>
-      <div className="antialiased bg-gray-50 dark:bg-gray-900 h-screen">
+      <div className="antialiased  dark:bg-gray-900 h-screen">
         {/* Navbar */}
 
-        <nav className="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
+        <nav className=" border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
           <div className="flex flex-wrap justify-between items-center">
             <div className="flex justify-start items-center">
               <button
@@ -110,7 +106,7 @@ const Dashboard = () => {
           </div>
         </nav>
         {/* <!-- Dashboard Menu --> */}
-        <DashboardMenu isOpen={isOpen} role={role}></DashboardMenu>
+        <DashboardMenu isOpen={isOpen}></DashboardMenu>
         {/* main  */}
         <main className="p-4 md:ml-64 h-auto pt-20">
           {/* <FormCRUD></FormCRUD> */}

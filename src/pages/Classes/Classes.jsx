@@ -1,23 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
-import LazyLoad from "react-lazy-load";
 import useClassesGET from "../../hooks/useClassesGET";
 
+import Card from "../../components/Card/Card";
 const Classes = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const { data, isLoading, refetch, error } = useClassesGET();
-
-  const loggedUserEmail = user?.email;
-  console.log("loggedUserEmail :>> ", loggedUserEmail);
+  // console.log(data);
   const handleAddToCart = (item) => {
     if (user) {
+      const customer_email = user?.email;
+
+      // console.log(item);
       const {
         class_image,
         class_name,
@@ -30,10 +30,11 @@ const Classes = () => {
         seats,
         status,
         user_email,
-        _id: addToCartId,
+        _id,
       } = item;
-      console.log('user_email :>> ', user_email);
-      const addToCart = {
+
+      const savedCarts = {
+        customer_email,
         class_image,
         class_name,
         description,
@@ -45,15 +46,15 @@ const Classes = () => {
         seats,
         status,
         user_email,
-        addToCartId,
+        classId: _id,
       };
-      // console.log(addToCart);
+
       axios
-        .post(`${import.meta.env.VITE_BASE_URL}/carts`, addToCart)
+        .post(`${import.meta.env.VITE_BASE_URL}/carts`, savedCarts)
         .then((response) => {
-          const insertedId = response.data;
-          if (insertedId) {
-            refetch(); // Refetch cart to update the number of items in the cart
+          const data = response.data;
+          if (data) {
+            refetch();
             Swal.fire({
               position: "top-end",
               icon: "success",
@@ -70,6 +71,22 @@ const Classes = () => {
             text: "An error occurred while adding the item to the cart.",
             icon: "error",
           });
+        });
+
+      axios
+        .patch(
+          `${import.meta.env.VITE_BASE_URL}/classes/decrement-seats/${
+            item?._id
+          }`
+        )
+        .then((response) => {
+          const data = response.data;
+          if (data) {
+            refetch();
+          }
+        })
+        .catch((error) => {
+          console.error("Error adding item to cart:", error);
         });
     } else {
       Swal.fire({
@@ -102,42 +119,11 @@ const Classes = () => {
         </div>
         <div className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-7">
           {data?.map((item) => (
-            <div
+            <Card
               key={item?._id}
-              className={`card ${
-                item?.seats == 0 ? "bg-rose-600" : "bg-base-100"
-              }  dark:text-white shadow-xl`}
-            >
-              <figure>
-                <LazyLoad>
-                  <img className="w-full" src={item?.class_image} alt="Shoes" />
-                </LazyLoad>
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">{item?.class_name}</h2>
-
-                <p>Instructor Name : {item?.instructor_name}</p>
-                <p>Email : {item?.instructor_email}</p>
-                <p>Available seats : {item?.seats}</p>
-                <p>Price : $ {item?.price}</p>
-                <div className="card-actions justify-end">
-                  {item?.role === "admin" ||
-                  item?.role == "instructor" ||
-                  item?.seats == "0" ? (
-                    <button disabled className="btn btn-primary">
-                      Select
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleAddToCart(item)}
-                      className="btn btn-primary"
-                    >
-                      Select
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
+              item={item}
+              handleAddToCart={handleAddToCart}
+            ></Card>
           ))}
         </div>
       </div>

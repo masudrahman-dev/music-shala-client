@@ -6,37 +6,6 @@ import { CirclesWithBar } from "react-loader-spinner";
 import { Link, useParams } from "react-router-dom";
 
 const FeedBackForm = () => {
-  const [loading, setLoading] = useState(true);
-  const {
-    register,
-    reset,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const { id } = useParams();
-  const onSubmit = (data) => {
-    // const baseUrl = import.meta.env.VITE_BASE_URL;
-    setLoading(false);
-    const { description } = data;
-    axios
-      .patch(
-        `${
-          import.meta.env.VITE_BASE_URL
-        }/classes/feedback/?classId=${id}&newDesc=${description}`
-      )
-      .then((response) => {
-        console.log(response.data);
-        // Do something with the response
-        reset();
-        toast.success("Successfully Added");
-        setLoading(true);
-      })
-      .catch((error) => {
-        console.error(error);
-        // Handle the error
-      });
-  };
-
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -44,7 +13,7 @@ const FeedBackForm = () => {
       <div className=" flex justify-center">
         <div className=" p-4 w-full max-w-2xl h-full">
           {/* <!-- Modal content --> */}
-          <div className="relative p-4 rounded-lg shadow  bg-white  dark:bg-gray-800 sm:p-5">
+          <div className="relative p-4 rounded-lg shadow     dark:bg-gray-800 sm:p-5">
             {/* <!-- Modal header --> */}
             <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">

@@ -1,9 +1,10 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect } from "react";
 import { useState } from "react";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+
 import useAuth from "../../../hooks/useAuth";
-import './CheckoutForm.css'
+// import './CheckoutForm.css'
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 
 const CheckoutForm = ({ cart, price }) => {
@@ -119,7 +120,7 @@ const CheckoutForm = ({ cart, price }) => {
                         },
                     }}
                 />
-                <button className="btn btn-primary btn-sm mt-4" type="submit" disabled={!stripe || !clientSecret || processing}>
+                <button className="btn btn-success mt-4" type="submit" disabled={!stripe || !clientSecret || processing}>
                     Pay
                 </button>
             </form>

@@ -59,22 +59,24 @@ const AuthProvider = ({ children }) => {
       // console.log("auth.currentUser :>> ", auth.currentUser);
       // console.log("logged in user inside auth state observer", currentUser);
       setUser(currentUser);
-      setLoading(false);
+     
 
       // get and set token
-      if (currentUser) {
-        axios
-          .post(`${import.meta.env.VITE_BASE_URL}/jwt`, {
-            email: currentUser?.email,
-          })
-          .then((data) => {
-            console.log(data.data.token)
-            localStorage.setItem("access-token", data?.data?.token);
-            setLoading(false);
-          });
-      } else {
-        localStorage.removeItem("access-token");
-      }
+      // if (currentUser) {
+      //   axios
+      //     .post(`${import.meta.env.VITE_BASE_URL}/jwt`, {
+      //       email: currentUser?.email,
+      //     })
+      //     .then((data) => {
+      //       console.log(data.data.token);
+      //       localStorage.setItem("access-token", data?.data?.token);
+      //       setLoading(false);
+      //     });
+      // } else {
+      //   localStorage.removeItem("access-token");
+      // }
+
+      setLoading(false);
     });
 
     return () => {

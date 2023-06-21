@@ -4,21 +4,22 @@ import ClassesSection from "./ClassesSection/ClassesSection";
 import InstructorsSection from "./InstructorsSection/InstructorsSection";
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
-import CustomarReview from '../ExtraPages/CustomarReview'
+import CustomarReview from "../ExtraPages/CustomarReview";
 import ServiceTeam from "../ExtraPages/ServiceTeam";
 import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../contexts/AuthProvider";
 const Home = () => {
-
+  const { loading } = useContext(AuthContext);
   const { data, isLoading, refetch, error } = useQuery({
     queryFn: async () => {
-      const data = await axios(`${import.meta.env.VITE_BASE_URL}/classes/six-item`);
+      const data = await axios(
+        `${import.meta.env.VITE_BASE_URL}/classes/six-item`
+      );
 
       return data?.data;
     },
-    queryKey: ["home-classes"],
+    queryKey: ["classes-six-item"],
   });
-
-
 
   if (isLoading) {
     return <Spinner />;

@@ -16,33 +16,31 @@ const UpdateClassForm = () => {
   const { id } = useParams();
 
   const onSubmit = (data) => {
-    // console.log("data :>> ", data);
+    console.log("data :>> ", data);
     setLoading(false);
     // console.log(data, id);
     axios
-      .patch(`${import.meta.env.VITE_BASE_URL}/classes/update-info/${id}`, data)
+      .put(`${import.meta.env.VITE_BASE_URL}/classes/update-info/${id}`, data)
       .then((response) => {
         console.log(response.data);
         // Do something with the response
-        reset();
+        // reset();
         toast.success(" update Successfully");
-        setLoading(true);
+        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
         // Handle the error
       });
   };
-  useEffect(() => {
-    // onSubmit()
-  }, []);
+
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
       <div className=" flex justify-center">
         <div className=" p-4 w-full max-w-2xl h-full">
           {/* <!-- Modal content --> */}
-          <div className="relative p-4 rounded-lg shadow  bg-white  dark:bg-gray-800 sm:p-5">
+          <div className="relative p-4 rounded-lg shadow     dark:bg-gray-800 sm:p-5">
             {/* <!-- Modal header --> */}
             <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -228,7 +226,7 @@ const UpdateClassForm = () => {
               </div>
 
               <div className="flex justify-between">
-                {loading ? (
+                {true ? (
                   <button type="submit" className="btn btn-primary">
                     <svg
                       className="mr-1 -ml-1 w-6 h-6"

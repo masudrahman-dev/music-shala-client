@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import "../../../assets/css/LazyLload.css";
 import LazyLoad from "react-lazy-load";
 const ClassesSection = ({ data }) => {
   // console.log('data :>> ', data);
@@ -11,7 +10,7 @@ const ClassesSection = ({ data }) => {
           Classes
         </h1>
       </div>
-      <div className="grid grid-cols-1  md:grid-cols-2  lg:grid-cols-3 gap-7">
+      <div className="grid grid-cols-1 mt-12 md:grid-cols-2  lg:grid-cols-3 gap-7">
         {data?.map((item) => (
           <motion.div
             key={item?._id}

@@ -7,33 +7,28 @@ import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 
 const MyClasses = () => {
-  const [desc, setDesc] = useState(true);
-  const { user } = useContext(AuthContext);
-  const searchQuery = user?.email;
+  const [desc, setDesc] = useState("");
+  const { user, loading } = useContext(AuthContext);
+  const email = user?.email;
   const { data, isLoading, refetch, error } = useQuery({
     queryFn: async () => {
       const data = await axios(
-        `${
-          import.meta.env.VITE_BASE_URL
-        }/classes/logged-user/?searchQuery=${searchQuery}`
+        `${import.meta.env.VITE_BASE_URL}/classes/?email=${email}`
       );
 
       return data?.data;
     },
-    queryKey: ["classes-logged-user"],
+    queryKey: ["my-classes"],
   });
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-  console.log('data :>> ', data);
+  // console.log("data :>> ", data);
   // delete item
-  const deleteClass = async (classId) => {
+  const deleteClass = async (_id) => {
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_BASE_URL}/classes/my-class/${classId}`
+        `${import.meta.env.VITE_BASE_URL}/classes/${_id}`
       );
-      // console.log(response.data);
+      console.log(response.data);
       refetch();
       Swal.fire({
         position: "top-end",
@@ -47,11 +42,19 @@ const MyClasses = () => {
     }
   };
 
+  if (isLoading || loading) {
+    return <Spinner />;
+  }
   return (
     <>
       <dialog id="my_modal_1" className="modal">
         <form method="dialog" className="modal-box">
-          <p className="py-4 text-center">{desc}</p>
+          <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              Feedback From Admin
+            </h3>
+          </div>
+          {desc}
           <div className="modal-action">
             {/* if there is a button in form, it will close the modal */}
             <button className="btn btn-ghost btn-outline">Close</button>
@@ -61,7 +64,14 @@ const MyClasses = () => {
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
         <div className="px-4 mx-auto max-w-screen-2xl lg:px-12">
           {/*  */}
-          <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
+          {/* <div className="flex  px-4 py-3 space-y-3 lg:items-center justify-end lg:space-y-0 lg:space-x-4">
+            <div className="flex items-center  space-x-4">
+              <h5 className="dark:text-white">
+                <span>Total Enrolled Student : 234 </span>
+              </h5>
+            </div>
+          </div> */}
+          <div className="relative overflow-hidden   shadow-md dark:bg-gray-800 sm:rounded-lg">
             {/* table */}
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -139,7 +149,8 @@ const MyClasses = () => {
                         {item?.status}
                       </td>
                       <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {item?.status === "denied" ? (
+                        {item?.status === "denied" &&
+                        item?.description !== "" ? (
                           <button
                             onClick={() => {
                               setDesc(item?.description);
@@ -194,7 +205,7 @@ const MyClasses = () => {
                 <li>
                   <a
                     href="#"
-                    className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500   rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
                     <span className="sr-only">Previous</span>
                     <svg
@@ -214,7 +225,7 @@ const MyClasses = () => {
                 <li>
                   <a
                     href="#"
-                    className="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    className="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500   border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
                     1
                   </a>
@@ -222,7 +233,7 @@ const MyClasses = () => {
                 <li>
                   <a
                     href="#"
-                    className="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    className="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500   border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
                     2
                   </a>
@@ -239,7 +250,7 @@ const MyClasses = () => {
                 <li>
                   <a
                     href="#"
-                    className="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    className="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500   border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
                     ...
                   </a>
@@ -247,7 +258,7 @@ const MyClasses = () => {
                 <li>
                   <a
                     href="#"
-                    className="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    className="flex items-center justify-center px-3 py-2 text-sm leading-tight text-gray-500   border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
                     100
                   </a>
@@ -255,7 +266,7 @@ const MyClasses = () => {
                 <li>
                   <a
                     href="#"
-                    className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500   rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
                     <span className="sr-only">Next</span>
                     <svg

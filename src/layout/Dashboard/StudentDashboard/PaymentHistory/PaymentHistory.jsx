@@ -1,60 +1,11 @@
-import axios from "axios";
-import Spinner from "../../../../components/Spinner/Spinner";
-import { useQuery } from "@tanstack/react-query";
-import { Toaster, toast } from "react-hot-toast";
-import useUserGET from "../../../../hooks/useUserGET";
-import { useState } from "react";
+import React from "react";
 
-const ManageUsers = () => {
-  const { data, isLoading, refetch, error } = useUserGET();
-  // const [data, setData] = useState(null);
-  // console.log("data :>> ", data);
-  const handleRole = (id, newRole, email) => {
-    // console.log(newRole);
-    axios
-      .patch(
-        `${
-          import.meta.env.VITE_BASE_URL
-        }/users/user-role/?newRole=${newRole}&email=${email}`
-      )
-      .then((response) => {
-        console.log(response.data);
-        // Do something with the response
-        toast.success("Successfully Updated!");
-        refetch();
-      })
-      .catch((error) => {
-        console.error(error);
-        // Handle the error
-      });
-
-    // axios
-    //   .patch(
-    //     `${
-    //       import.meta.env.VITE_BASE_URL
-    //     }/classes/update-user-role/?email=${email}&newRole=${newRole}`
-    //   )
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     // Do something with the response
-    //     // toast.success("Successfully Updated!");
-    //     refetch();
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //     // Handle the error
-    //   });
-  };
-  if (isLoading) {
-    return <Spinner />;
-  }
-  // TODO: delete user btn
+const PaymentHistory = () => {
   return (
     <>
-      <Toaster position="top-center" reverseOrder={false} />
       <section className="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
         <div className="px-4 mx-auto max-w-screen-2xl lg:px-12">
-          {/*  */}
+          {/*  */} <p>payment history</p>
           <div className="relative overflow-hidden   shadow-md dark:bg-gray-800 sm:rounded-lg">
             {/* table */}
             <div className="overflow-x-auto">
@@ -65,91 +16,51 @@ const ManageUsers = () => {
                       #
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      image
-                    </th>
-                    <th scope="col" className="px-4 py-3">
                       Name
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      Role
+                      Instructor
                     </th>
-
                     <th scope="col" className="px-4 py-3">
-                      Make Instructor
+                      Seats
                     </th>
-
                     <th scope="col" className="px-4 py-3">
-                      Make Admin
+                      Price
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {/* row */}
-                  {data?.map((item, index) => (
-                    <tr
-                      key={item?._id}
-                      className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  {/* Row */}
+                  <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <td className="w-4 px-4 py-3">
+                      {/* <div className="flex items-center">{index + 1}</div> */}
+                    </td>
+                    <th
+                      scope="row"
+                      className="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      <td className="w-4 px-4 py-3">
-                        <div className="flex items-center">{index + 1}</div>
-                      </td>
-
-                      <td className="px-4 py-2">
-                        <span className="bg-primary-100 dark:text-white text-primary-800  font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                          <img
-                            src={item?.photoURL || item?.userPhoto}
-                            alt="iMac Front Image"
-                            className="w-auto h-8 mr-3"
-                          />
-                        </span>
-                      </td>
-                      <td className="px-4 py-2">
-                        <span className="bg-primary-100 dark:text-white text-primary-800  font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                          {item?.displayName || item?.userName || item?.name}
-                        </span>
-                      </td>
-                      <td className="px-4 py-2">
-                        <span className="bg-primary-100 dark:text-white text-primary-800  font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                          {item?.role}
-                        </span>
-                      </td>
-
-                      <td className="px-4  py-2 font-medium text-gray-900 whitespace-nowrap ">
-                        {item?.role === "instructor" ||
-                        item?.role === "admin" ? (
-                          <button disabled className="btn btn-info">
-                            Instructor
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => {
-                              handleRole(item?._id, "instructor", item?.email);
-                            }}
-                            className="btn btn-info"
-                          >
-                            Instructor
-                          </button>
-                        )}
-                      </td>
-                      <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
-                        {item?.role === "admin" ||
-                        item?.role === "instructor" ? (
-                          <button disabled className="btn btn-primary">
-                            Admin
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() =>
-                              handleRole(item?._id, "admin", item?.email)
-                            }
-                            className="btn btn-primary"
-                          >
-                            Admin
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
+                      <img
+                        // src={product_url}
+                        alt="iMac Front Image"
+                        className="w-auto h-8 mr-3"
+                      />
+                      {/* {product_name} */}
+                    </th>
+                    <td className="px-4 py-2">
+                      <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                        {/* {category} */}
+                      </span>
+                    </td>
+                    <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      <div className="flex items-center">
+                        <div className="inline-block w-4 h-4 mr-2 bg-red-700 rounded-full"></div>
+                        {/* {quantity} */}
+                      </div>
+                    </td>
+                    <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      {/* $ {price} */}
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -258,4 +169,4 @@ const ManageUsers = () => {
   );
 };
 
-export default ManageUsers;
+export default PaymentHistory;

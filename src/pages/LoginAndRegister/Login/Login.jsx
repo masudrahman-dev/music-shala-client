@@ -2,10 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import logo from "../../../assets/Images/logo.svg";
-
-import Spinner from "../../../components/Spinner/Spinner";
 import { Eye, EyeClosed } from "@phosphor-icons/react";
 import axios from "axios";
+import { CirclesWithBar } from "react-loader-spinner";
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isHide, setIsHide] = useState(false);
@@ -56,7 +55,7 @@ const Login = () => {
 
         if (user) {
           const { displayName, email, photoURL } = user;
-          const role = "user";
+          const role = "student";
           const newUserData = {
             displayName,
             email,
@@ -80,9 +79,7 @@ const Login = () => {
         console.log(error);
       });
   };
-  if (loading) {
-    return <Spinner />;
-  }
+
   const eye = (
     <>
       <svg
@@ -107,7 +104,7 @@ const Login = () => {
             <img className="w-8 h-8 mr-2" src={logo} alt="logo" />
             Music Shala
           </Link>
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div className="w-full   rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in to your account
@@ -180,21 +177,58 @@ const Login = () => {
                     Forgot password?
                   </a>
                 </div>
-                <button
-                  type="submit"
-                  className="w-full btn btn-primary text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                >
-                  Sign in
-                </button>
 
-                <div className="divider">OR</div>
                 <div className="text-center">
-                  <button
-                    onClick={handleGoogleSignIn}
-                    className="btn btn-primary"
-                  >
-                    Google
-                  </button>
+                  {loading ? (
+                    <button className="btn btn-primary">
+                      <CirclesWithBar
+                        height="32"
+                        width="32"
+                        color="#ffffff"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                        visible={true}
+                        outerCircleColor=""
+                        innerCircleColor=""
+                        barColor=""
+                        ariaLabel="circles-with-bar-loading"
+                      />
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="w-full btn btn-primary text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                    >
+                      Sign in
+                    </button>
+                  )}
+                </div>
+                <div className="divider">OR</div>
+
+                <div className="text-center">
+                  {loading ? (
+                    <button className="btn btn-primary">
+                      <CirclesWithBar
+                        height="32"
+                        width="32"
+                        color="#ffffff"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                        visible={true}
+                        outerCircleColor=""
+                        innerCircleColor=""
+                        barColor=""
+                        ariaLabel="circles-with-bar-loading"
+                      />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleGoogleSignIn}
+                      className="btn btn-primary"
+                    >
+                      Google
+                    </button>
+                  )}
                 </div>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Don’t have an account yet?{" "}

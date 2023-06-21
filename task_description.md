@@ -139,7 +139,7 @@ Read the tasks carefully.
 
 1. **Payment: (Student Dashboard)** `0`
 
-   - **Pay button Action:** Upon clicking the **Pay button** for a Class on the My Selected Classes, the student will be redirected to the payment page to finalize their payment. After a successful payment, the **Available seats** for the particular Class will be reduced by 1. The Class information will be shown on the **My Enrolled Classes page**and removed from the **My Selected Classes page**.
+   - **Pay button Action:** Upon clicking the **Pay button** for a Class on the My Selected Classes, the student will be redirected to the payment page to finalize their payment. After a successful payment, the **Available seats** for the particular Class will be `reduced by 1`. The Class information will be shown on the **My Enrolled Classes page**and removed from the **My Selected Classes page**.
 
    `0` - Create a `payment history page` for students. It will show the payment made by that student. Make sure to sort the payment history descending. The newest payment will be at the top
 
@@ -170,7 +170,7 @@ Read the tasks carefully.
 
 <br/>
 
-`1`11. **Admin Dashboard:**
+1.  **Admin Dashboard:**
     <br/>
     **_It will be private & only an admin can access this route._**
 
@@ -180,7 +180,7 @@ Read the tasks carefully.
 
       > **Note:** If the admin `clicks the Deny button`, the status will be `updated to denied`. The `Deny and the Approve button will become disabled`.
 
-      > **Note:** A modal will be opened When the admin clicks the send feedback button. Admin will write the approved/denied reason in a text field and send it to the Instructor. You can also do this in another route except for the modal.
+      > **Note:** A modal will be opened When the admin clicks the `send feedback` button. Admin will write the approved/denied reason in a text field and send it to the Instructor. You can also do this in another route except for the modal.
 
         </br>
 

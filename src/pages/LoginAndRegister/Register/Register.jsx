@@ -10,14 +10,11 @@ import { CirclesWithBar } from "react-loader-spinner";
 
 const Register = () => {
   const [isMatch, setIsMatch] = useState(false);
-  const [isGoogle, setIssGoogle] = useState(true);
+  const [isGoogle, setIsGoogle] = useState(true);
   const [userError, setUserError] = useState(null);
-  const [userName, setUserName] = useState(null);
-  const [userPhoto, setUserPhoto] = useState(null);
-  const [load, setLoad] = useState(true);
   const [isHide, setIsHide] = useState(false);
   const [isHideConfirm, setIsHideConfirm] = useState(false);
-  const { createUser, updateUser, GoogleSignIn, user, loading } =
+  const { createUser, updateUser, GoogleSignIn, user, loading, setLoading } =
     useContext(AuthContext);
   const {
     register,
@@ -30,44 +27,54 @@ const Register = () => {
   let navigate = useNavigate();
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
-  const role = "user";
+
   const handleGoogleSignIn = () => {
-    setIssGoogle(false);
+    setIsGoogle(false);
     GoogleSignIn()
       .then((result) => {
         const loggedInUser = result.user;
-        // setUser(loggedInUser);
-        setLoad(false);
-        // console.log("loggedInUser :>> ", loggedInUser);
+        // setLoading(false);
       })
       .catch((error) => {
         console.log(error);
-        setLoad(false);
       });
   };
 
   const handleRegister = (data) => {
-    // Handle form submission
-    setLoad(loading);
-
     const { name, email, photo, password, confirmPassword } = data;
     if (password === confirmPassword) {
       createUser(email, password)
         .then((userCredential) => {
-          // Signed in
-          // const user = userCredential.user;
-          setUserName(name);
-          setUserPhoto(photo);
+          updateUser(name, photo);
+
+          if (user?.displayName) {
+            const { displayName, email, photoURL } = user;
+            let role = "student";
+            const newUser = {
+              displayName,
+              email,
+              photoURL,
+              role,
+            };
+            axios
+              .post(`${import.meta.env.VITE_BASE_URL}/users`, newUser)
+              .then((response) => {
+                console.log(response.data);
+                // console.log('user :>> ', user);
+                navigate(from, { replace: true });
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+            // setLoading(false);
+          }
           reset();
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          // console.log(errorMessage);
-          console.log(errorCode);
           setUserError(errorCode);
 
-          console.log("error :>> ", error);
           if (
             errorMessage === "Firebase: Error (auth/email-already-in-use)." ||
             errorCode === "auth/email-already-in-use" ||
@@ -78,48 +85,45 @@ const Register = () => {
                 position: "top-end",
                 icon: "error",
                 title:
-                  userError || "something want wrong,please check email or etc",
+                  userError ||
+                  "Something went wrong, please check the email or etc",
                 showConfirmButton: false,
                 timer: 2000,
               });
-              setLoad(false);
+              // setLoading(false);
             }
           }
         });
-
-      updateUser(userName, userPhoto);
     } else {
       setIsMatch(true);
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      const { displayName, email, photoURL } = user;
-      const role = "user";
-      const newUserData = {
-        displayName,
-        email,
-        photoURL,
-        role,
-        userName,
-        userPhoto,
-      };
+  // useEffect(() => {
+  //   if (user?.displayName) {
+  //     console.log("user :>> ", user);
 
-      axios
-        .post(`${import.meta.env.VITE_BASE_URL}/users`, newUserData)
-        .then((response) => {
-          // console.log(response.data);
-          // Do something with the response
-          navigate(from, { replace: true });
-        })
-        .catch((error) => {
-          console.error(error);
-          // Handle the error
-        });
-    }
-    setLoad(false);
-  }, [from, navigate, user]);
+  //     const { displayName, email, photoURL } = user;
+  //     console.log(displayName, email, photoURL);
+  //     let role = "student";
+  //     const newUser = {
+  //       displayName,
+  //       email,
+  //       photoURL,
+  //       role,
+  //     };
+  //     axios
+  //       .post(`${import.meta.env.VITE_BASE_URL}/users`, newUser)
+  //       .then((response) => {
+  //         console.log(response.data);
+  //         // navigate(from, { replace: true });
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //       });
+  //   }
+  //   console.log("loading register: ", loading);
+  // }, [from]);
   return (
     <section className="bg-gray-50 dark:bg-gray-900 py-20">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -130,7 +134,7 @@ const Register = () => {
           <img className="w-8 h-8 mr-2" src={logo} alt="logo" />
           Music Shala
         </Link>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-full   rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create and account
@@ -295,7 +299,7 @@ const Register = () => {
                 </div>
               </div>
 
-              {load ? (
+              {"" ? (
                 <button type="submit" className="w-full btn btn-primary ">
                   <CirclesWithBar
                     height="32"
@@ -316,44 +320,42 @@ const Register = () => {
                 </button>
               )}
               <div className="divider">OR</div>
-              <div className="text-center">
-                {load ? (
-                  <button
-                    onClick={handleGoogleSignIn}
-                    className="btn btn-primary"
-                  >
-                    <CirclesWithBar
-                      height="32"
-                      width="32"
-                      color="#ffffff"
-                      wrapperStyle={{}}
-                      wrapperClass=""
-                      visible={true}
-                      outerCircleColor=""
-                      innerCircleColor=""
-                      barColor=""
-                      ariaLabel="circles-with-bar-loading"
-                    />
-                  </button>
-                ) : (
-                  <button
-                    onClick={handleGoogleSignIn}
-                    className="btn btn-primary"
-                  >
-                    Google
-                  </button>
-                )}
-              </div>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Already have an account?{" "}
-                <Link
-                  to="/login"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >
-                  Login here
-                </Link>
-              </p>
             </form>
+
+            <div className="text-center">
+              {loading ? (
+                <button className="btn btn-primary">
+                  <CirclesWithBar
+                    height="32"
+                    width="32"
+                    color="#ffffff"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    outerCircleColor=""
+                    innerCircleColor=""
+                    barColor=""
+                    ariaLabel="circles-with-bar-loading"
+                  />
+                </button>
+              ) : (
+                <button
+                  onClick={handleGoogleSignIn}
+                  className="btn btn-primary"
+                >
+                  Google
+                </button>
+              )}
+            </div>
+            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+              >
+                Login here
+              </Link>
+            </p>
           </div>
         </div>
       </div>

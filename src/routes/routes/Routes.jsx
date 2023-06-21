@@ -16,6 +16,7 @@ import ErrorPage from "../../pages/ErrorPage/ErrorPage";
 import FeedBackForm from "../../pages/Home/ClassesSection/FeedBackForm";
 import AddClassForm from "../../layout/Dashboard/InstrctorDashboard/Add_UpdateClassFrom/AddClassForm";
 import UpdateClassForm from "../../layout/Dashboard/InstrctorDashboard/Add_UpdateClassFrom/UpdateClassForm";
+import PaymentHistory from "../../layout/Dashboard/StudentDashboard/PaymentHistory/PaymentHistory";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/student/enrolled-classes",
         element: <EnrolledClasses></EnrolledClasses>,
+      },
+      {
+        path: "/dashboard/student/payment-history",
+        element: <PaymentHistory></PaymentHistory>,
       },
       {
         path: "/dashboard/instructor/my-classes",
