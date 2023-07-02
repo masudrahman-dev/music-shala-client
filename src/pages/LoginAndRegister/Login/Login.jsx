@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../contexts/AuthProvider";
 import logo from "../../../assets/Images/logo.svg";
 import { Eye, EyeClosed } from "@phosphor-icons/react";
 import axios from "axios";
 import { CirclesWithBar } from "react-loader-spinner";
+import useAuth from "../../../hooks/useAuth";
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  const [isHide, setIsHide] = useState(false);
-  const { GoogleSignIn, logIn, user, loading } = useContext(AuthContext);
+  const [isHide, setIsHide] = useState(true);
+  const { GoogleSignIn, logIn, addUserToDB, user, loading } = useAuth();
   let navigate = useNavigate();
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
@@ -25,7 +25,8 @@ const Login = () => {
     logIn(email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
+        // const user = userCredential.user;
+
         navigate(from, { replace: true });
         console.log("Log in successful");
       })
@@ -51,29 +52,8 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         // setUser(loggedInUser);
-        // console.log("loggedInUser :>> ", loggedInUser);
-
-        if (user) {
-          const { displayName, email, photoURL } = user;
-          const role = "student";
-          const newUserData = {
-            displayName,
-            email,
-            photoURL,
-            role,
-          };
-
-          axios
-            .post(`${import.meta.env.VITE_BASE_URL}/users`, newUserData)
-            .then((response) => {
-              console.log(response.data);
-              // Do something with the response
-            })
-            .catch((error) => {
-              console.error(error);
-              // Handle the error
-            });
-        }
+        addUserToDB(user?.displayName, user.email, user?.photoURL);
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         console.log(error);
@@ -134,6 +114,7 @@ const Login = () => {
                     Password
                   </label>
                   <input
+                    defaultValue={"sssPass&123"}
                     type={`${isHide ? "text" : "password"}`}
                     name="password"
                     id="password"

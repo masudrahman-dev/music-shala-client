@@ -1,16 +1,13 @@
 import axios from "axios";
 import Spinner from "../../../../components/Spinner/Spinner";
-import { Link } from "react-router-dom";
-import useClassesGET from "../../../../hooks/useClassesGET";
+import useGetClasses from "../../../../hooks/useGetClasses";
 import { Toaster, toast } from "react-hot-toast";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { CirclesWithBar } from "react-loader-spinner";
-import { Tree } from "@phosphor-icons/react";
 
 const ManageClasses = () => {
-  const { data, isLoading, refetch } = useClassesGET();
-
+  const { data, isLoading, refetch } = useGetClasses();
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState("");
@@ -20,57 +17,52 @@ const ManageClasses = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  // console.log(data);
   const handleStatus = (classId, newStatus) => {
     // console.log(classId, newStatus);
     axios
-      .patch(
-        `${
-          import.meta.env.VITE_BASE_URL
-        }/classes/update-status/?classId=${classId}&newStatus=${newStatus}`
-      )
+      .patch(`${import.meta.env.VITE_BASE_URL}/classes/${classId}`, {
+        newStatus,
+      })
       .then((response) => {
         // console.log(response.data);
         // Do something with the response
+        // reset();
         refetch();
+        toast.success("Status Successfully Updated");
+        // setLoading(true);
       })
       .catch((error) => {
         console.error(error);
         // Handle the error
         refetch();
+        toast.error("Failed to update Status");
+        // setLoading(false);
       });
-
     if (newStatus === "denied") {
       setId(classId);
     }
   };
-
   const onSubmit = (descData) => {
-    const { description } = descData;
-    handleDesc(id, description);
-  };
-
-  const handleDesc = (classId, description) => {
-    console.log(classId, description);
+    // console.log(id, descData);
     axios
-      .patch(
-        `${
-          import.meta.env.VITE_BASE_URL
-        }/classes/feedback/?classId=${classId}&newDesc=${description}`
-      )
+      .patch(`${import.meta.env.VITE_BASE_URL}/classes/${id}`, descData)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         // Do something with the response
-        reset();
+        // reset();
+        refetch();
         toast.success("Feedback Successfully Updated");
         // setLoading(true);
       })
       .catch((error) => {
         console.error(error);
         // Handle the error
+        refetch();
+        toast.error("Failed to update feedback");
+        // setLoading(false);
       });
   };
-
   if (isLoading) {
     return <Spinner />;
   }

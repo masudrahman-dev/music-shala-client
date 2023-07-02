@@ -20,7 +20,7 @@ const UpdateClassForm = () => {
     setLoading(false);
     // console.log(data, id);
     axios
-      .put(`${import.meta.env.VITE_BASE_URL}/classes/update-info/${id}`, data)
+      .put(`${import.meta.env.VITE_BASE_URL}/classes/${id}`, data)
       .then((response) => {
         console.log(response.data);
         // Do something with the response

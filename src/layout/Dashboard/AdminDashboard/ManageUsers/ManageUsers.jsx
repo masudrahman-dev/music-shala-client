@@ -1,22 +1,14 @@
 import axios from "axios";
 import Spinner from "../../../../components/Spinner/Spinner";
-import { useQuery } from "@tanstack/react-query";
 import { Toaster, toast } from "react-hot-toast";
-import useUserGET from "../../../../hooks/useUserGET";
-import { useState } from "react";
+import useGetUsers from "../../../../hooks/useGetUsers";
 
 const ManageUsers = () => {
-  const { data, isLoading, refetch, error } = useUserGET();
-  // const [data, setData] = useState(null);
-  // console.log("data :>> ", data);
-  const handleRole = (id, newRole, email) => {
+  const { data, isLoading, refetch, error } = useGetUsers();
+  const handleRole = (id, newRole) => {
     // console.log(newRole);
     axios
-      .patch(
-        `${
-          import.meta.env.VITE_BASE_URL
-        }/users/user-role/?newRole=${newRole}&email=${email}`
-      )
+      .patch(`${import.meta.env.VITE_BASE_URL}/users/${id}`, { newRole })
       .then((response) => {
         console.log(response.data);
         // Do something with the response
@@ -26,29 +18,15 @@ const ManageUsers = () => {
       .catch((error) => {
         console.error(error);
         // Handle the error
+        toast.error("error occur!");
       });
-
-    // axios
-    //   .patch(
-    //     `${
-    //       import.meta.env.VITE_BASE_URL
-    //     }/classes/update-user-role/?email=${email}&newRole=${newRole}`
-    //   )
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     // Do something with the response
-    //     // toast.success("Successfully Updated!");
-    //     refetch();
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //     // Handle the error
-    //   });
   };
+
   if (isLoading) {
     return <Spinner />;
   }
   // TODO: delete user btn
+  // console.log("data :>> ", data);
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -63,9 +41,6 @@ const ManageUsers = () => {
                   <tr>
                     <th scope="col" className="p-4">
                       #
-                    </th>
-                    <th scope="col" className="px-4 py-3">
-                      image
                     </th>
                     <th scope="col" className="px-4 py-3">
                       Name
@@ -95,19 +70,19 @@ const ManageUsers = () => {
                       </td>
 
                       <td className="px-4 py-2">
-                        <span className="bg-primary-100 dark:text-white text-primary-800  font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                          <img
-                            src={item?.photoURL || item?.userPhoto}
-                            alt="iMac Front Image"
-                            className="w-auto h-8 mr-3"
-                          />
-                        </span>
+                        <div className="flex items-center  dark:text-white">
+                          <span className="bg-primary-100 text-primary-800  font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                            {item?.photoURL && (
+                              <img
+                                src={item?.photoURL}
+                                className="w-auto h-8 mr-3"
+                              />
+                            )}
+                          </span>
+                          <span>{item?.name}</span>
+                        </div>
                       </td>
-                      <td className="px-4 py-2">
-                        <span className="bg-primary-100 dark:text-white text-primary-800  font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                          {item?.displayName || item?.userName || item?.name}
-                        </span>
-                      </td>
+
                       <td className="px-4 py-2">
                         <span className="bg-primary-100 dark:text-white text-primary-800  font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
                           {item?.role}
@@ -123,7 +98,7 @@ const ManageUsers = () => {
                         ) : (
                           <button
                             onClick={() => {
-                              handleRole(item?._id, "instructor", item?.email);
+                              handleRole(item?._id, "instructor");
                             }}
                             className="btn btn-info"
                           >
@@ -139,9 +114,7 @@ const ManageUsers = () => {
                           </button>
                         ) : (
                           <button
-                            onClick={() =>
-                              handleRole(item?._id, "admin", item?.email)
-                            }
+                            onClick={() => handleRole(item?._id, "admin")}
                             className="btn btn-primary"
                           >
                             Admin

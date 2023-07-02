@@ -1,11 +1,11 @@
 import Spinner from "../../components/Spinner/Spinner";
-import useClassesGET from "../../hooks/useClassesGET";
+import useGetClasses from "../../hooks/useGetClasses";
 import "../../assets/css/lazyLoad.css";
 import LazyLoad from "react-lazy-load";
 import { motion } from "framer-motion";
 
 const Instructors = () => {
-  const { data, isLoading } = useClassesGET();
+  const { data, isLoading } = useGetClasses();
   // console.log(data);
   if (isLoading) {
     return <Spinner />;

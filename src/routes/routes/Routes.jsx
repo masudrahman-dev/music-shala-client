@@ -2,7 +2,6 @@ import { Form, createBrowserRouter } from "react-router-dom";
 import Main from "../../layout/Main";
 import Home from "../../pages/Home/Home";
 import Instructors from "../../pages/Instructors/Instructors";
-import Classes from "../../pages/Classes/Classes";
 import Login from "../../pages/LoginAndRegister/Login/Login";
 import Register from "../../pages/LoginAndRegister/Register/Register";
 import Dashboard from "../../layout/Dashboard/Dashboard";
@@ -13,7 +12,7 @@ import SelectedClasses from "../../layout/Dashboard/StudentDashboard/SelectedCla
 import EnrolledClasses from "../../layout/Dashboard/StudentDashboard/EnrolledClasses/EnrolledClasses";
 import PrivateRoute from "../privateRoute/PrivateRoute";
 import ErrorPage from "../../pages/ErrorPage/ErrorPage";
-import FeedBackForm from "../../pages/Home/ClassesSection/FeedBackForm";
+import FeedBackForm from "../../pages/Home/Classes/FeedBackForm";
 import AddClassForm from "../../layout/Dashboard/InstrctorDashboard/Add_UpdateClassFrom/AddClassForm";
 import UpdateClassForm from "../../layout/Dashboard/InstrctorDashboard/Add_UpdateClassFrom/UpdateClassForm";
 import PaymentHistory from "../../layout/Dashboard/StudentDashboard/PaymentHistory/PaymentHistory";
@@ -31,10 +30,6 @@ const router = createBrowserRouter([
       {
         path: "instructors",
         element: <Instructors />,
-      },
-      {
-        path: "classes",
-        element: <Classes />,
       },
     ],
   },

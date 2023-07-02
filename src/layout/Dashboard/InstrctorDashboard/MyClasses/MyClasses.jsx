@@ -5,23 +5,14 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../../contexts/AuthProvider";
+import useGetClasses from "../../../../hooks/useGetClasses";
 
 const MyClasses = () => {
   const [desc, setDesc] = useState("");
   const { user, loading } = useContext(AuthContext);
   const email = user?.email;
-  const { data, isLoading, refetch, error } = useQuery({
-    queryFn: async () => {
-      const data = await axios(
-        `${import.meta.env.VITE_BASE_URL}/classes/?email=${email}`
-      );
+  const { data, isLoading, refetch, error } = useGetClasses(email);
 
-      return data?.data;
-    },
-    queryKey: ["my-classes"],
-  });
-
-  // console.log("data :>> ", data);
   // delete item
   const deleteClass = async (_id) => {
     try {

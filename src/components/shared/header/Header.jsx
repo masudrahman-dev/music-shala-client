@@ -1,9 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import logo from "../../../assets/Images/logo.svg";
 import Hamburger from "hamburger-react";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
+import { Basket } from "@phosphor-icons/react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 const Header = () => {
   const [isOpen, setOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext);
@@ -17,7 +20,20 @@ const Header = () => {
         // An error happened.
       });
   };
+  const email = user?.email;
+  const { data, isLoading, refetch, error } = useQuery({
+    queryFn: async () => {
+      const data = await axios(
+        `${import.meta.env.VITE_BASE_URL}/carts/?email=${email}`
+      );
 
+      return data?.data;
+    },
+    queryKey: ["selected-classes-length"],
+  });
+  useEffect(() => {
+    refetch();
+  }, [email]);
   const menuItems = (
     <>
       <li>
@@ -25,24 +41,6 @@ const Header = () => {
           {({ isActive }) => (
             <span className={isActive ? "text-fuchsia-500 font-bold" : ""}>
               Home
-            </span>
-          )}
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/instructors">
-          {({ isActive }) => (
-            <span className={isActive ? "text-fuchsia-500 font-bold" : ""}>
-              Instructors
-            </span>
-          )}
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/classes">
-          {({ isActive }) => (
-            <span className={isActive ? "text-fuchsia-500 font-bold" : ""}>
-              Classes
             </span>
           )}
         </NavLink>
@@ -95,16 +93,18 @@ const Header = () => {
                 <div className="flex">
                   <div className=" mx-3">
                     <label className="btn btn-ghost btn-circle avatar">
-                      <div className="w-10 rounded-full">
-                        <img
-                          src={
-                            user?.photoURL ||
-                            "https://source.unsplash.com/user/c_v_r/100x100"
-                          }
-                        />
+                      <div className="w-10 rounded-full ring">
+
+                        {  user?.photoURL &&  <img src={ user?.photoURL} /> }
                       </div>
                     </label>
                   </div>
+                  <Link
+                    to={"/dashboard/student/selected-classes"}
+                    className={"btn btn-outline btn-success "}
+                  >
+                    checkout <Basket size={24} /> {data?.length}
+                  </Link>
                   <button onClick={handleLogOut} className="btn btn-ghost ">
                     Log out
                   </button>
@@ -115,14 +115,14 @@ const Header = () => {
                 </NavLink>
               )}
             </div>
+
             <div className="md:hidden ">
               <Hamburger size={26} toggled={isOpen} toggle={setOpen} />
             </div>
             <ul
-              className={`  absolute  z-50 rounded-lg shadow-md border p-5 top-32  md:hidden ${
+              className={`absolute z-50 rounded-lg shadow-md border p-5 top-36 right-20  md:hidden ${
                 isOpen ? "" : "hidden"
               }`}
-              id="mobile-menu-2"
             >
               {menuItems}
             </ul>

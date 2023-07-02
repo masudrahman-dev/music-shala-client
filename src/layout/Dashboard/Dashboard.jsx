@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import DashboardMenu from "./DashboardMenu/DashboardMenu";
 import logo from "../../assets/Images/logo.svg";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import { AuthContext } from "../../contexts/AuthProvider";
+
+import useAuth from "../../hooks/useAuth";
 const Dashboard = () => {
   const [isOpen, setOpen] = useState(false);
 
-  const { user, logOut, setLoading } = useContext(AuthContext);
+  const { user, logOut, setLoading } = useAuth();
   const handleLogOut = () => {
     logOut()
       .then(() => {
@@ -23,21 +22,6 @@ const Dashboard = () => {
   useEffect(() => {
     setLoading(false);
   }, []);
-  // const { data, isLoading, refetch, error } = useQuery({
-  //   queryFn: async () => {
-  //     const data = await axios(
-  //       `${import.meta.env.VITE_BASE_URL}/users/one-role/${user?.email}`
-  //     );
-
-  //     return data?.data;
-  //   },
-  //   queryKey: ["users-one-role"],
-  // });
-
-  // TODO: make admin first time then delete extra component
-  // let isAdmin = true;
-
-  // find one to verify user or admin or instructor
 
   return (
     <div>
@@ -93,7 +77,9 @@ const Dashboard = () => {
                 data-dropdown-toggle="dropdown"
               >
                 <span className="sr-only">Open user menu</span>
-                <img className="w-8 h-8 rounded-full" src={user?.photoURL} />
+                {user?.photoURL && (
+                  <img className="w-8 h-8 rounded-full" src={user?.photoURL} />
+                )}
               </button>
               <button
                 onClick={handleLogOut}

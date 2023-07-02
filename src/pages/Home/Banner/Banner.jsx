@@ -3,7 +3,9 @@ import "react-awesome-slider/dist/styles.css";
 import withAutoplay from "react-awesome-slider/dist/autoplay";
 const AutoplaySlider = withAutoplay(AwesomeSlider);
 import AwesomeSliderStyles from "react-awesome-slider/dist/";
-
+import slide_1 from "../../../assets/Images/slide/slide_1.jpg";
+import slide_2 from "../../../assets/Images/slide/slide_2.jpg";
+import slide_3 from "../../../assets/Images/slide/slide_3.jpg";
 /**
  * https://bridgemusic.in/wp-content/uploads/2022/09/IMG_6357.jpg
  * https://bridgemusic.in/wp-content/uploads/2022/09/IMG_7127.jpg
@@ -21,8 +23,6 @@ import AwesomeSliderStyles from "react-awesome-slider/dist/";
  */
 
 const Banner = () => {
-  const image =
-    "https://bridgemusic.in/wp-content/uploads/2022/09/IMG_6784.jpg";
 
   const slider = (
     <AutoplaySlider
@@ -32,26 +32,14 @@ const Banner = () => {
       cssModule={AwesomeSliderStyles}
     >
       <div>
-        <img
-          className="mix-blend-multiply"
-          src="https://bridgemusic.in/wp-content/uploads/2022/09/IMG_6784.jpg"
-          alt=""
-        />
+        <img className="mix-blend-multiply" src={slide_1} alt="" />
       </div>
       <div>
-        <img
-          className="mix-blend-multiply"
-          src="https://bridgemusic.in/wp-content/uploads/2022/09/IMG_7127.jpg"
-          alt=""
-        />
+        <img className="mix-blend-multiply" src={slide_2} alt="" />
       </div>
 
       <div>
-        <img
-          className="mix-blend-multiply"
-          src="https://bridgemusic.in/wp-content/uploads/2022/09/IMG_6476.jpg"
-          alt=""
-        />
+        <img className="mix-blend-multiply" src={slide_3} alt="" />
       </div>
     </AutoplaySlider>
   );

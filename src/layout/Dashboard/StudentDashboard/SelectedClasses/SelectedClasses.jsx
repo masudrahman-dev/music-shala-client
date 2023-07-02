@@ -1,30 +1,21 @@
 import Spinner from "../../../../components/Spinner/Spinner";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useQuery } from "@tanstack/react-query";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../../contexts/AuthProvider";
 import { Toaster, toast } from "react-hot-toast";
 import Payment from "../../Payment/Payment";
+import useGetCarts from "../../../../hooks/useGetCarts";
+import useAuth from "../../../../hooks/useAuth";
+import { useState } from "react";
 
 const SelectedClasses = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading } = useAuth();
+  const [isDisable, setIsDisable] = useState(false);
   const email = user?.email;
-  const { data, isLoading, refetch, error } = useQuery({
-    queryFn: async () => {
-      const data = await axios(
-        `${import.meta.env.VITE_BASE_URL}/carts/?email=${email}`
-      );
-
-      return data?.data;
-    },
-    queryKey: ["customer-selected-classes"],
-  });
-
-  // console.log("data :>> ", data);
-
-  const total = data?.reduce((sum, item) => parseFloat(item.price) + sum, 0);
+  const { data, isLoading, refetch, error } = useGetCarts(email);
+  const total = data?.reduce((sum, item) => parseFloat(item.totalPrice) + sum, 0);
   const handleDelete = (_id) => {
+    setIsDisable(true);
+
     Swal.fire({
       title: "Are you sure?",
       text: "You want to delete it!",
@@ -42,9 +33,13 @@ const SelectedClasses = () => {
             if (data.deletedCount > 0) {
               refetch();
               toast.success("Deleted Successfully!");
+              setTimeout(() => {
+                setIsDisable(false);
+              }, 1000);
             }
           })
           .catch((error) => {
+            setIsDisable(false);
             console.error("Error deleting item:", error);
             Swal.fire(
               "Error!",
@@ -54,6 +49,25 @@ const SelectedClasses = () => {
           });
       }
     });
+  };
+  const handleQuantity = (id, plusOrMinus) => {
+    // console.log(id, plusOrMinus);
+    setIsDisable(true);
+    axios
+      .patch(`${import.meta.env.VITE_BASE_URL}/carts/${id}`, { plusOrMinus })
+      .then((response) => {
+        const data = response.data;
+        toast.success("increment or decrement by one");
+        refetch();
+        setTimeout(() => {
+          setIsDisable(false);
+        }, 1000);
+      })
+      .catch((error) => {
+        console.error("Error plus or minus item:", error);
+        toast.error("Error occur!");
+        setIsDisable(false);
+      });
   };
 
   if (isLoading) {
@@ -102,7 +116,7 @@ const SelectedClasses = () => {
                       Instructor email
                     </th>
                     <th scope="col" className="px-4 py-3">
-                      Seats
+                      quantity
                     </th>
                     <th scope="col" className="px-4 py-3">
                       Price
@@ -151,17 +165,32 @@ const SelectedClasses = () => {
                         </span>
                       </td>
 
-                      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <p className="flex items-center text-center">
-                          {item?.seats}
+                      <td className="px-4 py-2 text-center  font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <p className="bg-primary-100  text-primary-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                          <button
+                            disabled={item.quantity === 1 || isDisable}
+                            onClick={() => handleQuantity(item?._id, "-")}
+                            className="btn  btn-outline btn-accent mr-5"
+                          >
+                            -
+                          </button>
+                          <span>{item?.quantity || 0} </span>
+                          <button
+                            disabled={isDisable}
+                            onClick={() => handleQuantity(item?._id, "+")}
+                            className="btn btn-outline btn-success ml-5"
+                          >
+                            +
+                          </button>
                         </p>
                       </td>
                       <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        $ {item?.price}
+                        $ {item?.totalPrice}
                       </td>
 
                       <td className="px-4 link py-2 font-medium text-gray-900 whitespace-nowrap dark:text-warning">
                         <button
+                          disabled={isDisable}
                           onClick={() => handleDelete(item?._id)}
                           className="btn btn-warning"
                         >

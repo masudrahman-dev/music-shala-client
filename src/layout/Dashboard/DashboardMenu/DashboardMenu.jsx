@@ -2,16 +2,28 @@ import React, { useState } from "react";
 import StudentDashboard from "../StudentDashboard/StudentDashboard";
 import InstructorDashboard from "../InstrctorDashboard/InstructorDashboard";
 import AdminDashboard from "../AdminDashboard/AdminDashboard";
+import useAuth from "../../../hooks/useAuth";
+import useGetSingleUser from "../../../hooks/useGetSingleUser";
 
 const DashboardMenu = ({ isOpen }) => {
   // TODO: role come from server
-  let role1 = "instructor";
-  let role2 = "student";
-  let role = "admin";
+  const { user } = useAuth();
+  const email = user?.email;
+  const { data, isLoading, refetch, error } = useGetSingleUser(email);
+  // console.log(data);
+  
+  // let role1 = "instructor";
+  // let role2 = "student";
+  let role = data?.role;
+  // TODO: make admin first time then delete extra component
+  // let isAdmin = true;
+
+  // find one to verify user or admin or instructor
+
   return (
     <>
       <aside
-        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform    border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700  ${
+        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform   border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700  ${
           isOpen ? " " : " md:translate-x-0 -translate-x-full"
         } `}
       >
@@ -35,9 +47,9 @@ const DashboardMenu = ({ isOpen }) => {
               </a>
             </li>
 
-            {role2 == "student" && <StudentDashboard />}
+            {role == "user" && <StudentDashboard />}
 
-            {role1 == "instructor" && <InstructorDashboard />}
+            {role == "instructor" && <InstructorDashboard />}
 
             {role == "admin" && <AdminDashboard />}
             {/* {<StudentDashboard role={role} />}

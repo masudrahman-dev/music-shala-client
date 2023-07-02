@@ -1,21 +1,20 @@
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../../../assets/Images/logo.svg";
-import { AuthContext } from "../../../contexts/AuthProvider";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import axios from "axios";
 import { Eye, EyeClosed } from "@phosphor-icons/react";
 import { CirclesWithBar } from "react-loader-spinner";
+import useAuth from "../../../hooks/useAuth";
 
 const Register = () => {
   const [isMatch, setIsMatch] = useState(false);
   const [isGoogle, setIsGoogle] = useState(true);
   const [userError, setUserError] = useState(null);
-  const [isHide, setIsHide] = useState(false);
-  const [isHideConfirm, setIsHideConfirm] = useState(false);
-  const { createUser, updateUser, GoogleSignIn, user, loading, setLoading } =
-    useContext(AuthContext);
+  const [isHide, setIsHide] = useState(true);
+  const [isHideConfirm, setIsHideConfirm] = useState(true);
+  const { createUser, updateUser, addUserToDB, GoogleSignIn, loading } =
+    useAuth();
   const {
     register,
     handleSubmit,
@@ -23,17 +22,20 @@ const Register = () => {
     reset,
     formState: { errors },
   } = useForm();
-
   let navigate = useNavigate();
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
-
   const handleGoogleSignIn = () => {
     setIsGoogle(false);
     GoogleSignIn()
       .then((result) => {
-        const loggedInUser = result.user;
-        // setLoading(false);
+        const user = result.user;
+        // console.log("user :>> ", user);
+        const name = user?.displayName;
+        const email = user?.email;
+        const photo = user?.photoURL;
+        addUserToDB(name, email,photo);
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         console.log(error);
@@ -41,34 +43,15 @@ const Register = () => {
   };
 
   const handleRegister = (data) => {
-    const { name, email, photo, password, confirmPassword } = data;
+    const { name, email, password, confirmPassword } = data;
     if (password === confirmPassword) {
       createUser(email, password)
         .then((userCredential) => {
-          updateUser(name, photo);
-
-          if (user?.displayName) {
-            const { displayName, email, photoURL } = user;
-            let role = "student";
-            const newUser = {
-              displayName,
-              email,
-              photoURL,
-              role,
-            };
-            axios
-              .post(`${import.meta.env.VITE_BASE_URL}/users`, newUser)
-              .then((response) => {
-                console.log(response.data);
-                // console.log('user :>> ', user);
-                navigate(from, { replace: true });
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-            // setLoading(false);
-          }
+          // console.log(userCredential.user);
+          addUserToDB(name, email);
+          updateUser(name);
           reset();
+          navigate(from, { replace: true });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -99,31 +82,6 @@ const Register = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (user?.displayName) {
-  //     console.log("user :>> ", user);
-
-  //     const { displayName, email, photoURL } = user;
-  //     console.log(displayName, email, photoURL);
-  //     let role = "student";
-  //     const newUser = {
-  //       displayName,
-  //       email,
-  //       photoURL,
-  //       role,
-  //     };
-  //     axios
-  //       .post(`${import.meta.env.VITE_BASE_URL}/users`, newUser)
-  //       .then((response) => {
-  //         console.log(response.data);
-  //         // navigate(from, { replace: true });
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //       });
-  //   }
-  //   console.log("loading register: ", loading);
-  // }, [from]);
   return (
     <section className="bg-gray-50 dark:bg-gray-900 py-20">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -137,7 +95,7 @@ const Register = () => {
         <div className="w-full   rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Create and account
+              Create an account
             </h1>
             <form
               onSubmit={handleSubmit(handleRegister)}
@@ -183,25 +141,6 @@ const Register = () => {
                   <p className="text-rose-500 mt-1">{errors.email.message}</p>
                 )}
               </div>
-              <div>
-                <label
-                  htmlFor="url"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Your Photo url *
-                </label>
-                <input
-                  defaultValue="https://gourmand.qodeinteractive.com/wp-content/uploads/2018/01/product-3.jpg"
-                  type="url"
-                  id="url"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="photo url"
-                  {...register("photo", { required: "photo url is required" })}
-                />
-              </div>
-              {errors.email && (
-                <p className="text-rose-500 mt-1">{errors.email.message}</p>
-              )}
               <div className="relative">
                 <label
                   htmlFor="password"
@@ -299,7 +238,7 @@ const Register = () => {
                 </div>
               </div>
 
-              {"" ? (
+              {loading ? (
                 <button type="submit" className="w-full btn btn-primary ">
                   <CirclesWithBar
                     height="32"
