@@ -3,16 +3,21 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { Toaster, toast } from "react-hot-toast";
 import Payment from "../../Payment/Payment";
-import useGetCarts from "../../../../hooks/useGetCarts";
 import useAuth from "../../../../hooks/useAuth";
 import { useState } from "react";
+import useGetCarts from "../../../../hooks/useGetCarts";
 
 const SelectedClasses = () => {
   const { user, loading } = useAuth();
   const [isDisable, setIsDisable] = useState(false);
   const email = user?.email;
   const { data, isLoading, refetch, error } = useGetCarts(email);
-  const total = data?.reduce((sum, item) => parseFloat(item.totalPrice) + sum, 0);
+
+  // console.log(data);
+  const total = data?.result?.reduce(
+    (sum, item) => parseFloat(item.totalPrice) + sum,
+    0
+  );
   const handleDelete = (_id) => {
     setIsDisable(true);
 
@@ -71,7 +76,7 @@ const SelectedClasses = () => {
   };
 
   if (isLoading) {
-    refetch();
+
     return <Spinner />;
   }
   return (
@@ -85,7 +90,7 @@ const SelectedClasses = () => {
             <div className="flex  px-4 py-3 space-y-3 lg:items-center justify-end lg:space-y-0 lg:space-x-4">
               <div className="flex items-center  space-x-4">
                 <span className="dark:text-white">
-                  Total Selected : {data?.length || 0}{" "}
+                  Total Selected : {data?.totalAddToCarts}
                 </span>
                 <h5 className="dark:text-white">
                   <span>Total Price : </span>
@@ -131,7 +136,7 @@ const SelectedClasses = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.map((item, index) => (
+                  {data?.result?.map((item, index) => (
                     <tr
                       key={item?._id}
                       className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"

@@ -29,7 +29,6 @@ const AuthProvider = ({ children }) => {
       .then((response) => {
         console.log(response.data);
         // console.log('user :>> ', user);
-
       })
       .catch((error) => {
         console.error(error);
@@ -86,10 +85,10 @@ const AuthProvider = ({ children }) => {
           });
       } else {
         localStorage.removeItem("access-token");
+        setLoading(false);
       }
-
-      setLoading(false);
     });
+    // setLoading(false);
 
     return () => {
       unsubscribe();

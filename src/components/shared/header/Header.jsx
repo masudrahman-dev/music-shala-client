@@ -1,15 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { AuthContext } from "../../../contexts/AuthProvider";
 import logo from "../../../assets/Images/logo.svg";
 import Hamburger from "hamburger-react";
 import { motion } from "framer-motion";
 import { Basket } from "@phosphor-icons/react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import useGetCarts from "../../../hooks/useGetCarts";
+import Spinner from "../../Spinner/Spinner";
+import useAuth from "../../../hooks/useAuth";
 const Header = () => {
   const [isOpen, setOpen] = useState(false);
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut } = useAuth();
   const handleLogOut = () => {
     logOut()
       .then(() => {
@@ -21,19 +21,14 @@ const Header = () => {
       });
   };
   const email = user?.email;
-  const { data, isLoading, refetch, error } = useQuery({
-    queryFn: async () => {
-      const data = await axios(
-        `${import.meta.env.VITE_BASE_URL}/carts/?email=${email}`
-      );
 
-      return data?.data;
-    },
-    queryKey: ["selected-classes-length"],
-  });
-  useEffect(() => {
-    refetch();
-  }, [email]);
+  let cartsData;
+  if (email) {
+    const { data, isLoading, refetch, error } = useGetCarts(email);
+    cartsData = data?.totalAddToCarts;
+  }
+  // console.log(cartsData);
+
   const menuItems = (
     <>
       <li>
@@ -94,8 +89,7 @@ const Header = () => {
                   <div className=" mx-3">
                     <label className="btn btn-ghost btn-circle avatar">
                       <div className="w-10 rounded-full ring">
-
-                        {  user?.photoURL &&  <img src={ user?.photoURL} /> }
+                        {user?.photoURL && <img src={user?.photoURL} />}
                       </div>
                     </label>
                   </div>
@@ -103,7 +97,7 @@ const Header = () => {
                     to={"/dashboard/student/selected-classes"}
                     className={"btn btn-outline btn-success "}
                   >
-                    checkout <Basket size={24} /> {data?.length}
+                    checkout <Basket size={24} /> {cartsData}
                   </Link>
                   <button onClick={handleLogOut} className="btn btn-ghost ">
                     Log out

@@ -160,7 +160,7 @@ const Login = () => {
                 </div>
 
                 <div className="text-center">
-                  {loading ? (
+                  { loading ? (
                     <button className="btn btn-primary">
                       <CirclesWithBar
                         height="32"
@@ -187,7 +187,7 @@ const Login = () => {
                 <div className="divider">OR</div>
 
                 <div className="text-center">
-                  {loading ? (
+                  { loading ? (
                     <button className="btn btn-primary">
                       <CirclesWithBar
                         height="32"

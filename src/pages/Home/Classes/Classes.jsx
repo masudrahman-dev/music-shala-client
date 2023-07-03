@@ -9,6 +9,7 @@ const Classes = ({ data, refetch }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
+
   const handleAddToCart = (item) => {
     setIsDisable(true);
     if (user) {

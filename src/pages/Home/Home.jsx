@@ -21,7 +21,6 @@ const Home = () => {
     <>
       <Banner />
       <Classes data={data} refetch={refetch} />
-
       <CustomarReview></CustomarReview>
       <ServiceTeam></ServiceTeam>
     </>
