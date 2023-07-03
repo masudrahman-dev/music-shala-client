@@ -4,30 +4,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Card from "../../../components/Card/Card";
 import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
-
 import "./classes.css";
-import useGetClasses from "../../../hooks/useGetClasses";
-import Spinner from "../../../components/Spinner/Spinner";
-const Classes = () => {
+
+const Classes = ({ handleTabs, data, currentTab }) => {
   const [isDisable, setIsDisable] = useState(false);
-  const [currentTab, setCurrentTab] = useState("all");
+  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
-  const { data, isLoading, refetch, error } = useGetClasses(
-    "",
-    "approved",
-    currentTab
-  );
 
-  const handleTabs = (tab) => {
-    console.log("tab :>> ", tab);
-    setCurrentTab(tab);
-    refetch();
-    // console.log("currentTab :>> ", currentTab);
-  };
-
-  console.log("currentTab :>> ", currentTab);
   const handleAddToCart = (item) => {
     setIsDisable(true);
     if (user) {
@@ -109,9 +93,7 @@ const Classes = () => {
       });
     }
   };
-  if (isLoading) {
-    return <Spinner />;
-  }
+
   return (
     <div className="max-w-screen-xl mx-auto mt-20">
       <div className="flex items-center justify-center py-4 md:py-12 flex-wrap">
@@ -124,7 +106,9 @@ const Classes = () => {
           <li>
             <button
               onClick={() => handleTabs("all")}
-              className="underline  font-bold"
+              className={`underline  ${
+                currentTab === "all" ? " font-bold text-fuchsia-600" : ""
+              }`}
             >
               All
             </button>
@@ -132,7 +116,9 @@ const Classes = () => {
           <li>
             <button
               onClick={() => handleTabs("guitar")}
-              className="underline font-bold"
+              className={`underline  ${
+                currentTab === "guitar" ? " font-bold text-fuchsia-600" : ""
+              }`}
             >
               Guitar
             </button>
@@ -140,7 +126,9 @@ const Classes = () => {
           <li>
             <button
               onClick={() => handleTabs("tabla")}
-              className="underline font-bold"
+              className={`underline  ${
+                currentTab === "tabla" ? " font-bold text-fuchsia-600" : ""
+              }`}
             >
               Tabla
             </button>
@@ -148,7 +136,9 @@ const Classes = () => {
           <li>
             <button
               onClick={() => handleTabs("vocalist")}
-              className="underline font-bold"
+              className={`underline  ${
+                currentTab === "vocalist" ? " font-bold text-fuchsia-600" : ""
+              }`}
             >
               Vocalist
             </button>
@@ -156,7 +146,9 @@ const Classes = () => {
           <li>
             <button
               onClick={() => handleTabs("singer")}
-              className="underline font-bold"
+              className={`underline  ${
+                currentTab === "singer" ? " font-bold text-fuchsia-600" : ""
+              }`}
             >
               Singer
             </button>
