@@ -11,7 +11,7 @@ const DashboardMenu = ({ isOpen }) => {
   const email = user?.email;
   const { data, isLoading, refetch, error } = useGetSingleUser(email);
   // console.log(data);
-  
+
   // let role1 = "instructor";
   // let role2 = "student";
   let role = data?.role;
@@ -43,15 +43,54 @@ const DashboardMenu = ({ isOpen }) => {
                   <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                   <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                 </svg>
-                <span className="ml-3">{role}</span>
+                {/* <span className="ml-3">{role}</span> */}
+                <span className="ml-3 text-fuchsia-600">User Panel</span>
               </a>
             </li>
 
-            {role == "user" && <StudentDashboard />}
+            {"user" == "user" && <StudentDashboard />}
 
-            {role == "instructor" && <InstructorDashboard />}
+            <hr />
 
-            {role == "admin" && <AdminDashboard />}
+            <li>
+              <a
+                href="#"
+                className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <svg
+                  className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                  <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                </svg>
+                {/* <span className="ml-3">{role}</span> */}
+                <span className="ml-3 text-fuchsia-600">Instructor Panel</span>
+              </a>
+            </li>
+            {"instructor" == "instructor" && <InstructorDashboard />}
+            <hr />
+            <li>
+              <a
+                href="#"
+                className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <svg
+                  className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+                  <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+                </svg>
+                {/* <span className="ml-3">{role}</span> */}
+                <span className="ml-3 text-fuchsia-600">Admin Panel</span>
+              </a>
+            </li>
+            {"admin" == "admin" && <AdminDashboard />}
             {/* {<StudentDashboard role={role} />}
 
             {<InstructorDashboard />}

@@ -4,12 +4,30 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Card from "../../../components/Card/Card";
 import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
-const Classes = ({ data, refetch }) => {
+
+import "./classes.css";
+import useGetClasses from "../../../hooks/useGetClasses";
+import Spinner from "../../../components/Spinner/Spinner";
+const Classes = () => {
   const [isDisable, setIsDisable] = useState(false);
+  const [currentTab, setCurrentTab] = useState("all");
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
+  const { data, isLoading, refetch, error } = useGetClasses(
+    "",
+    "approved",
+    currentTab
+  );
 
+  const handleTabs = (tab) => {
+    console.log("tab :>> ", tab);
+    setCurrentTab(tab);
+    refetch();
+    // console.log("currentTab :>> ", currentTab);
+  };
+
+  console.log("currentTab :>> ", currentTab);
   const handleAddToCart = (item) => {
     setIsDisable(true);
     if (user) {
@@ -42,7 +60,6 @@ const Classes = ({ data, refetch }) => {
         .then((response) => {
           const data = response.data;
           if (data) {
- 
             refetch();
             Swal.fire({
               position: "top-end",
@@ -92,48 +109,60 @@ const Classes = ({ data, refetch }) => {
       });
     }
   };
-
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <div className="max-w-screen-xl mx-auto mt-20">
       <div className="flex items-center justify-center py-4 md:py-12 flex-wrap">
         <h1 className="text-5xl font-semibold text-gray-900 dark:text-white ">
-          Classes
+          Classes {data.length}
         </h1>
       </div>
-      {/* <div>
+      <div>
         <ul className="flex justify-around">
           <li>
-            <button onClick={() => {}} className="underline font-bold">
+            <button
+              onClick={() => handleTabs("all")}
+              className="underline  font-bold"
+            >
               All
             </button>
           </li>
           <li>
-            <button onClick={() => {}} className="underline font-bold">
+            <button
+              onClick={() => handleTabs("guitar")}
+              className="underline font-bold"
+            >
               Guitar
             </button>
           </li>
           <li>
-            <button onClick={() => {}} className="underline font-bold">
+            <button
+              onClick={() => handleTabs("tabla")}
+              className="underline font-bold"
+            >
               Tabla
             </button>
           </li>
           <li>
-            <button onClick={() => {}} className="underline font-bold">
+            <button
+              onClick={() => handleTabs("vocalist")}
+              className="underline font-bold"
+            >
               Vocalist
             </button>
           </li>
           <li>
-            <button onClick={() => {}} className="underline font-bold">
+            <button
+              onClick={() => handleTabs("singer")}
+              className="underline font-bold"
+            >
               Singer
             </button>
           </li>
-          <li>
-            <button onClick={() => {}} className="underline font-bold">
-              Harmony
-            </button>
-          </li>
         </ul>
-      </div> */}
+      </div>
       <div className="grid grid-cols-1 mt-12 md:grid-cols-2  lg:grid-cols-3 gap-7">
         {data?.map((item) => (
           <Card

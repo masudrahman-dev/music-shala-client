@@ -4,8 +4,7 @@ import logo from "../../../assets/Images/logo.svg";
 import Hamburger from "hamburger-react";
 import { motion } from "framer-motion";
 import { Basket } from "@phosphor-icons/react";
-import useGetCarts from "../../../hooks/useGetCarts";
-import Spinner from "../../Spinner/Spinner";
+
 import useAuth from "../../../hooks/useAuth";
 const Header = () => {
   const [isOpen, setOpen] = useState(false);
@@ -20,13 +19,7 @@ const Header = () => {
         // An error happened.
       });
   };
-  const email = user?.email;
 
-  let cartsData;
-  if (email) {
-    const { data, isLoading, refetch, error } = useGetCarts(email);
-    cartsData = data?.totalAddToCarts;
-  }
 
 
   const menuItems = (
@@ -97,7 +90,7 @@ const Header = () => {
                     to={"/dashboard/student/selected-classes"}
                     className={"btn btn-outline btn-success "}
                   >
-                    checkout <Basket size={24} /> {cartsData}
+                    checkout <Basket size={24} />
                   </Link>
                   <button onClick={handleLogOut} className="btn btn-ghost ">
                     Log out
