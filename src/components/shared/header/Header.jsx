@@ -27,7 +27,7 @@ const Header = () => {
     const { data, isLoading, refetch, error } = useGetCarts(email);
     cartsData = data?.totalAddToCarts;
   }
-  // console.log(cartsData);
+
 
   const menuItems = (
     <>

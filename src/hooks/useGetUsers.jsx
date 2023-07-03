@@ -13,7 +13,7 @@ const useGetUsers = (email) => {
     queryKey: ["users"],
   });
 
-  return { data, isLoading, refetch };
+  return { data, isLoading, refetch,error };
 };
 
 export default useGetUsers;

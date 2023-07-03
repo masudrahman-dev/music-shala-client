@@ -2,9 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "./useAuth";
 import axios from "axios";
 import useAxiosSecure2 from "./useAxiosSecure2";
+import useAxiosSecure3 from "./useAxiosSecure3";
 
 const useGetCarts = (email) => {
+  // const { loading } = useAuth();
   // const { data, isLoading, refetch, error } = useQuery({
+  //   queryKey: ["carts", email],
+  //   enabled: !loading,
   //   queryFn: async () => {
   //     const data = await axios.get(
   //       `${import.meta.env.VITE_BASE_URL}/carts/?email=${email}`,
@@ -17,7 +21,6 @@ const useGetCarts = (email) => {
 
   //     return data?.data;
   //   },
-  //   queryKey: ["carts"],
   // });
   // return { data, isLoading, refetch, error };
 
@@ -31,7 +34,7 @@ const useGetCarts = (email) => {
       return data?.data;
     },
   });
- 
+
   return { data, isLoading, refetch, error };
 };
 export default useGetCarts;
