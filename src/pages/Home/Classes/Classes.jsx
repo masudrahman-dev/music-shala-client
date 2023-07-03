@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Card from "../../../components/Card/Card";
 import useAuth from "../../../hooks/useAuth";
 import { useState } from "react";
-import "./classes.css";
 
 const Classes = ({ handleTabs, data, currentTab }) => {
   const [isDisable, setIsDisable] = useState(false);
@@ -44,7 +43,7 @@ const Classes = ({ handleTabs, data, currentTab }) => {
         .then((response) => {
           const data = response.data;
           if (data) {
-            refetch();
+            // refetch();
             Swal.fire({
               position: "top-end",
               icon: "success",
@@ -87,7 +86,7 @@ const Classes = ({ handleTabs, data, currentTab }) => {
         confirmButtonText: "Login now!",
       }).then((result) => {
         if (result.isConfirmed) {
-          refetch();
+          // refetch();
           navigate("/login", { state: { from: location } });
         }
       });
@@ -98,7 +97,7 @@ const Classes = ({ handleTabs, data, currentTab }) => {
     <div className="max-w-screen-xl mx-auto mt-20">
       <div className="flex items-center justify-center py-4 md:py-12 flex-wrap">
         <h1 className="text-5xl font-semibold text-gray-900 dark:text-white ">
-          Classes {data.length}
+          Classes - {currentTab} - {data.length}
         </h1>
       </div>
       <div>
