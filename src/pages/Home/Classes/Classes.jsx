@@ -100,7 +100,7 @@ const Classes = ({ data, refetch }) => {
           Classes
         </h1>
       </div>
-      <div>
+      {/* <div>
         <ul className="flex justify-around">
           <li>
             <button onClick={() => {}} className="underline font-bold">
@@ -133,7 +133,7 @@ const Classes = ({ data, refetch }) => {
             </button>
           </li>
         </ul>
-      </div>
+      </div> */}
       <div className="grid grid-cols-1 mt-12 md:grid-cols-2  lg:grid-cols-3 gap-7">
         {data?.map((item) => (
           <Card
