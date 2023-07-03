@@ -1,30 +1,35 @@
 # Project Name: MUSIC SHALA
 
+## [Live Link](https://summer-camp-client-side.web.app/)
+
 ## use packages
 
-1. @phosphor-icons/react
-2. tanstack/react-query
-3. axios
-4. firebase
-5. framer-motion
-6. hamburger-react
-7. react js
-8. react-awesome-slider
-9. react-router
-10. react-hook-form
-11. react-loader-spinner
-12. react-hot-toast
-13. sweetalert2
+### Front End
+
+1. react js
+2. Javascript
+3. tanstack/react-query
+4. react-router
+5. axios
+6. firebase
+7. framer-motion
+8. hamburger-react
+9. phosphor-icons/react
+10. react-awesome-slider
+11. react-hook-form
+12. react-loader-spinner
+13. react-hot-toast
+14. sweetalert2
+
+### Back End
+
+1. Express js
+2. MongoDB
+3. JWT
+4. javascript
 
 ## features
 
-1. students can show their selected class and pay for class
-2. can show which call he/she enrolled
-3. instructor can add,delete and update class info
-4. instructor also show all added classes
-5. admin can manage all user and make instructor or admin
-6. admin can approved or denied class and send feedback why denied
-
-
-### [Live Link](https://summer-camp-client-side.web.app/)
-# summer-camp-client-clone
+1. use firebase and JWT for authentication
+2. admin can manage all user and make instructor or admin
+3. admin can approved or denied class and send feedback why denied
