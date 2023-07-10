@@ -48,7 +48,7 @@ const Home = () => {
   }
   return (
     <>
-      <Banner />
+      {/* <Banner /> */}
       <Classes data={data} handleTabs={handleTabs} currentTab={currentTab} />
       <CustomarReview></CustomarReview>
       <ServiceTeam></ServiceTeam>

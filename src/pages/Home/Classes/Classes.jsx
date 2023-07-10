@@ -96,12 +96,12 @@ const Classes = ({ handleTabs, data, currentTab }) => {
   return (
     <div className="max-w-screen-xl mx-auto mt-20">
       <div className="flex items-center justify-center py-4 md:py-12 flex-wrap">
-        <h1 className="text-5xl font-semibold text-gray-900 dark:text-white ">
+        <h1 className="text-3xl md:text-5xl font-semibold text-gray-900 dark:text-white ">
           Classes - {currentTab} - {data.length}
         </h1>
       </div>
       <div>
-        <ul className="flex justify-around">
+        <ul className="flex justify-around mt-3">
           <li>
             <button
               onClick={() => handleTabs("all")}
