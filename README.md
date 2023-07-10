@@ -1,6 +1,7 @@
 # Project Name: MUSIC SHALA
 
-## [Live Link](https://summer-camp-client-side.web.app/)
+## [Live Link](https://music-shala.web.app/)
+## [back-end repo](https://github.com/masudrahman-dev/music-shala-server.git)
 
 ## use packages
 
